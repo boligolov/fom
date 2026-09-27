@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
+from .semantic_diff import diff_texts, nonempty_diff
 from .validator import validate_path
 
 
@@ -60,6 +62,42 @@ def cmd_check(
     )
 
 
+def cmd_diff(source: str, candidate: str, as_json: bool = False) -> int:
+    source_path = Path(source)
+    candidate_path = Path(candidate)
+
+    try:
+        result = nonempty_diff(
+            diff_texts(
+                source_path.read_text(encoding="utf-8"),
+                candidate_path.read_text(encoding="utf-8"),
+                str(source_path),
+                str(candidate_path),
+            )
+        )
+    except (OSError, ValueError) as exc:
+        print(f"fom diff: {exc}")
+        return 2
+
+    if as_json:
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+    elif not result:
+        print("no differences in the currently supported dimensions")
+    else:
+        for dimension, changes in result.items():
+            print(f"{dimension}:")
+            for change in changes:
+                details = ", ".join(
+                    f"{key}={value}"
+                    for key, value in change.items()
+                    if key != "status"
+                )
+                suffix = f" ({details})" if details else ""
+                print(f"  {change['status']}{suffix}")
+
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="fom")
     sub = parser.add_subparsers(
@@ -81,6 +119,14 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
     )
 
+    diff = sub.add_parser(
+        "diff",
+        help="compare two FoM files using the currently supported semantic dimensions",
+    )
+    diff.add_argument("source")
+    diff.add_argument("candidate")
+    diff.add_argument("--json", action="store_true")
+
     return parser
 
 
@@ -91,6 +137,13 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_check(
             args.paths,
             args.warnings_as_errors,
+        )
+
+    if args.command == "diff":
+        return cmd_diff(
+            args.source,
+            args.candidate,
+            args.json,
         )
 
     return 2
