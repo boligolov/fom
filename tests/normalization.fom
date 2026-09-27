@@ -1,0 +1,69 @@
+(fom test-normalization
+  {:kind :test}
+
+  ;; Alpha-equivalent patterns.
+  (pattern alpha-a [?x]
+    (where (student ?x))
+    (require (read ?x book)))
+
+  (pattern alpha-b [?student]
+    (where (student ?student))
+    (require (read ?student book)))
+
+  (constraint expect-alpha-equivalent
+    (canonical-equivalent alpha-a alpha-b))
+
+  ;; Exact temporal inverse.
+  (subgraph temporal-a
+    (rel ta before {:left event-a :right event-b}))
+
+  (subgraph temporal-b
+    (rel tb after {:left event-b :right event-a}))
+
+  (constraint expect-temporal-equivalent
+    (canonical-equivalent temporal-a temporal-b))
+
+  ;; Do NOT normalize quantifier negation.
+  (subgraph qneg-a
+    (not
+      (for-each [?x]
+        (where (student ?x))
+        (require (came ?x)))))
+
+  (subgraph qneg-b
+    (exists [?x]
+      (where (student ?x))
+      (require (not (came ?x)))))
+
+  (constraint keep-distinct-qneg
+    (not (canonical-equivalent qneg-a qneg-b)))
+
+  ;; Do NOT collapse repeated occurrences solely by structure.
+  (subgraph occurrence-a
+    (rel says-a says
+      {:speaker john
+       :content proposition-p}))
+
+  (subgraph occurrence-b
+    (rel says-b says
+      {:speaker mary
+       :content proposition-p}))
+
+  (constraint keep-occurrences
+    (not (identity says-a says-b)))
+
+  ;; Scope overlay remains an overlay, not a materialized copy.
+  (scope base
+    (accept (door-open)))
+
+  (scope child
+    {:inherits-status-from base
+     :inherit-mode :overlay}
+    (reject (door-open)))
+
+  (constraint preserve-local-override
+    (local-status
+      {:scope child
+       :content (door-open)
+       :value :reject}))
+)
