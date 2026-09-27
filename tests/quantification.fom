@@ -1,33 +1,40 @@
 (fom test-quantification
   {:kind :test}
 
-  ;; Every student read the book.
-  (pattern student-read [x]
-    {:where (student x)
-     :require (read x book)})
+  (node students {:type :group})
+  (node book {:type :object})
+  (node piano {:type :object})
+  (node relevant-people {:type :group})
+  (node arrival-ratio {:type :degree})
+  (node bird-kind {:type :kind})
+
+  (pattern student-read [?x]
+    (where
+      (member-of ?x students))
+    (require
+      (read ?x book)))
 
   (constraint all-students-read
-    (for-each
-      {:binding [x]
-       :where (student x)
-       :require (read x book)}))
+    (for-each [?x]
+      (where
+        (member-of ?x students))
+      (require
+        (read ?x book))))
 
-  ;; Students lifted the piano collectively.
-  (node student-group {:type :group})
-  (rel lift {:actor student-group :object piano})
+  (rel collective-lift lift
+    {:actor students :object piano})
 
-  ;; Almost all arrived.
   (subgraph almost-all-arrived
-    (rel ratio
+    (rel arrival-ratio-rel ratio
       {:numerator (count (arrived-members relevant-people))
        :denominator (count relevant-people)
-       :value r})
-    (constraint below-target (< r 1))
+       :value arrival-ratio})
+    (constraint below-target
+      (< arrival-ratio 1))
     (constraint close-to-target
-      (contextually-close-to r 1)))
+      (contextually-close-to arrival-ratio 1)))
 
-  ;; Birds fly: generic, not universal.
-  (rel characteristic-of
-    {:kind bird
+  (rel bird-characteristic characteristic-of
+    {:kind bird-kind
      :property (can-fly)})
 )
