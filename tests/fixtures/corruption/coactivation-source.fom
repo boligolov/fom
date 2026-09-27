@@ -1,0 +1,14 @@
+(fom coactivation-source
+  {:kind :diff-fixture}
+
+  (subgraph reading-a
+    (visitor-reading))
+
+  (subgraph reading-b
+    (meal-reading))
+
+  (constraint both-readings
+    (preserve
+      {:coactivated [reading-a reading-b]}
+      {:strength :required}))
+)
