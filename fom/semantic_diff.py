@@ -222,6 +222,11 @@ def snapshot(
                     args = _map_dict(args_expr)
                     left = _symbol(args.get("left")) if args.get("left") else None
                     right = _symbol(args.get("right")) if args.get("right") else None
+                    if aliases:
+                        if left:
+                            left = aliases.get(left, left)
+                        if right:
+                            right = aliases.get(right, right)
                     if left and right:
                         order_edges.add((left, right))
             return
