@@ -682,3 +682,65 @@ EQUAL
 with inverse relations derived by argument reversal.
 
 FoM must preserve partial temporal information. A source that only licenses `A BEFORE B` does not license exact duration or distance between A and B.
+
+
+## 27. Aspect and event structure
+
+FoM does not require PROCESS, ACCOMPLISHMENT, ACHIEVEMENT, or RESULT as new semantic primitives.
+
+Event structure may be decomposed when relevant into:
+
+```
+process
+culmination / transition
+result state
+```
+
+with TEMPORAL, CAUSAL, and ordinary semantic relations among them.
+
+A process description does not entail culmination unless its Concept Contract and aspectual interpretation require it.
+
+This preserves contrasts such as:
+
+```
+"Иван строил дом, но не построил его."
+```
+
+Repeated bounded events and habitual recurrence are distinct structures.
+
+## 28. Social acts and felicity
+
+Speech/social acts should distinguish:
+
+```
+intended operation
+attempted DELTA
+felicity conditions
+actual DELTA
+```
+
+Authority, context, procedure, jurisdiction, uptake, capacity, and other conditions may gate whether an attempted social transformation succeeds.
+
+An unsuccessful declaration or command-like act may therefore remain represented as an attempted DELTA without the corresponding actual social-state change.
+
+## 29. Vagueness and semantic indeterminacy
+
+FoM distinguishes epistemic uncertainty from semantic borderline cases.
+
+```
+unknown because evidence is missing
+!=
+uncommitted because a vague predicate has multiple admissible precisifications
+```
+
+A vague predicate can be represented using a family of admissible precisification scopes plus constraints.
+
+No new truth-status primitive is required: some admissible precisifications may ACCEPT P while others REJECT P.
+
+The source of non-commitment should be representable explicitly, for example:
+
+```
+:indeterminacy-source :vagueness
+```
+
+Comparatives and superlatives are represented using ordered scale relations, comparison classes, PATTERN/BINDING, and contextual thresholds without inventing numeric precision.
