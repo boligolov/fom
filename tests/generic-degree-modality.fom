@@ -1,87 +1,115 @@
 (fom test-generic-degree-modality
   {:kind :test}
 
-  ;; GENERIC != ALL and != MOST.
   (node bird-kind {:type :kind})
+  (node biological-normality {:type :normality-context})
+  (node penguin {:type :kind})
 
   (subgraph birds-fly-generic
     (generic
       {:kind bird-kind
-       :property can-fly
+       :property (can-fly)
        :normality-context biological-normality}))
 
-  (node penguin {:type :kind})
-  (rel subtype-of {:child penguin :parent bird-kind})
+  (rel penguin-subtype subtype-of
+    {:child penguin :parent bird-kind})
 
   (subgraph penguin-exception
     (generic
       {:kind penguin
-       :property (not can-fly)
+       :property (not (can-fly))
        :normality-context biological-normality}))
 
-  ;; ALMOST: target false, close from non-satisfying side.
+  (node ivan {:type :person})
+  (node lateness-scale {:type :scale})
+  (node ivan-lateness {:type :degree})
+  (node lateness-threshold {:type :threshold})
+
   (subgraph almost-late
-    (rel degree
+    (rel lateness-degree degree
       {:subject ivan
        :scale lateness-scale
-       :value ?d})
+       :value ivan-lateness})
     (constraint target-not-attained
       (not (late ivan)))
     (constraint near-threshold
-      (near ?d lateness-threshold)))
+      (near ivan-lateness lateness-threshold)))
 
-  ;; BARELY: target true, close to same boundary.
+  (node maria {:type :person})
+  (node exam {:type :event})
+  (node exam-score-scale {:type :scale})
+  (node maria-score {:type :degree})
+  (node pass-threshold {:type :threshold})
+
+  (scope reality {:mode :reality})
+
   (subgraph barely-passed
     (accept reality (passed maria exam))
-    (rel degree
+    (rel exam-degree degree
       {:subject (performance maria exam)
        :scale exam-score-scale
-       :value ?score})
+       :value maria-score})
     (constraint near-pass-boundary
-      (near ?score pass-threshold)))
+      (near maria-score pass-threshold)))
 
-  ;; TOO includes goal-relative blocking.
+  (node tea {:type :substance})
+  (node person {:type :person})
+  (node temperature-scale {:type :scale})
+  (node tea-temperature {:type :degree})
+  (node drinkable-threshold {:type :threshold})
+
   (subgraph too-hot-to-drink
-    (rel degree
+    (rel tea-degree degree
       {:subject tea
        :scale temperature-scale
-       :value ?temp})
+       :value tea-temperature})
     (constraint excessive-for-goal
-      (above ?temp drinkable-threshold))
-    (rel prevents
-      {:state (temperature tea ?temp)
+      (above tea-temperature drinkable-threshold))
+    (rel heat-prevents prevents
+      {:state (temperature tea tea-temperature)
        :goal (drink person tea)}))
 
-  ;; ENOUGH is sufficiency relative to goal.
+  (node water {:type :substance})
+  (node water-amount {:type :degree})
+  (node survival-water-threshold {:type :threshold})
+
   (subgraph enough-water
-    (rel amount {:substance water :value ?amount})
+    (rel water-amount-rel amount
+      {:substance water :value water-amount})
     (constraint sufficient
-      (at-least ?amount survival-water-threshold))
-    (rel threshold-for
+      (at-least water-amount survival-water-threshold))
+    (rel survival-threshold threshold-for
       {:threshold survival-water-threshold
        :goal (survive person)}))
 
-  ;; Epistemic possibility.
+  (node epistemic-evidence {:type :modal-base})
+  (scope speaker-model {:mode :epistemic})
+
   (subgraph may-be-home
     (possible
       {:content (home ivan)
        :base epistemic-evidence
        :anchor speaker-model}))
 
-  ;; Deontic necessity.
+  (node applicable-rules {:type :modal-base})
+  (scope normative-model {:mode :normative})
+
   (subgraph must-be-home
     (necessary
       {:content (home ivan)
        :base applicable-rules
        :anchor normative-model}))
 
-  ;; Ability requires control, not bare possibility.
+  (node door {:type :object})
+  (node ivan-capabilities {:type :modal-base})
+  (node current-circumstances {:type :context})
+
   (subgraph can-open-door
     (possible
       {:content (open ivan door)
        :base ivan-capabilities
        :anchor current-circumstances})
-    (rel controls
+    (rel door-control controls
       {:agent ivan
        :transition (closed-to-open door)}))
 )
