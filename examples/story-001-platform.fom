@@ -12,12 +12,20 @@
   (node glove-a {:type :object :concept :child-glove :color :red})
   (node glove-b {:type :object :concept :child-glove :color :red})
 
-  (rel paired-with {:left glove-a :right glove-b})
-  (rel original-owner {:object glove-a :owner sister})
-  (rel original-owner {:object glove-b :owner sister})
+  (rel gloves-pair paired-with
+    {:left glove-a :right glove-b})
+
+  (rel glove-a-owner original-owner
+    {:object glove-a :owner sister})
+
+  (rel glove-b-owner original-owner
+    {:object glove-b :owner sister})
 
   (subgraph disappearance
-    (rel disappeared {:person sister :location platform :time :years-before-story}))
+    (rel sister-disappeared disappeared
+      {:person sister
+       :location platform
+       :time :years-before-story}))
 
   (constraint sister-fate
     (fixed-unknown (fate sister)))
@@ -31,10 +39,10 @@
   (scope mark-model
     {:owner mark}
     (accept (sister-arrival-unlikely))
-    (accept (possible (sister-arrives))
+    (accept (possible (arrives sister platform))
       {:role :emotional-expectation}))
 
-  (rel recurring-wait
+  (rel yearly-wait recurring-wait
     {:actor mark
      :location platform
      :frequency :yearly
@@ -59,18 +67,23 @@
   (delta mark-correction
     {:intended-by mark
      :recoverability :none}
-    (update
-      (belief anna (waiting-for mark anna))
-      :accepted
-      :rejected))
+    (add
+      (reject anna-belief
+        (waiting-for mark anna)))
+    (add
+      (accept anna-belief
+        (waiting-for mark sister))))
 
-  (rel arrives {:actor train :location platform})
-  (rel interrupts {:event (arrives train platform)
-                   :target mark-correction})
+  (rel train-arrival arrives
+    {:actor train :location platform})
+
+  (rel correction-interruption interrupts
+    {:event train-arrival
+     :target mark-correction})
 
   (node mark-line {:type :signal :modality :speech})
 
-  (rel expresses
+  (rel mark-line-meaning expresses
     {:signal mark-line
      :meaning (both-waited-for-wrong-people-today)})
 
@@ -82,17 +95,20 @@
        :initial-preference :interpersonal-misreading
        :later-preference :parallel-incomplete-searches}))
 
-  (rel reveals {:actor mark :object glove-a})
-  (rel reveals {:actor anna :object glove-b})
+  (rel reveal-a reveals
+    {:actor mark :object glove-a})
 
-  (rel found-among
+  (rel reveal-b reveals
+    {:actor anna :object glove-b})
+
+  (rel glove-b-found found-among
     {:actor anna
      :object glove-b
      :possessions-of mother
      :time :after-mother-death})
 
   (subgraph unresolved-connection
-    (rel evidence-for
+    (rel connection-evidence evidence-for
       {:evidence [(paired-with glove-a glove-b)
                   (original-owner glove-a sister)
                   (original-owner glove-b sister)
@@ -103,31 +119,40 @@
     (fixed-unknown (nature-of (relation mother sister))))
 
   (subgraph meaningful-silence
-    (rel expected {:content (immediate-response mark)})
-    (rel absent {:content (immediate-response mark)})
-    (rel evidence-for
+    (rel response-expected expected
+      {:content (immediate-response mark)})
+    (rel response-absent absent
+      {:content (immediate-response mark)})
+    (rel silence-evidence evidence-for
       {:evidence (absence-of (immediate-response mark))
        :conclusion
-       (one-of :shock :uncertainty :recognition-of-implication :fear-of-conclusion)}))
+       (one-of :shock
+               :uncertainty
+               :recognition-of-implication
+               :fear-of-conclusion)}))
 
-  (rel places {:actor anna :object glove-b :beside glove-a})
+  (rel glove-b-placement places
+    {:actor anna :object glove-b :beside glove-a})
 
   (subgraph gloves-reunited
-    (rel beside {:left glove-a :right glove-b}))
+    (rel gloves-beside beside
+      {:left glove-a :right glove-b}))
 
   (subgraph searches-converge
-    (rel shared-target {:agents [anna mark] :target sister}))
+    (rel same-target shared-target
+      {:agents [anna mark] :target sister}))
 
-  (mapping glove-symbolism
-    {:source gloves-reunited
-     :target searches-converge
-     :source-explicitness :explicit
-     :target-explicitness :inferable
-     :target-recoverability :required})
+  (constraint glove-symbolism
+    (mapping
+      {:source gloves-reunited
+       :target searches-converge
+       :source-explicitness :explicit
+       :target-explicitness :inferable
+       :target-recoverability :required}))
 
   (node final-line {:type :signal :modality :speech})
 
-  (rel expresses
+  (rel final-line-meaning expresses
     {:signal final-line
      :meaning (now-we-wait-for-same-person)})
 
