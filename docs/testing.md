@@ -186,3 +186,53 @@ A future dedicated test should cover in-group coded language where:
 - recoverability depends strongly on audience/shared code.
 
 This is useful for testing signal→meaning mappings beyond ordinary dictionary semantics.
+
+
+## Executable tooling
+
+The repository now has two executable validation layers.
+
+### Structural validation
+
+```bash
+python -m fom check examples tests
+```
+
+This validates FoM Text syntax, IDs/references, basic lexical binding, and structural forms.
+
+A green structural check means the files obey the current surface contract. It does **not** establish semantic correctness.
+
+### First semantic-diff subset
+
+```bash
+python -m fom diff SOURCE.fom CANDIDATE.fom
+```
+
+The current implementation intentionally supports only a narrow subset:
+
+- addressable relation content;
+- scope-relative ACCEPT/REJECT and certainty;
+- salience qualifiers;
+- inference relations such as `evidence-for`;
+- disclosure constraints;
+- FIXED_UNKNOWN preservation.
+
+The first executable corruption fixtures live under:
+
+```
+tests/fixtures/corruption/
+```
+
+and are checked by `python_tests/test_semantic_diff.py`.
+
+This diff currently assumes stable IDs for deliberately mutated fixtures. It is **not yet** a general semantic graph matcher and must not be described as such.
+
+## Torture-test discipline
+
+`tests/discipline.toml` and `python_tests/test_torture_discipline.py` provide an initial falsifiability guard.
+
+For selected tests, predicate names may not contain the name of the phenomenon under test.
+
+For example, a humor test may not pass by encoding its result as an opaque predicate named `funny` or `joke`.
+
+This rule is deliberately incomplete. The longer-term requirement is that every torture test specify which lower-level vocabulary/mechanisms it is allowed to use and what competency condition must be satisfied.
