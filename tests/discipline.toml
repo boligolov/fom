@@ -1,0 +1,19 @@
+[[test]]
+path = "examples/winnie-001.fom"
+forbid_predicate_fragments = ["joke", "humor", "funny", "comic"]
+
+[[test]]
+path = "tests/deliberate-multimeaning.fom"
+forbid_predicate_fragments = ["multimeaning", "multi-meaning", "double-meaning", "pun"]
+
+[[test]]
+path = "tests/aesopian-language.fom"
+forbid_predicate_fragments = ["aesopian", "coded", "codeword", "metaphor"]
+
+[[test]]
+path = "tests/idiom-literalization.fom"
+forbid_predicate_fragments = ["pun", "joke", "humor", "literalization"]
+
+[[test]]
+path = "tests/mention-use.fom"
+forbid_predicate_fragments = ["mention", "metalinguistic"]
