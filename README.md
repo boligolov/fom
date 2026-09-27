@@ -70,6 +70,7 @@ Run:
 
 ```bash
 python -m fom check examples tests
+python -m fom diff tests/fixtures/corruption/source.fom tests/fixtures/corruption/content.fom
 ```
 
 The validator currently checks the surface grammar, declaration/reference integrity, duplicate IDs, lexical variable binding, and several structural forms. GitHub Actions runs both Python unit tests and validation of the full `.fom` corpus.
@@ -93,6 +94,8 @@ Broad semantic expansion is temporarily paused. The current priorities are:
 - [FoM Text syntax](docs/text-syntax.md)
 - [Concept ontology boundary](docs/concept-ontology.md)
 - [Testing and semantic diff](docs/testing.md)
+- [Prior art and positioning](docs/prior-art.md)
+- [Annotation agreement design](docs/annotation-evaluation.md)
 - [Canonical FoM graph](docs/canonical-format.md)
 - [Standard macros](docs/standard-macros.md)
 - [Research roadmap](docs/research-roadmap.md)
