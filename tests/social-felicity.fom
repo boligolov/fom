@@ -1,0 +1,86 @@
+(fom test-social-felicity
+  {:kind :test
+   :language :ru}
+
+  ;; Promise.
+  (node promise-signal
+    {:type :signal
+     :form "Я обещаю вернуть деньги завтра."})
+
+  (subgraph repay-content
+    (rel repay-1 repay
+      {:agent speaker
+       :recipient addressee
+       :time tomorrow}))
+
+  (delta promise-attempt
+    {:role :attempted
+     :agent speaker}
+    (add
+      (commitment speaker repay-content addressee)))
+
+  (constraint promise-felicity
+    (requires
+      [(speaker-of promise-signal speaker)
+       (addressed-to promise-signal addressee)
+       (capable-of speaker repay-content)]))
+
+  ;; Declaration: authorized vs unauthorized.
+  (node marriage-signal
+    {:type :signal
+     :form "Объявляю вас мужем и женой."})
+
+  (delta marriage-attempt
+    {:role :attempted
+     :agent officiant}
+    (add
+      (married person-a person-b)))
+
+  (constraint marriage-validity
+    (requires
+      [(authorized officiant marriage-jurisdiction)
+       (procedure-satisfied marriage-procedure)
+       (participants-consented [person-a person-b])]))
+
+  (scope valid-ceremony
+    {:mode :social-world}
+    (accept (authorized officiant marriage-jurisdiction))
+    (accept (procedure-satisfied marriage-procedure)))
+
+  (delta marriage-actual
+    {:role :actual
+     :condition marriage-validity}
+    (add
+      (married person-a person-b)))
+
+  (scope random-stranger-case
+    {:mode :social-world}
+    (reject (authorized stranger marriage-jurisdiction)))
+
+  (delta invalid-declaration
+    {:role :attempted
+     :agent stranger}
+    (add
+      (married person-a person-b)))
+
+  (constraint no-effect-without-authority
+    (not
+      (actualize invalid-declaration
+        :in random-stranger-case)))
+
+  ;; Permission vs ability.
+  (node may-go-signal
+    {:type :signal
+     :form "Можете идти."})
+
+  (subgraph permission-reading
+    (delta grant-permission
+      {:role :attempted}
+      (add
+        (permission addressee leave))))
+
+  (subgraph ability-reading
+    (possible
+      {:content (leave addressee)
+       :base addressee-capabilities}))
+)
