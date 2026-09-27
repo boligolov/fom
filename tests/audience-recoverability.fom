@@ -4,9 +4,11 @@
 
   (node ogre {:type :person :concept :cannibal})
   (node wife {:type :person})
-  (node stranger {:type :person})
-  (node signal {:type :signal
-                :form "Сегодня у нас на обед будут гости"})
+  (node guests {:type :group})
+  (node humans {:type :kind})
+  (node signal
+    {:type :signal
+     :form "Сегодня у нас на обед будут гости"})
 
   (subgraph hospitality
     (rel h1 visitors-at-meal
