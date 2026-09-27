@@ -1,0 +1,9 @@
+(fom common-tongue-corrupted
+  {:case :common-tongue}
+
+  (subgraph communication-reading
+    (shared-language-achieved))
+
+  (subgraph anatomical-reading
+    (prosthetic-tongue-found))
+)
