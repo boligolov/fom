@@ -1,0 +1,26 @@
+(fom inference-route-corrupted
+  {:case :inference-route}
+
+  (node sergei {:type :person})
+  (node warm-chair {:type :object})
+  (node cup-a {:type :object})
+  (node cup-b {:type :object})
+
+  (subgraph evidence-state
+    (rel chair-warm warm
+      {:object warm-chair})
+    (rel cup-a-present present
+      {:object cup-a})
+    (rel cup-b-present present
+      {:object cup-b}))
+
+  (subgraph recent-visitor
+    (recently-occupied
+      {:chair warm-chair
+       :other-than sergei}))
+
+  (scope narrator
+    {:mode :narrator}
+    (accept recent-visitor
+      {:certainty :high}))
+)
