@@ -1,0 +1,146 @@
+(fom story-001-platform
+  {:kind :short-fiction
+   :status :example
+   :source-language :none}
+
+  (node anna {:type :person})
+  (node mark {:type :person})
+  (node sister {:type :person})
+  (node mother {:type :person})
+  (node platform {:type :place})
+  (node train {:type :vehicle})
+  (node glove-a {:type :object :concept :child-glove :color :red})
+  (node glove-b {:type :object :concept :child-glove :color :red})
+
+  (rel paired-with {:left glove-a :right glove-b})
+  (rel original-owner {:object glove-a :owner sister})
+  (rel original-owner {:object glove-b :owner sister})
+
+  (subgraph disappearance
+    (rel disappeared {:person sister :location platform :time :years-before-story}))
+
+  (constraint sister-fate
+    (fixed-unknown (fate sister)))
+
+  (constraint mother-connection
+    (fixed-unknown (relation mother sister)))
+
+  (constraint glove-path
+    (fixed-unknown (how-obtained mother glove-b)))
+
+  (scope mark-model
+    {:owner mark}
+    (accept (sister-arrival-unlikely))
+    (accept (possible (sister-arrives))
+      {:role :emotional-expectation}))
+
+  (rel recurring-wait
+    {:actor mark
+     :location platform
+     :frequency :yearly
+     :anchor disappearance})
+
+  (scope anna-belief
+    {:owner anna}
+    (accept (waiting-for mark anna)
+      {:certainty :plausible
+       :recoverability :optional}))
+
+  (scope reality
+    {:mode :reality}
+    (reject (waiting-for mark anna))
+    (accept (waiting-for mark sister)))
+
+  (scope mark-model-of-anna
+    {:owner anna
+     :modelled-by mark}
+    (accept (waiting-for mark anna)))
+
+  (delta mark-correction
+    {:intended-by mark
+     :recoverability :none}
+    (update
+      (belief anna (waiting-for mark anna))
+      :accepted
+      :rejected))
+
+  (rel arrives {:actor train :location platform})
+  (rel interrupts {:event (arrives train platform)
+                   :target mark-correction})
+
+  (node mark-line {:type :signal :modality :speech})
+
+  (rel expresses
+    {:signal mark-line
+     :meaning (both-waited-for-wrong-people-today)})
+
+  (constraint mark-line-ambiguity
+    (ambiguity
+      {:candidates
+       [(interpersonal-misreading)
+        (parallel-incomplete-searches)]
+       :initial-preference :interpersonal-misreading
+       :later-preference :parallel-incomplete-searches}))
+
+  (rel reveals {:actor mark :object glove-a})
+  (rel reveals {:actor anna :object glove-b})
+
+  (rel found-among
+    {:actor anna
+     :object glove-b
+     :possessions-of mother
+     :time :after-mother-death})
+
+  (subgraph unresolved-connection
+    (rel evidence-for
+      {:evidence [(paired-with glove-a glove-b)
+                  (original-owner glove-a sister)
+                  (original-owner glove-b sister)
+                  (possessed mother glove-b)]
+       :conclusion (some-historical-connection mother sister)}))
+
+  (constraint unresolved-connection-detail
+    (fixed-unknown (nature-of (relation mother sister))))
+
+  (subgraph meaningful-silence
+    (rel expected {:content (immediate-response mark)})
+    (rel absent {:content (immediate-response mark)})
+    (rel evidence-for
+      {:evidence (absence-of (immediate-response mark))
+       :conclusion
+       (one-of :shock :uncertainty :recognition-of-implication :fear-of-conclusion)}))
+
+  (rel places {:actor anna :object glove-b :beside glove-a})
+
+  (subgraph gloves-reunited
+    (rel beside {:left glove-a :right glove-b}))
+
+  (subgraph searches-converge
+    (rel shared-target {:agents [anna mark] :target sister}))
+
+  (mapping glove-symbolism
+    {:source gloves-reunited
+     :target searches-converge
+     :source-explicitness :explicit
+     :target-explicitness :inferable
+     :target-recoverability :required})
+
+  (node final-line {:type :signal :modality :speech})
+
+  (rel expresses
+    {:signal final-line
+     :meaning (now-we-wait-for-same-person)})
+
+  (constraint final-reference
+    (fixed (refers-to final-line sister)))
+
+  (constraint final-state
+    (preserve
+      {:known [(disappeared sister)
+               (paired-with glove-a glove-b)
+               (possessed mother glove-b)]
+       :unknown [(fate sister)
+                 (how-obtained mother glove-b)
+                 (nature-of (relation mother sister))]
+       :affect [:curiosity :subdued-unease :sympathy :cautious-hope]}
+      {:strength :required})))
