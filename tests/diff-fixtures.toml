@@ -39,3 +39,17 @@ source = "tests/fixtures/corruption/source.fom"
 candidate = "tests/fixtures/corruption/fixed-unknown.fom"
 dimension = "fixed_unknown"
 status = "LOST"
+
+[[case]]
+name = "source-attribution"
+source = "tests/fixtures/corruption/attribution-source.fom"
+candidate = "tests/fixtures/corruption/attribution-loss.fom"
+dimension = "source_attribution"
+status = "LOST"
+
+[[case]]
+name = "coactivation"
+source = "tests/fixtures/corruption/coactivation-source.fom"
+candidate = "tests/fixtures/corruption/coactivation-loss.fom"
+dimension = "coactivation"
+status = "LOST"
