@@ -2,31 +2,37 @@
   {:kind :test
    :language :ru}
 
+  (node ivan {:type :person})
+  (node petr {:type :person})
+  (node group {:type :group})
+
   (node height-scale {:type :scale})
   (node context-adults {:type :comparison-class})
+  (node ivan-height {:type :degree})
+  (node petr-height {:type :degree})
+  (node threshold-a {:type :threshold})
+  (node threshold-b {:type :threshold})
 
   (rel deg-ivan degree
     {:subject ivan
      :dimension :height
      :scale height-scale
-     :value ?ivan-height})
+     :value ivan-height})
 
   (rel deg-petr degree
     {:subject petr
      :dimension :height
      :scale height-scale
-     :value ?petr-height})
+     :value petr-height})
 
-  ;; Comparative can be determinate.
   (constraint ivan-taller
-    (> ?ivan-height ?petr-height))
+    (> ivan-height petr-height))
 
-  ;; Positive vague predicate via admissible precisifications.
   (scope tall-precisification-a
     {:mode :precisification}
     (accept
       (threshold
-        {:predicate tall
+        {:predicate :tall
          :comparison-class context-adults
          :value threshold-a}))
     (accept (tall ivan)))
@@ -35,7 +41,7 @@
     {:mode :precisification}
     (accept
       (threshold
-        {:predicate tall
+        {:predicate :tall
          :comparison-class context-adults
          :value threshold-b}))
     (reject (tall ivan)))
@@ -48,23 +54,22 @@
         tall-precisification-b]
        :source :vagueness}))
 
-  ;; Much taller = comparative + contextually large gap.
   (constraint much-taller
     (contextually-large
-      (difference ?ivan-height ?petr-height)))
+      (difference ivan-height petr-height)))
 
-  ;; Superlative over a comparison class.
   (pattern tallest-in-group [?x]
     (where
       (member-of ?x group))
     (require
-      (>= ?ivan-height
+      (>= ivan-height
           (degree-of ?x :height))))
 
   (constraint ivan-tallest
     (for-each [?x]
-      (where (member-of ?x group))
+      (where
+        (member-of ?x group))
       (require
-        (>= ?ivan-height
+        (>= ivan-height
             (degree-of ?x :height)))))
 )
