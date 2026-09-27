@@ -2,7 +2,11 @@
   {:kind :test
    :language :ru}
 
-  ;; "Даже Иван пришёл."
+  (node ivan {:type :person})
+  (node speaker {:type :person})
+  (node relevant-people {:type :group})
+  (node contextual-stereotype {:type :concept})
+
   (node signal-even
     {:type :signal
      :form "Даже Иван пришёл."})
@@ -12,7 +16,7 @@
       {:actor ivan}))
 
   (subgraph even-scale
-    (rel ranked-lower-expectation
+    (rel even-ranking ranked-lower-expectation
       {:member ivan
        :alternatives relevant-people
        :dimension :expected-to-come}))
@@ -27,7 +31,6 @@
      :meaning even-scale
      :mode :scalar})
 
-  ;; "Иван бедный, но честный."
   (node signal-but
     {:type :signal
      :form "Иван бедный, но честный."})
@@ -37,7 +40,7 @@
     (rel honest-1 honest {:subject ivan}))
 
   (subgraph but-contrast
-    (rel contrasts-with-expectation
+    (rel but-expectation contrasts-with-expectation
       {:content (honest ivan)
        :expectation-source contextual-stereotype
        :trigger (poor ivan)}))
@@ -52,7 +55,6 @@
      :meaning but-contrast
      :mode :contrast})
 
-  ;; "Иван, этот идиот, пришёл."
   (node signal-expressive
     {:type :signal
      :form "Иван, этот идиот, пришёл."})
@@ -61,7 +63,7 @@
     (rel came-2 came {:actor ivan}))
 
   (subgraph expressive-evaluation
-    (rel negative-evaluation
+    (rel insult-evaluation negative-evaluation
       {:evaluator speaker
        :target ivan
        :content :idiot}))
