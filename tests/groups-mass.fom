@@ -1,0 +1,76 @@
+(fom test-groups-mass-reciprocal
+  {:kind :test
+   :language :ru}
+
+  ;; Collective lifting.
+  (node students-g {:type :group})
+  (rel lift-collective lift
+    {:agent students-g
+     :object piano})
+
+  ;; Distributive letters.
+  (pattern letter-per-student [?s ?letter]
+    (where
+      (member-of ?s students-g))
+    (bind
+      (?letter (one letter-object)))
+    (require
+      (received ?s ?letter)))
+
+  ;; Reciprocal meeting.
+  (node pair-ip
+    {:type :group
+     :members [ivan petr]})
+
+  (subgraph reciprocal-meeting
+    (rel meet-1 meet
+      {:left ivan
+       :right petr})
+    (constraint distinct-participants
+      (not (identity ivan petr))))
+
+  ;; Unresolved collective/distributive ambiguity.
+  (node writing-signal
+    {:type :signal
+     :form "Три студента написали статью."})
+
+  (subgraph collective-writing
+    (rel write-collective write
+      {:agent student-trio
+       :theme article-1}))
+
+  (subgraph distributive-writing
+    (pattern write-each [?s ?a]
+      (where
+        (member-of ?s student-trio))
+      (bind
+        (?a (one article)))
+      (require
+        (wrote ?s ?a))))
+
+  (constraint writing-ambiguity
+    (ambiguity
+      {:candidates
+       [collective-writing distributive-writing]
+       :indeterminacy-source :interpretation-ambiguity}))
+
+  ;; Mass noun.
+  (node water-kind
+    {:type :substance-kind})
+
+  (node spill-water
+    {:type :portion})
+
+  (rel water-portion portion-of
+    {:portion spill-water
+     :substance water-kind})
+
+  (rel cover-1 covers
+    {:substance spill-water
+     :surface floor})
+
+  (constraint quantity-unspecified
+    (unknown
+      (quantity spill-water)
+      {:indeterminacy-source :underspecified}))
+)
