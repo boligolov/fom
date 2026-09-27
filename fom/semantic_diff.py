@@ -5,6 +5,7 @@ from typing import Any
 
 from .model import Atom, Expr, ListExpr, MapExpr, VectorExpr
 from .parser import parse
+from .signature import SemanticResolver
 from .validator import validate_text
 
 
@@ -100,11 +101,17 @@ def _map_dict(expr: MapExpr) -> dict[str, Expr]:
     return {str(k.value): v for k, v in expr.items}
 
 
-def _qualifier_tuple(expr: MapExpr | None) -> tuple[tuple[str, Any], ...]:
+def _qualifier_tuple(
+    expr: MapExpr | None,
+    normalizer=normalize,
+) -> tuple[tuple[str, Any], ...]:
     if expr is None:
         return ()
     return tuple(
-        sorted((str(k.value), normalize(v)) for k, v in expr.items)
+        sorted(
+            (str(k.value), normalizer(v))
+            for k, v in expr.items
+        )
     )
 
 
@@ -156,6 +163,8 @@ def snapshot(text: str, path: str = "<memory>") -> Snapshot:
         raise ValueError(f"cannot diff invalid FoM:\n{rendered}")
 
     root = parse(text)
+    resolver = SemanticResolver(root)
+    norm = resolver.normalize
 
     relations: dict[str, RelationRecord] = {}
     statuses: dict[tuple[str, Any], StatusRecord] = {}
@@ -201,7 +210,7 @@ def snapshot(text: str, path: str = "<memory>") -> Snapshot:
             if rel_id and predicate:
                 relations[rel_id] = RelationRecord(
                     predicate,
-                    normalize(args_expr),
+                    norm(args_expr),
                 )
 
                 if predicate == "before" and isinstance(args_expr, MapExpr):
@@ -246,9 +255,9 @@ def snapshot(text: str, path: str = "<memory>") -> Snapshot:
                 return
 
             if scope_id is not None:
-                statuses[(scope_id, normalize(content))] = StatusRecord(
+                statuses[(scope_id, norm(content))] = StatusRecord(
                     head,
-                    _qualifier_tuple(q),
+                    _qualifier_tuple(q, norm),
                 )
             return
 
@@ -265,9 +274,10 @@ def snapshot(text: str, path: str = "<memory>") -> Snapshot:
                         len(body.items) >= 3
                         and isinstance(body.items[-1], MapExpr)
                     ):
-                        target = normalize(body.items[1])
+                        target = norm(body.items[1])
                         disclosures[target] = _qualifier_tuple(
-                            body.items[-1]
+                            body.items[-1],
+                            norm,
                         )
 
                 elif (
@@ -275,7 +285,7 @@ def snapshot(text: str, path: str = "<memory>") -> Snapshot:
                     and body_head == "fixed-unknown"
                 ):
                     if len(body.items) >= 2:
-                        fixed_unknown.add(normalize(body.items[1]))
+                        fixed_unknown.add(norm(body.items[1]))
 
                 elif (
                     isinstance(body, ListExpr)
@@ -286,7 +296,7 @@ def snapshot(text: str, path: str = "<memory>") -> Snapshot:
                     preserve_map = _map_dict(body.items[1])
                     if "coactivated" in preserve_map:
                         coactivations.add(
-                            normalize(preserve_map["coactivated"])
+                            norm(preserve_map["coactivated"])
                         )
                     elif (
                         "readings" in preserve_map
@@ -299,7 +309,7 @@ def snapshot(text: str, path: str = "<memory>") -> Snapshot:
                             and flag.value is True
                         ):
                             coactivations.add(
-                                normalize(preserve_map["readings"])
+                                norm(preserve_map["readings"])
                             )
             return
 
@@ -419,31 +429,66 @@ def diff_texts(
         "coactivation": [],
     }
 
-    all_rel_ids = sorted(set(source.relations) | set(candidate.relations))
-    for rel_id in all_rel_ids:
-        left = source.relations.get(rel_id)
-        right = candidate.relations.get(rel_id)
+    source_left = set(source.relations)
+    candidate_left = set(candidate.relations)
+
+    candidate_by_record: dict[RelationRecord, list[str]] = {}
+    for rel_id, record in candidate.relations.items():
+        candidate_by_record.setdefault(record, []).append(rel_id)
+
+    # First cancel semantically identical relations, regardless of their IDs.
+    # This makes generated/internal relation names non-semantic.
+    for source_id, source_record in source.relations.items():
+        matches = candidate_by_record.get(source_record)
+        if not matches:
+            continue
+
+        candidate_id = (
+            source_id
+            if source_id in matches
+            else matches[0]
+        )
+        matches.remove(candidate_id)
+        if not matches:
+            candidate_by_record.pop(source_record, None)
+
+        source_left.discard(source_id)
+        candidate_left.discard(candidate_id)
+
+    # If the same ID remains on both sides, treat it as a deliberately
+    # mutated semantic locus. This preserves useful corruption diagnostics.
+    for rel_id in sorted(source_left & candidate_left):
+        left = source.relations[rel_id]
+        right = candidate.relations[rel_id]
         dimension = _relation_dimension(left, right)
 
-        if left is None:
-            result[dimension].append(
-                {"id": rel_id, "status": "INVENTED"}
-            )
-        elif right is None:
-            result[dimension].append(
-                {"id": rel_id, "status": "LOST"}
-            )
-        elif left != right:
-            result[dimension].append(
-                {
-                    "id": rel_id,
-                    "status": (
-                        "BROKEN"
-                        if dimension == "inference_path"
-                        else "CONTRADICTED"
-                    ),
-                }
-            )
+        result[dimension].append(
+            {
+                "id": rel_id,
+                "status": (
+                    "BROKEN"
+                    if dimension == "inference_path"
+                    else "CONTRADICTED"
+                ),
+            }
+        )
+
+        source_left.discard(rel_id)
+        candidate_left.discard(rel_id)
+
+    for rel_id in sorted(source_left):
+        left = source.relations[rel_id]
+        dimension = _relation_dimension(left, None)
+        result[dimension].append(
+            {"id": rel_id, "status": "LOST"}
+        )
+
+    for rel_id in sorted(candidate_left):
+        right = candidate.relations[rel_id]
+        dimension = _relation_dimension(None, right)
+        result[dimension].append(
+            {"id": rel_id, "status": "INVENTED"}
+        )
 
     common_status_keys = set(source.statuses) & set(candidate.statuses)
     for key in sorted(common_status_keys, key=repr):
