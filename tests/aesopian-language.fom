@@ -1,0 +1,67 @@
+(fom test-aesopian-language
+  {:kind :test}
+
+  (node boss {:type :person})
+  (node employee {:type :person})
+
+  (node signal-1
+    {:type :signal
+     :modality :speech
+     :form "начальник его любит"})
+
+  ;; Ordinary lexical candidate.
+  (subgraph literal-love
+    (rel loves {:experiencer boss :target employee}))
+
+  ;; Shared in-group target.
+  (subgraph harsh-reprimand
+    (rel reprimands
+      {:actor boss
+       :target employee
+       :manner :harsh
+       :intensity :high}))
+
+  ;; Metaphorical source domain.
+  (subgraph coercive-sexual-source
+    (rel domination
+      {:agent boss
+       :patient employee
+       :mode :sexual-violation-metaphor}))
+
+  (scope reality
+    {:mode :reality}
+    (reject literal-love)
+    (reject (sexual-act boss employee))
+    (accept harsh-reprimand))
+
+  (scope employee-group-code
+    {:mode :shared-convention}
+    (accept
+      (coded-meaning signal-1 harsh-reprimand)))
+
+  (rel corresponds-to
+    {:source coercive-sexual-source
+     :target harsh-reprimand})
+
+  (rel expresses
+    {:signal signal-1
+     :meaning harsh-reprimand
+     :audience :ingroup})
+
+  (constraint outsider-reading
+    (preserve
+      {:target-meaning harsh-reprimand
+       :recoverability :optional}
+      {:audience :outsider}))
+
+  (constraint insider-reading
+    (preserve
+      {:target-meaning harsh-reprimand
+       :recoverability :required}
+      {:audience :ingroup}))
+
+  (constraint literal-rejection
+    (fixed
+      [(not literal-love)
+       (not (sexual-act boss employee))]))
+)
