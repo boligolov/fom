@@ -215,11 +215,11 @@ Surface:
 
 ```clojure
 (disclosure P
-  {:before cp7 :prohibited
-   :after cp7 :required})
+  {:prohibited-before cp7
+   :required-after cp7})
 ```
 
-Expansion: trajectory-position constraints over recoverability/availability of P.
+Expansion: trajectory-position constraints over recoverability/availability of P. Checkpoint-valued fields such as `:prohibited-before` and `:required-after` take graph references, not keyword literals.
 
 DISCLOSURE constrains when information may become recoverable, not merely when a literal sentence may occur.
 
