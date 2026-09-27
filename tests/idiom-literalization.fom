@@ -1,0 +1,63 @@
+(fom test-idiom-literalization
+  {:kind :test
+   :language :ru}
+
+  (node signal
+    {:type :signal
+     :form "Ничто так не красит человека, как перекись водорода."})
+
+  (node fragment-krasit
+    {:type :signal-fragment
+     :form "красит человека"})
+
+  (rel part-of
+    {:part fragment-krasit
+     :whole signal})
+
+  (subgraph figurative-reading
+    (rel improves-image
+      {:cause ?x
+       :person human}))
+
+  (subgraph literal-reading
+    (rel changes-appearance-chemically
+      {:agent hydrogen-peroxide
+       :patient human}))
+
+  (rel map-figurative semiotic-maps-to
+    {:signal fragment-krasit
+     :meaning figurative-reading
+     :mode :constructional
+     :intendedness :required})
+
+  (rel map-literal semiotic-maps-to
+    {:signal fragment-krasit
+     :meaning literal-reading
+     :mode :literal-compositional
+     :intendedness :required})
+
+  (scope reader-before-punch
+    {:mode :trajectory-state}
+    (accept figurative-reading {:salience :high})
+    (accept literal-reading {:salience :low}))
+
+  (scope reader-after-punch
+    {:mode :trajectory-state
+     :inherits-status-from reader-before-punch
+     :inherit-mode :overlay}
+    (accept figurative-reading {:salience :high})
+    (accept literal-reading {:salience :high}))
+
+  (constraint shared-signal-locus
+    (preserve
+      {:signal-locus fragment-krasit
+       :meanings [figurative-reading literal-reading]}
+      {:aspect :function
+       :strength :required}))
+
+  (constraint humor
+    (preserve
+      {:coactivated [figurative-reading literal-reading]
+       :affect :comic}
+      {:strength :required}))
+)
