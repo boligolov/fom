@@ -20,25 +20,25 @@ Working list of unfinished FoM research and implementation tasks.
 - [ ] Formalize modality bases and accessibility relations.
 - [ ] Distinguish ability from opportunity rigorously.
 - [ ] Finish temporal semantics: tense, deixis, duration, recurrence, habituality.
-- [ ] Finish scope overlay conflict rules.
-- [ ] Define constraint inheritance across scopes.
+- [x] Finish first-pass scope overlay conflict rules.
+- [x] Define default constraint inheritance policy across scopes.
 - [ ] Define world-knowledge licensing during realization.
 - [x] Define a sparse audience model.
 - [x] Formalize deliberate multi-meaning / co-activation of readings.
 - [ ] Test lexical polysemy, homonymy, puns, double entendre, and frame collision.
 - [ ] Test conventional implicatures and expressive meaning.
-- [ ] Test quotation, mention/use distinction, and metalinguistic negation.
+- [x] Test quotation, mention/use distinction, and metalinguistic negation.
 - [ ] Test questions, answers, alternatives, and open-question state more deeply.
 - [x] Test comparatives and superlatives.
-- [ ] Test plurals, groups, mass nouns, and part-whole structure more deeply.
+- [x] Test plurals, groups, mass nouns, and part-whole structure (first pass).
 - [x] Test aspect and event structure.
 - [x] Test vague predicates and sorites-like boundaries.
-- [ ] Test counterfactual causation and causal uncertainty.
-- [ ] Test evidentiality and source reliability.
-- [ ] Test conflicting sources and disagreement.
+- [x] Test counterfactual causation and causal uncertainty.
+- [x] Test evidentiality and source reliability.
+- [x] Test conflicting sources and disagreement.
 - [x] Test social authority / felicity conditions in declarations, promises, commands, permissions, and prohibitions.
 
-- [ ] Formalize a general uncertainty/indeterminacy provenance vocabulary (evidence gaps, vagueness, ambiguity, source conflict, etc.).
+- [x] Formalize first-pass uncertainty/indeterminacy provenance vocabulary.
 - [ ] Formalize event phase / culmination / result patterns in the standard library.
 
 ## Representation questions
