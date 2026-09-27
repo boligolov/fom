@@ -1,0 +1,72 @@
+(fom test-audience-recoverability
+  {:kind :test
+   :language :ru}
+
+  (node ogre {:type :person :concept :cannibal})
+  (node wife {:type :person})
+  (node stranger {:type :person})
+  (node signal {:type :signal
+                :form "Сегодня у нас на обед будут гости"})
+
+  (subgraph hospitality
+    (rel h1 visitors-at-meal
+      {:visitors guests
+       :household [ogre wife]}))
+
+  (subgraph cannibal-meal
+    (rel c1 food-at-meal
+      {:food guests
+       :eaters [ogre wife]}))
+
+  (subgraph cannibal-background
+    (rel kb1 knows
+      {:agent wife
+       :content (cannibal ogre)})
+    (rel kb2 licenses-inference
+      {:premise (cannibal ogre)
+       :conclusion (possible (eat ogre humans))}))
+
+  (subgraph russian-construction-knowledge
+    (rel kb3 construction-affords
+      {:signal-pattern "на обед будет X"
+       :role :food})
+    (rel kb4 construction-affords
+      {:signal-pattern "на обед будут гости"
+       :role :visitor}))
+
+  (node audience-wife {:type :audience-profile})
+  (rel a1 includes-assumption
+    {:profile audience-wife
+     :assumption cannibal-background})
+  (rel a2 includes-assumption
+    {:profile audience-wife
+     :assumption russian-construction-knowledge})
+
+  (node audience-stranger {:type :audience-profile})
+  (rel a3 includes-assumption
+    {:profile audience-stranger
+     :assumption russian-construction-knowledge})
+
+  (constraint wife-recoverability
+    (preserve
+      {:audience audience-wife
+       :required [hospitality cannibal-meal]
+       :coactivation true}
+      {:strength :required}))
+
+  (constraint stranger-recoverability
+    (preserve
+      {:audience audience-stranger
+       :required [hospitality]
+       :optional [cannibal-meal]}
+      {:strength :required}))
+
+  (rel dep1 depends-on
+    {:inference (recover signal cannibal-meal)
+     :assumptions [cannibal-background
+                   russian-construction-knowledge]})
+
+  (rel dep2 depends-on
+    {:inference (recover signal hospitality)
+     :assumptions [russian-construction-knowledge]})
+)
