@@ -1,0 +1,56 @@
+(fom test-questions
+  {:kind :test
+   :language :ru}
+
+  (node q-who-came {:type :question})
+
+  (pattern came-pattern [?x]
+    (where
+      (person ?x))
+    (require
+      (came ?x)))
+
+  (rel question-pattern
+    {:question q-who-came
+     :pattern came-pattern})
+
+  (scope conversation-before
+    {:mode :conversational-state}
+    (reject (open q-who-came)))
+
+  (delta ask-who-came
+    {:target-scope conversation-before}
+    (activate q-who-came))
+
+  (constraint q-status
+    (question-state
+      {:question q-who-came
+       :state :open}))
+
+  ;; Polar question.
+  (node q-ivan-came {:type :question})
+
+  (rel alternatives
+    {:question q-ivan-came
+     :members [(came ivan)
+               (not (came ivan))]
+     :exhaustive true})
+
+  ;; Biased polar question: "Разве Иван пришёл?"
+  (scope speaker-stance
+    {:owner speaker}
+    (accept
+      (expected (not (came ivan)))
+      {:salience :high}))
+
+  ;; Partial answer narrows but does not resolve.
+  (delta partial-answer
+    {:target q-who-came}
+    (update q-who-came
+      {:candidate-domain
+       {:from :relevant-people
+        :to :accounting-department}
+       :resolution
+       {:from :open
+        :to :partial}}))
+)
