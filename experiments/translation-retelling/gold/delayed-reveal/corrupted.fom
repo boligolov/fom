@@ -1,0 +1,18 @@
+(fom delayed-reveal-corrupted
+  {:case :delayed-reveal}
+
+  (node initial-reading {:type :checkpoint})
+  (node evening-reveal {:type :checkpoint})
+
+  (subgraph hidden-letter
+    (letter-attached-inside-box))
+
+  (rel checkpoint-order before
+    {:left initial-reading
+     :right evening-reveal})
+
+  (constraint reveal-window
+    (disclosure hidden-letter
+      {:prohibited-before initial-reading
+       :required-after initial-reading}))
+)
