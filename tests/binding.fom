@@ -1,45 +1,50 @@
 (fom test-binding
   {:kind :test}
 
-  ;; Everyone loves their mother.
-  (pattern loves-own-mother [x y]
-    {:where [(person x)
-             (mother-of y x)]
-     :require (loves x y)
-     :binding {:y :dependent-on x}})
+  (node ivan {:type :person})
+  (node petr {:type :person})
+  (node oleg {:type :person})
+  (node external-oleg {:type :person})
 
-  ;; Ivan told Petr that he was wrong.
+  (pattern loves-own-mother [?x ?y]
+    (where
+      (person ?x)
+      (mother-of ?y ?x))
+    (require
+      (loves ?x ?y)))
+
   (node pronoun-1 {:type :signal-fragment :form "он"})
   (node ref-slot-1 {:type :unresolved-reference})
 
-  (rel refers-to {:signal pronoun-1 :target ref-slot-1})
+  (rel pronoun-reference refers-to
+    {:signal pronoun-1 :target ref-slot-1})
 
   (constraint pronoun-candidates
     (one-of
       {:target ref-slot-1
        :candidates [ivan petr]}))
 
-  ;; Donkey sentence.
-  (pattern farmer-donkey [x y]
-    {:where [(farmer x)
-             (donkey y)
-             (owns x y)]
-     :require (beats x y)
-     :binding-accessibility :consequent})
+  (pattern farmer-donkey [?x ?y]
+    (where
+      (farmer ?x)
+      (donkey ?y)
+      (owns ?x ?y))
+    (require
+      (beats ?x ?y)))
 
-  ;; Re-identification.
-  (node mention-same-man {:type :signal-fragment :form "тот самый человек"})
+  (node mention-same-man
+    {:type :signal-fragment
+     :form "тот самый человек"})
 
   (constraint same-man
     (presuppose
       {:prior-referent :required
        :salience :required}))
 
-  ;; De se vs de re.
   (scope oleg-belief
     {:owner oleg
      :center oleg}
-    (accept (winner SELF)))
+    (accept (winner (self))))
 
   (scope oleg-belief-de-re
     {:owner oleg}
