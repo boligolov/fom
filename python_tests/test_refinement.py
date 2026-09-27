@@ -154,6 +154,51 @@ class RefinementTests(unittest.TestCase):
         )
         self.assertNotIn("content", diff)
 
+    def test_semantic_diff_reports_equivalent_under_abstraction(self):
+        source = """
+        (fom source
+          (node anna {:type :person})
+          (node bob {:type :person})
+          (node book {:type :object})
+
+          (rel before controls-before
+            {:holder anna
+             :theme book})
+
+          (rel after controls-after
+            {:holder bob
+             :theme book}))
+        """
+
+        candidate = """
+        (fom candidate
+          (node anna {:type :person})
+          (node bob {:type :person})
+          (node book {:type :object})
+
+          (rel transfer transfer-control
+            {:source anna
+             :theme book
+             :recipient bob}))
+        """
+
+        diff = nonempty_diff(
+            diff_texts(source, candidate)
+        )
+
+        self.assertEqual(
+            diff.get("resolution"),
+            [
+                {
+                    "id": "transfer",
+                    "status": "EQUIVALENT_UNDER_ABSTRACTION",
+                    "contract": "transfer-control",
+                    "source_relations": ["after", "before"],
+                }
+            ],
+        )
+        self.assertNotIn("content", diff)
+
 
 if __name__ == "__main__":
     unittest.main()
