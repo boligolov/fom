@@ -149,3 +149,65 @@ A concept may license one or more graph refinements.
 A refined graph and an opaque concept instance may coexist.
 
 Resolution-independent semantic equivalence is allowed when the refinement preserves the concept contract and all message-specific constraints.
+
+
+## 10. Executable refinement contracts
+
+The repository now contains a first executable Concept Contract registry in:
+
+```
+fom/data/concept_contracts.toml
+```
+
+The first contract covers `transfer-control`.
+
+A coarse relation:
+
+```
+transfer-control(
+    source = A,
+    theme = X,
+    recipient = B
+)
+```
+
+may be matched against a refined graph containing the contract-required structure:
+
+```
+controls-before(holder=A, theme=X)
+controls-after(holder=B, theme=X)
+```
+
+The matcher deliberately fails if:
+
+- a required refinement relation is missing;
+- a required role binding is wrong;
+- the candidate only resembles the refinement through world knowledge.
+
+Semantic diff may classify a licensed resolution change as:
+
+```
+EQUIVALENT_UNDER_REFINEMENT
+```
+
+or, in the reverse direction:
+
+```
+EQUIVALENT_UNDER_ABSTRACTION
+```
+
+rather than reporting coarse-vs-detailed structure as ordinary CONTENT loss/invention.
+
+This is only a first executable proof of the Concept Contract idea.
+
+Current limitations:
+
+- only one concept contract exists;
+- node identity currently relies on the broader matching layer;
+- contracts do not yet encode asserted entailments, presuppositions, or conventional effects;
+- refinement alternatives and optional branches are not yet implemented;
+- the registry format is provisional.
+
+The important architectural rule remains:
+
+> Abstraction/refinement equivalence is licensed by explicit concept contracts, not by generic similarity or plausibility.
