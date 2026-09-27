@@ -2,7 +2,10 @@
   {:kind :test
    :language :ru}
 
-  ;; Direct quote.
+  (node ivan {:type :person})
+  (node target-person {:type :person})
+  (node speaker {:type :person})
+
   (node ivan-quote
     {:type :signal
      :form "Я устал"
@@ -31,8 +34,6 @@
       {:aspect :form
        :strength :required}))
 
-  ;; Metalinguistic negation:
-  ;; "Он не умный — он гениальный."
   (node smart-word
     {:type :signal-fragment
      :form "умный"})
@@ -47,12 +48,9 @@
 
   (scope speaker-model
     {:owner speaker}
-
     (accept smart-content)
-
     (accept
       (genius target-person))
-
     (reject
       (adequate-expression
         smart-mapping
