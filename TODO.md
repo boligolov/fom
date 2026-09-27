@@ -50,6 +50,9 @@ Working list of unfinished FoM research and implementation tasks.
 - [x] Formalize first-pass uncertainty/indeterminacy provenance vocabulary.
 - [ ] Formalize event phase / culmination / result patterns in the standard library.
 
+- [ ] Run layered-architecture experiment: standalone FoM vs UMR/content carrier + FoM overlay on the post-freeze corpus.
+- [ ] Define a representation-agnostic semantic-carrier interface if the layered experiment succeeds.
+
 ## Representation questions
 
 - [ ] Decide whether ordered scales require a special relation family or remain standard semantic patterns.
