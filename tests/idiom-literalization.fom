@@ -10,17 +10,21 @@
     {:type :signal-fragment
      :form "красит человека"})
 
-  (rel part-of
+  (node human {:type :person})
+  (node hydrogen-peroxide {:type :substance})
+  (node figurative-cause-slot {:type :reference-slot})
+
+  (rel signal-part part-of
     {:part fragment-krasit
      :whole signal})
 
   (subgraph figurative-reading
-    (rel improves-image
-      {:cause ?x
+    (rel figurative-effect improves-image
+      {:cause figurative-cause-slot
        :person human}))
 
   (subgraph literal-reading
-    (rel changes-appearance-chemically
+    (rel literal-effect changes-appearance-chemically
       {:agent hydrogen-peroxide
        :patient human}))
 
