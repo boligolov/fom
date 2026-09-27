@@ -1,0 +1,12 @@
+(fom attribution-source
+  {:kind :diff-fixture}
+
+  (node alice {:type :person})
+
+  (subgraph proposition-p
+    (train-left))
+
+  (rel report-1 reported
+    {:source alice
+     :content proposition-p})
+)
