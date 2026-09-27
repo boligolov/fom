@@ -1,0 +1,14 @@
+(fom contrastive-focus-corrupted
+  {:case :contrastive-focus}
+
+  (node petr {:type :person})
+
+  (subgraph refusal
+    (rel peter-refused refused-to-sign
+      {:actor petr}))
+
+  (scope discourse-state
+    {:mode :attention}
+    (accept refusal
+      {:salience :low}))
+)
