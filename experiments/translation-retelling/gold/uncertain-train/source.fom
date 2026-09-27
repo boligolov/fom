@@ -1,0 +1,14 @@
+(fom uncertain-train-source
+  {:case :uncertain-train}
+
+  (node train {:type :vehicle})
+
+  (subgraph departure
+    (rel train-left departed
+      {:vehicle train}))
+
+  (scope speaker
+    {:mode :epistemic}
+    (accept departure
+      {:certainty :possible}))
+)
