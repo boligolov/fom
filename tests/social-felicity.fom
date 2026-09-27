@@ -2,7 +2,16 @@
   {:kind :test
    :language :ru}
 
-  ;; Promise.
+  (node speaker {:type :person})
+  (node addressee {:type :person})
+  (node officiant {:type :person})
+  (node stranger {:type :person})
+  (node person-a {:type :person})
+  (node person-b {:type :person})
+  (node marriage-jurisdiction {:type :social-domain})
+  (node marriage-procedure {:type :procedure})
+  (node addressee-capabilities {:type :modal-base})
+
   (node promise-signal
     {:type :signal
      :form "Я обещаю вернуть деньги завтра."})
@@ -11,7 +20,7 @@
     (rel repay-1 repay
       {:agent speaker
        :recipient addressee
-       :time tomorrow}))
+       :time :tomorrow}))
 
   (delta promise-attempt
     {:role :attempted
@@ -25,7 +34,6 @@
        (addressed-to promise-signal addressee)
        (capable-of speaker repay-content)]))
 
-  ;; Declaration: authorized vs unauthorized.
   (node marriage-signal
     {:type :signal
      :form "Объявляю вас мужем и женой."})
@@ -68,19 +76,22 @@
       (actualize invalid-declaration
         :in random-stranger-case)))
 
-  ;; Permission vs ability.
   (node may-go-signal
     {:type :signal
      :form "Можете идти."})
+
+  (subgraph leave-content
+    (rel leave-event leave
+      {:agent addressee}))
 
   (subgraph permission-reading
     (delta grant-permission
       {:role :attempted}
       (add
-        (permission addressee leave))))
+        (permission addressee leave-content))))
 
   (subgraph ability-reading
     (possible
-      {:content (leave addressee)
+      {:content leave-content
        :base addressee-capabilities}))
 )
