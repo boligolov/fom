@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
+from .canonical import canonicalize_text
 from .semantic_diff import diff_texts, nonempty_diff
 from .validator import validate_path
 
@@ -98,6 +99,29 @@ def cmd_diff(source: str, candidate: str, as_json: bool = False) -> int:
     return 0
 
 
+def cmd_canonical(path: str) -> int:
+    source_path = Path(path)
+
+    try:
+        result = canonicalize_text(
+            source_path.read_text(encoding="utf-8"),
+            str(source_path),
+        )
+    except (OSError, ValueError) as exc:
+        print(f"fom canonical: {exc}")
+        return 2
+
+    print(
+        json.dumps(
+            result,
+            indent=2,
+            ensure_ascii=False,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="fom")
     sub = parser.add_subparsers(
@@ -127,6 +151,12 @@ def build_parser() -> argparse.ArgumentParser:
     diff.add_argument("candidate")
     diff.add_argument("--json", action="store_true")
 
+    canonical = sub.add_parser(
+        "canonical",
+        help="emit first-pass canonical FoM graph as JSON",
+    )
+    canonical.add_argument("path")
+
     return parser
 
 
@@ -145,5 +175,8 @@ def main(argv: list[str] | None = None) -> int:
             args.candidate,
             args.json,
         )
+
+    if args.command == "canonical":
+        return cmd_canonical(args.path)
 
     return 2
