@@ -6,6 +6,7 @@ from typing import Any
 from .alignment import align_node_aliases
 from .model import Atom, Expr, ListExpr, MapExpr, VectorExpr
 from .parser import parse
+from .refinement import find_refinement_matches
 from .signature import SemanticResolver
 from .validator import validate_text
 
@@ -453,10 +454,39 @@ def diff_texts(
         "disclosure": [],
         "fixed_unknown": [],
         "coactivation": [],
+        "resolution": [],
     }
 
     source_left = set(source.relations)
     candidate_left = set(candidate.relations)
+
+    refinement_matches = find_refinement_matches(
+        source_text,
+        candidate_text,
+    )
+
+    for match in refinement_matches:
+        if match.source_relation_id not in source_left:
+            continue
+        if not set(match.candidate_relation_ids).issubset(
+            candidate_left
+        ):
+            continue
+
+        source_left.discard(match.source_relation_id)
+        for rel_id in match.candidate_relation_ids:
+            candidate_left.discard(rel_id)
+
+        result["resolution"].append(
+            {
+                "id": match.source_relation_id,
+                "status": "EQUIVALENT_UNDER_REFINEMENT",
+                "contract": match.contract_name,
+                "candidate_relations": list(
+                    match.candidate_relation_ids
+                ),
+            }
+        )
 
     candidate_by_record: dict[RelationRecord, list[str]] = {}
     for rel_id, record in candidate.relations.items():
