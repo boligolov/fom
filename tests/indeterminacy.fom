@@ -1,13 +1,26 @@
 (fom test-indeterminacy-provenance
   {:kind :test}
 
+  (node alice {:type :person})
+  (node ivan {:type :person})
+  (node petr {:type :person})
+  (node ref-slot {:type :unresolved-reference})
+
+  (scope p1 {:mode :precisification})
+  (scope p2 {:mode :precisification})
+
+  (subgraph proposition-p
+    (proposition-content))
+
+  (subgraph secret-content
+    (secret-proposition))
+
   (scope epistemic-unknown
     {:owner alice}
     (unknown
       (home ivan)
       {:indeterminacy-source :missing-evidence}))
 
-  (node ref-slot {:type :unresolved-reference})
   (constraint reference-ambiguity
     (ambiguity
       {:target ref-slot
@@ -21,13 +34,14 @@
        :indeterminacy-source :vagueness}))
 
   (scope source-a
-    (accept P))
+    (accept proposition-p))
+
   (scope source-b
-    (reject P))
+    (reject proposition-p))
 
   (constraint conflicting-sources
     (unresolved
-      {:content P
+      {:content proposition-p
        :evidence-scopes [source-a source-b]
        :indeterminacy-source :source-conflict}))
 
