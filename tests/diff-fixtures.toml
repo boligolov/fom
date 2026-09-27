@@ -1,0 +1,41 @@
+[[case]]
+name = "content"
+source = "tests/fixtures/corruption/source.fom"
+candidate = "tests/fixtures/corruption/content.fom"
+dimension = "content"
+status = "CONTRADICTED"
+
+[[case]]
+name = "certainty"
+source = "tests/fixtures/corruption/source.fom"
+candidate = "tests/fixtures/corruption/certainty.fom"
+dimension = "epistemic_status"
+status = "WEAKENED"
+
+[[case]]
+name = "salience"
+source = "tests/fixtures/corruption/source.fom"
+candidate = "tests/fixtures/corruption/salience.fom"
+dimension = "salience"
+status = "WEAKENED"
+
+[[case]]
+name = "inference"
+source = "tests/fixtures/corruption/source.fom"
+candidate = "tests/fixtures/corruption/inference.fom"
+dimension = "inference_path"
+status = "BROKEN"
+
+[[case]]
+name = "disclosure"
+source = "tests/fixtures/corruption/source.fom"
+candidate = "tests/fixtures/corruption/disclosure.fom"
+dimension = "disclosure"
+status = "CHANGED"
+
+[[case]]
+name = "fixed-unknown"
+source = "tests/fixtures/corruption/source.fom"
+candidate = "tests/fixtures/corruption/fixed-unknown.fom"
+dimension = "fixed_unknown"
+status = "LOST"
