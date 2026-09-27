@@ -2,22 +2,28 @@
   {:kind :test
    :language :ru}
 
-  ;; Collective lifting.
   (node students-g {:type :group})
+  (node piano {:type :object})
+  (node letter-kind {:type :kind})
+  (node ivan {:type :person})
+  (node petr {:type :person})
+  (node student-trio {:type :group})
+  (node article-1 {:type :object})
+  (node article-kind {:type :kind})
+  (node floor {:type :surface})
+
   (rel lift-collective lift
     {:agent students-g
      :object piano})
 
-  ;; Distributive letters.
   (pattern letter-per-student [?s ?letter]
     (where
       (member-of ?s students-g))
     (bind
-      (?letter (one letter-object)))
+      (?letter (one-of-kind letter-kind)))
     (require
       (received ?s ?letter)))
 
-  ;; Reciprocal meeting.
   (node pair-ip
     {:type :group
      :members [ivan petr]})
@@ -29,7 +35,6 @@
     (constraint distinct-participants
       (not (identity ivan petr))))
 
-  ;; Unresolved collective/distributive ambiguity.
   (node writing-signal
     {:type :signal
      :form "Три студента написали статью."})
@@ -44,7 +49,7 @@
       (where
         (member-of ?s student-trio))
       (bind
-        (?a (one article)))
+        (?a (one-of-kind article-kind)))
       (require
         (wrote ?s ?a))))
 
@@ -54,7 +59,6 @@
        [collective-writing distributive-writing]
        :indeterminacy-source :interpretation-ambiguity}))
 
-  ;; Mass noun.
   (node water-kind
     {:type :substance-kind})
 
