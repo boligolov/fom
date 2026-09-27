@@ -31,7 +31,7 @@ name = "disclosure"
 source = "tests/fixtures/corruption/source.fom"
 candidate = "tests/fixtures/corruption/disclosure.fom"
 dimension = "disclosure"
-status = "CHANGED"
+status = "EARLY"
 
 [[case]]
 name = "fixed-unknown"
