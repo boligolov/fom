@@ -9,21 +9,19 @@
      :modality :speech
      :form "начальник его любит"})
 
-  ;; Ordinary lexical candidate.
   (subgraph literal-love
-    (rel loves {:experiencer boss :target employee}))
+    (rel literal-love-rel loves
+      {:experiencer boss :target employee}))
 
-  ;; Shared in-group target.
   (subgraph harsh-reprimand
-    (rel reprimands
+    (rel reprimand-rel reprimands
       {:actor boss
        :target employee
        :manner :harsh
        :intensity :high}))
 
-  ;; Metaphorical source domain.
   (subgraph coercive-sexual-source
-    (rel domination
+    (rel domination-rel domination
       {:agent boss
        :patient employee
        :mode :sexual-violation-metaphor}))
@@ -39,11 +37,11 @@
     (accept
       (coded-meaning signal-1 harsh-reprimand)))
 
-  (rel corresponds-to
+  (rel metaphor-correspondence corresponds-to
     {:source coercive-sexual-source
      :target harsh-reprimand})
 
-  (rel expresses
+  (rel coded-expression expresses
     {:signal signal-1
      :meaning harsh-reprimand
      :audience :ingroup})
