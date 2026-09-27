@@ -2,8 +2,11 @@
   {:kind :test
    :language :ru}
 
-  ;; "Он тонул, но не утонул."
-  ;; Process is compatible with failed culmination.
+  (node ivan {:type :person})
+  (node speaker {:type :person})
+  (node addressee {:type :person})
+  (node permission-domain {:type :social-domain})
+
   (node drowning-process {:type :event})
   (node drowning-culmination {:type :event})
   (node death-by-drowning {:type :state})
@@ -30,8 +33,6 @@
       [(accept reality drowning-process)
        (reject reality drowning-culmination)]))
 
-  ;; "Иван почти перестал курить."
-  ;; STOP contributes prior smoking; ALMOST scopes over the cessation transition.
   (subgraph smoking-habit
     (habitual
       {:event-pattern (smoke ivan)}))
@@ -49,10 +50,8 @@
 
   (constraint closeness-source-unresolved
     (unknown
-      (relevant-scale
-        almost-stopped-smoking)))
+      (relevant-scale almost-stopped-smoking)))
 
-  ;; "Я разрешаю вам уйти." uttered without authority.
   (node permission-signal
     {:type :signal
      :form "Я разрешаю вам уйти."})
