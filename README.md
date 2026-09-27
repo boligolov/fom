@@ -96,6 +96,8 @@ Broad semantic expansion is temporarily paused. The current priorities are:
 - [Testing and semantic diff](docs/testing.md)
 - [Prior art and positioning](docs/prior-art.md)
 - [Annotation agreement design](docs/annotation-evaluation.md)
+- [Pilot annotation guide](docs/annotation-guide.md)
+- [Translation/retelling experiment](experiments/translation-retelling/README.md)
 - [Canonical FoM graph](docs/canonical-format.md)
 - [Standard macros](docs/standard-macros.md)
 - [Research roadmap](docs/research-roadmap.md)
