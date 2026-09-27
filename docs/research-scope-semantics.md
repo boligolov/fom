@@ -173,3 +173,129 @@ SCOPE should be modeled as an overlay-capable perspective with separate channels
 - center/self.
 
 This avoids both graph copying and accidental truth leakage.
+
+
+## 11. Masking inherited status
+
+Overlay semantics exposes an important case.
+
+Base scope:
+
+```
+ACCEPT P
+```
+
+Child scope may need:
+
+```
+neither ACCEPT P nor REJECT P
+```
+
+This is different from simply omitting a local status, because omission would continue to inherit ACCEPT(P).
+
+Therefore canonical overlay representation needs an explicit way to shadow an inherited status.
+
+Conceptually:
+
+```
+MASK inherited status for P
+```
+
+or:
+
+```
+local effective status = UNCOMMITTED
+```
+
+without modifying the parent.
+
+This is structural overlay machinery, not a new semantic truth value.
+
+### Recommended canonical behavior
+
+Status records may use:
+
+```
+accept
+reject
+uncommitted
+```
+
+where explicit `uncommitted` is allowed when it acts as an overlay tombstone/shadow.
+
+Outside inheritance contexts, uncommitted normally remains represented by absence unless the uncommitted state is itself constrained/meaningful.
+
+## 12. Conflict resolution order
+
+For an overlay scope, effective status should be resolved in this order:
+
+1. explicit local status/shadow;
+2. explicitly selected inherited base status;
+3. otherwise UNCOMMITTED.
+
+A local ACCEPT or REJECT overrides the inherited status.
+
+A local explicit UNCOMMITTED masks the inherited status.
+
+No child operation mutates the parent.
+
+## 13. Multiple inherited bases
+
+Multiple status bases create possible conflicts.
+
+FoM should not silently choose one.
+
+If:
+
+```
+base-A ACCEPT P
+base-B REJECT P
+```
+
+and neither has declared priority, the child should preserve a source-conflict state rather than pick a winner.
+
+Priority/precedence, if intended, must be explicit.
+
+## 14. Constraint inheritance
+
+Constraints must not automatically follow status inheritance.
+
+Different constraint classes have different propagation semantics.
+
+Safe default:
+
+```
+constraint inheritance = none
+```
+
+A constraint may explicitly declare:
+
+```
+:applies-to [scope-a scope-b]
+:propagation :descendants
+:propagation :trajectory
+```
+
+or another defined policy.
+
+This avoids accidentally importing:
+
+- epistemic restrictions;
+- disclosure rules;
+- local social rules;
+- realization constraints;
+
+into unrelated child scopes.
+
+## 15. Updated conclusion
+
+SCOPE overlay semantics requires a distinction between:
+
+```
+no local status record
+explicit local UNCOMMITTED shadow
+local ACCEPT
+local REJECT
+```
+
+This remains compatible with the five-part Core but must be represented in the canonical graph.
