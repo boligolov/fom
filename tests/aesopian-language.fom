@@ -35,7 +35,7 @@
   (scope employee-group-code
     {:mode :shared-convention}
     (accept
-      (coded-meaning signal-1 harsh-reprimand)))
+      (maps-to signal-1 harsh-reprimand)))
 
   (rel metaphor-correspondence corresponds-to
     {:source coercive-sexual-source
