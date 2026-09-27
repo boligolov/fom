@@ -1,0 +1,76 @@
+(fom test-evidentiality-source-reliability
+  {:kind :test
+   :language :ru}
+
+  (subgraph train-left
+    (rel departed-1 departed
+      {:vehicle train}))
+
+  ;; "По словам Ивана, поезд ушёл."
+  (scope ivan-report
+    {:source ivan}
+    (accept train-left))
+
+  (scope speaker-after-report
+    {:owner speaker}
+    (accept
+      (reported ivan train-left)
+      {:certainty :high})
+    (unknown
+      train-left
+      {:indeterminacy-source :missing-evidence}))
+
+  ;; "Я видел, как поезд ушёл."
+  (rel visual-evidence perceived
+    {:observer speaker
+     :modality :vision
+     :content train-left})
+
+  (scope speaker-direct
+    {:owner speaker}
+    (accept train-left
+      {:certainty :high
+       :evidence visual-evidence}))
+
+  ;; "Говорят, поезд ушёл."
+  (node hearsay-source
+    {:type :source
+     :specificity :unspecified})
+
+  (rel hearsay-report reported
+    {:source hearsay-source
+     :content train-left})
+
+  ;; Domain-relative reliability.
+  (scope source-model
+    {:owner speaker}
+    (accept
+      (reliable ivan
+        :domain train-schedules)
+      {:degree :high})
+    (unknown
+      (reliable ivan
+        :domain medical-diagnosis)))
+
+  ;; Conflicting reports.
+  (scope alice-report
+    {:source alice}
+    (accept train-left))
+
+  (scope bob-report
+    {:source bob}
+    (reject train-left))
+
+  (scope synthesis
+    {:mode :analysis}
+    (unknown
+      train-left
+      {:indeterminacy-source :source-conflict
+       :evidence [alice-report bob-report]}))
+
+  (constraint reliability-not-truth
+    (not
+      (definitionally-equivalent
+        (reliable ivan :domain train-schedules)
+        (true-everything-said-by ivan))))
+)
