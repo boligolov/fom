@@ -52,6 +52,7 @@ class Validator:
         self.path = path
         self.diags: list[Diagnostic] = []
         self.ids: dict[str, Loc] = {}
+        self.decl_kinds: dict[str, str] = {}
         self.used_ids: set[str] = set()
         self.doc_id: str | None = None
 
@@ -100,11 +101,14 @@ class Validator:
             )
 
         for name, loc in sorted(self.ids.items()):
-            if name not in self.used_ids:
+            if (
+                self.decl_kinds.get(name) == "node"
+                and name not in self.used_ids
+            ):
                 self.warn(
                     loc,
                     "W001",
-                    f"declared id '{name}' is never referenced",
+                    f"declared node '{name}' is never referenced",
                 )
 
         return ValidationResult(self.diags)
@@ -139,6 +143,7 @@ class Validator:
                     )
                 else:
                     self.ids[name] = expr.items[1].loc
+                    self.decl_kinds[name] = self._symbol(head_expr)
 
         for child in expr.items[1:]:
             if isinstance(child, ListExpr):
