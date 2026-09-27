@@ -4,13 +4,20 @@ Working list of unfinished FoM research and implementation tasks.
 
 ## Highest priority
 
+- [x] Freeze broad semantic expansion while tooling and empirical validation catch up.
+- [x] Make the current FoM corpus parse and structurally validate in CI.
+- [x] Add first executable torture-test discipline rule against phenomenon-name predicates.
+- [ ] Add prior-art comparison matrix: FoM vs AMR/UMR, DRT/dynamic semantics, common ground, speech acts, Allen, supervaluation, questions/discourse frameworks.
+- [ ] Design and run annotation-agreement experiment.
+- [ ] Define first narrow end-to-end use case: translation/retelling preservation validation.
+
 - [ ] Define the canonical FoM schema precisely enough to implement a parser/canonicalizer.
 - [ ] Specify deterministic macro expansions for the standard library.
 - [x] Define canonicalization / normal-form rules.
 - [ ] Decide how stable IDs, generated IDs, and cross-document references work.
 - [ ] Specify module/import semantics for larger FoM documents.
-- [ ] Build a minimal parser for FoM Text.
-- [ ] Build a validator for references, bindings, scopes, and constraints.
+- [x] Build a minimal parser for FoM Text.
+- [x] Build first-pass validator for syntax, references, bindings, scopes, and structural constraints.
 - [ ] Build a semantic-diff prototype.
 
 ## Semantics still under research
@@ -61,7 +68,7 @@ Working list of unfinished FoM research and implementation tasks.
 - [x] Add audience-dependent decoding tests.
 - [x] Add source-report vs event-reality tests.
 - [ ] Add long-form trajectory tests with spoilers and delayed disclosure.
-- [ ] Add semantic corruption fixtures with expected validator outcomes.
+- [ ] Replace semantic-corruption declarations with executable source/candidate/expected-diff fixtures.
 - [ ] Add refinement/abstraction equivalence tests.
 - [ ] Add scope-inheritance conflict tests.
 - [ ] Add temporal-consistency tests.
@@ -85,7 +92,7 @@ Working list of unfinished FoM research and implementation tasks.
 - [ ] Implement semantic diff.
 - [ ] Implement constraint validator.
 - [ ] Implement simple realizer/extractor experiments.
-- [ ] Add CI tests once executable tooling exists.
+- [x] Add CI tests; full current FoM corpus passes structural validation.
 
 ## Later
 
