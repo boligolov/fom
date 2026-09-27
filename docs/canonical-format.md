@@ -190,7 +190,7 @@ ACCEPT / REJECT are represented explicitly.
 }
 ```
 
-Canonical FoM preserves:
+Canonical FoM preserves effective:
 
 ```
 ACCEPT
@@ -198,7 +198,11 @@ REJECT
 UNCOMMITTED
 ```
 
-UNCOMMITTED is normally absence of a status record unless a constraint makes that absence semantically required.
+UNCOMMITTED is normally absence of a status record in a non-inheriting scope.
+
+In an overlay/inheriting scope, explicit UNCOMMITTED is also permitted as a structural shadow/tombstone that masks an inherited ACCEPT or REJECT without changing the parent scope.
+
+Therefore canonical status records may use `accept`, `reject`, or explicit `uncommitted` when inheritance semantics requires it.
 
 ## 9. Identity
 
@@ -415,3 +419,22 @@ Semantic diff therefore matches graph structure using:
 - binding structure.
 
 Canonical FoM is a normalized graph, not a content-addressed hash tree.
+
+
+## 20. Overlay status resolution
+
+For scopes with status inheritance, effective status resolution is:
+
+```
+explicit local status/shadow
+    overrides
+selected inherited status
+    otherwise
+UNCOMMITTED
+```
+
+An explicit local `uncommitted` record masks inherited status.
+
+If multiple inherited bases provide incompatible statuses and no precedence rule is declared, canonicalization must preserve the conflict rather than choose one.
+
+Constraint inheritance is independent from status inheritance and defaults to none.
