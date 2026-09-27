@@ -68,6 +68,12 @@ The project deliberately avoids a giant closed ontology. Domain meaning can use 
 - [FoM Text syntax](docs/text-syntax.md)
 - [Concept ontology boundary](docs/concept-ontology.md)
 - [Testing and semantic diff](docs/testing.md)
+- [Canonical FoM graph](docs/canonical-format.md)
+- [Standard macros](docs/standard-macros.md)
+- [Research roadmap](docs/research-roadmap.md)
+- [Core relation operators](docs/research-core-operators.md)
+- [Temporal model](docs/research-temporal-model.md)
+- [Scope semantics](docs/research-scope-semantics.md)
 
 ## Status
 
