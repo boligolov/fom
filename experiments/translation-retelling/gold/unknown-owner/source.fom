@@ -1,0 +1,14 @@
+(fom unknown-owner-source
+  {:case :unknown-owner}
+
+  (node umbrella {:type :object})
+  (node bus-stop {:type :place})
+
+  (rel umbrella-location located-at
+    {:object umbrella
+     :place bus-stop})
+
+  (constraint unknown-owner
+    (fixed-unknown
+      (owner-of umbrella)))
+)
