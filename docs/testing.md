@@ -236,3 +236,31 @@ For selected tests, predicate names may not contain the name of the phenomenon u
 For example, a humor test may not pass by encoding its result as an opaque predicate named `funny` or `joke`.
 
 This rule is deliberately incomplete. The longer-term requirement is that every torture test specify which lower-level vocabulary/mechanisms it is allowed to use and what competency condition must be satisfied.
+
+
+## Cross-document structural matching
+
+Semantic diff must not treat local implementation IDs as meaning.
+
+The current matcher therefore:
+
+1. resolves relation and subgraph references to structural signatures;
+2. cancels semantically identical relations even when their IDs differ;
+3. aligns nodes with the same explicit ID as a continuity hint for authored revisions;
+4. conservatively aligns differently named nodes only when a structural fingerprint is unique on both sides;
+5. leaves ambiguous/symmetric node groups unmatched rather than guessing.
+
+The node fingerprint currently uses node metadata plus explicit-relation incidence, with two refinement rounds.
+
+This is deliberately weaker than general graph isomorphism/Smatch-style alignment. It is a safe intermediate step.
+
+Current limitation:
+
+```
+different valid decompositions
+ambiguous repeated entities
+ontology refinements
+scope-ID differences
+```
+
+can still create structural diff noise.
