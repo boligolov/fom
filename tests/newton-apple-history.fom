@@ -1,0 +1,100 @@
+(fom test-newton-apple-history
+  {:kind :historical-source-test}
+
+  (node newton {:type :person})
+  (node stukeley {:type :person})
+  (node conduitt {:type :person})
+
+  (node source-stukeley
+    {:type :historical-document
+     :author stukeley
+     :date 1752})
+
+  (node source-conduitt
+    {:type :historical-document
+     :author conduitt
+     :date :circa-1727-1728})
+
+  (node conversation-1726
+    {:type :event
+     :date "1726-04-15"})
+
+  (subgraph apple-story
+    (rel apple-fall fall
+      {:object apple
+       :direction :toward-ground})
+
+    (rel prompts-thought prompts
+      {:event apple-fall
+       :content (question newton
+                  (why-falls-toward-earth apple))}))
+
+  ;; Strong source-level claim:
+  ;; Stukeley records Newton recounting the apple story.
+  (scope stukeley-report
+    {:source source-stukeley}
+
+    (accept
+      (told newton stukeley apple-story)
+      {:certainty :high}))
+
+  (rel stukeley-evidence evidence-for
+    {:evidence (told newton stukeley apple-story)
+     :conclusion apple-story
+     :source source-stukeley})
+
+  ;; Conduitt independently records an apple/gravity account.
+  (scope conduitt-report
+    {:source source-conduitt}
+
+    (accept apple-story
+      {:mode :reported-about-newton}))
+
+  (rel conduitt-evidence evidence-for
+    {:evidence source-conduitt
+     :conclusion apple-story})
+
+  ;; Historical synthesis does not automatically equal source assertion.
+  (scope historical-reconstruction
+    {:mode :historian-model}
+
+    (accept apple-story
+      {:certainty :supported-by-testimony}))
+
+  ;; Popular embellishments are separate.
+  (subgraph head-hit
+    (rel hits
+      {:object apple
+       :target (head newton)}))
+
+  (subgraph instant-complete-theory
+    (rel causes
+      {:cause apple-fall
+       :effect (complete-theory-of-universal-gravitation newton)
+       :mode :instant}))
+
+  (scope popular-legend
+    {:mode :retelling}
+    (accept head-hit)
+    (accept instant-complete-theory))
+
+  (scope historical-reconstruction-2
+    {:mode :historian-model}
+    (reject head-hit
+      {:reason :unsupported-by-selected-sources})
+    (reject instant-complete-theory
+      {:reason :stronger-than-selected-sources}))
+
+  (constraint preserve-source-layer
+    (preserve
+      {:source source-stukeley
+       :report (told newton stukeley apple-story)
+       :event apple-story}
+      {:strength :required}))
+
+  (constraint no-report-collapse
+    (not
+      (equivalent-by-default
+        (reports source-stukeley apple-story)
+        apple-story)))
+)
