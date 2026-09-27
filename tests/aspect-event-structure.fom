@@ -1,0 +1,64 @@
+(fom test-aspect-event-structure
+  {:kind :test
+   :language :ru}
+
+  ;; Иван строил дом, но не построил его.
+  (node build-process {:type :event})
+  (node build-culmination {:type :event})
+  (node house-complete {:type :state})
+
+  (rel build-1 building
+    {:event build-process
+     :agent ivan
+     :theme house})
+
+  (rel culm-1 culminates
+    {:process build-process
+     :culmination build-culmination})
+
+  (rel result-1 initiates
+    {:event build-culmination
+     :state house-complete})
+
+  (scope reality
+    (accept build-process)
+    (reject build-culmination)
+    (reject house-complete))
+
+  (constraint imperfective-paradox
+    (consistent
+      [(accept reality build-process)
+       (reject reality build-culmination)]))
+
+  ;; Дверь открылась: result without invented agent.
+  (node open-transition {:type :event})
+  (node door-open-state {:type :state})
+
+  (rel transition-1 change-of-state
+    {:event open-transition
+     :theme door
+     :to door-open-state})
+
+  (constraint no-agent-invention
+    (unknown (agent-of open-transition)))
+
+  ;; Иван перестал курить.
+  (subgraph stop-smoking
+    (presuppose
+      (prior (habitual (smoke ivan))))
+    (accept reality
+      (terminated (habitual (smoke ivan)))))
+
+  ;; Three knocks != habitual knocking.
+  (pattern three-knocks [?e]
+    (where
+      (knock-event ?e)
+      (agent-of ?e ivan))
+    (require
+      (count-bindings ?e 3)))
+
+  (subgraph morning-habit
+    (habitual
+      {:event-pattern (knock ivan door)
+       :occasion-domain :mornings}))
+)
