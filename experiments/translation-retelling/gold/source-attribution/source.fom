@@ -1,0 +1,21 @@
+(fom source-attribution-source
+  {:case :source-attribution}
+
+  (node marina {:type :person})
+  (node bridge {:type :object})
+
+  (subgraph closure
+    (rel bridge-closed closed
+      {:object bridge
+       :time :overnight}))
+
+  (rel marina-report reported
+    {:source marina
+     :content closure})
+
+  (scope narrator
+    {:mode :narrator}
+    (accept
+      (reported marina closure)
+      {:certainty :high}))
+)
