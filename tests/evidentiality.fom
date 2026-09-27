@@ -2,11 +2,18 @@
   {:kind :test
    :language :ru}
 
+  (node train {:type :vehicle})
+  (node ivan {:type :person})
+  (node speaker {:type :person})
+  (node alice {:type :person})
+  (node bob {:type :person})
+  (node train-schedules {:type :domain})
+  (node medical-diagnosis {:type :domain})
+
   (subgraph train-left
     (rel departed-1 departed
       {:vehicle train}))
 
-  ;; "По словам Ивана, поезд ушёл."
   (scope ivan-report
     {:source ivan}
     (accept train-left))
@@ -20,7 +27,6 @@
       train-left
       {:indeterminacy-source :missing-evidence}))
 
-  ;; "Я видел, как поезд ушёл."
   (rel visual-evidence perceived
     {:observer speaker
      :modality :vision
@@ -32,7 +38,6 @@
       {:certainty :high
        :evidence visual-evidence}))
 
-  ;; "Говорят, поезд ушёл."
   (node hearsay-source
     {:type :source
      :specificity :unspecified})
@@ -41,18 +46,16 @@
     {:source hearsay-source
      :content train-left})
 
-  ;; Domain-relative reliability.
   (scope source-model
     {:owner speaker}
     (accept
-      (reliable ivan
-        :domain train-schedules)
+      (reliable {:source ivan
+                 :domain train-schedules})
       {:degree :high})
     (unknown
-      (reliable ivan
-        :domain medical-diagnosis)))
+      (reliable {:source ivan
+                 :domain medical-diagnosis})))
 
-  ;; Conflicting reports.
   (scope alice-report
     {:source alice}
     (accept train-left))
@@ -71,6 +74,7 @@
   (constraint reliability-not-truth
     (not
       (definitionally-equivalent
-        (reliable ivan :domain train-schedules)
+        (reliable {:source ivan
+                   :domain train-schedules})
         (true-everything-said-by ivan))))
 )
