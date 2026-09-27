@@ -1,0 +1,33 @@
+(fom test-quantification
+  {:kind :test}
+
+  ;; Every student read the book.
+  (pattern student-read [x]
+    {:where (student x)
+     :require (read x book)})
+
+  (constraint all-students-read
+    (for-each
+      {:binding [x]
+       :where (student x)
+       :require (read x book)}))
+
+  ;; Students lifted the piano collectively.
+  (node student-group {:type :group})
+  (rel lift {:actor student-group :object piano})
+
+  ;; Almost all arrived.
+  (subgraph almost-all-arrived
+    (rel ratio
+      {:numerator (count (arrived-members relevant-people))
+       :denominator (count relevant-people)
+       :value r})
+    (constraint below-target (< r 1))
+    (constraint close-to-target
+      (contextually-close-to r 1)))
+
+  ;; Birds fly: generic, not universal.
+  (rel characteristic-of
+    {:kind bird
+     :property (can-fly)})
+)
