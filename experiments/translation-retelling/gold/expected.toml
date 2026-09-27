@@ -1,0 +1,48 @@
+[[case]]
+name = "unknown-owner"
+source = "experiments/translation-retelling/gold/unknown-owner/source.fom"
+candidate = "experiments/translation-retelling/gold/unknown-owner/corrupted.fom"
+dimension = "fixed_unknown"
+status = "LOST"
+
+[[case]]
+name = "source-attribution"
+source = "experiments/translation-retelling/gold/source-attribution/source.fom"
+candidate = "experiments/translation-retelling/gold/source-attribution/corrupted.fom"
+dimension = "source_attribution"
+status = "LOST"
+
+[[case]]
+name = "inference-route"
+source = "experiments/translation-retelling/gold/inference-route/source.fom"
+candidate = "experiments/translation-retelling/gold/inference-route/corrupted.fom"
+dimension = "inference_path"
+status = "LOST"
+
+[[case]]
+name = "delayed-reveal"
+source = "experiments/translation-retelling/gold/delayed-reveal/source.fom"
+candidate = "experiments/translation-retelling/gold/delayed-reveal/corrupted.fom"
+dimension = "disclosure"
+status = "EARLY"
+
+[[case]]
+name = "common-tongue"
+source = "experiments/translation-retelling/gold/common-tongue/source.fom"
+candidate = "experiments/translation-retelling/gold/common-tongue/corrupted.fom"
+dimension = "coactivation"
+status = "LOST"
+
+[[case]]
+name = "uncertain-train"
+source = "experiments/translation-retelling/gold/uncertain-train/source.fom"
+candidate = "experiments/translation-retelling/gold/uncertain-train/corrupted.fom"
+dimension = "epistemic_status"
+status = "STRENGTHENED"
+
+[[case]]
+name = "contrastive-focus"
+source = "experiments/translation-retelling/gold/contrastive-focus/source.fom"
+candidate = "experiments/translation-retelling/gold/contrastive-focus/corrupted.fom"
+dimension = "salience"
+status = "WEAKENED"
