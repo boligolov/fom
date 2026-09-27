@@ -69,14 +69,15 @@ Working list of unfinished FoM research and implementation tasks.
 
 ## Validation / testing
 
-- [ ] Add round-trip tests: FoM -> realization -> extraction -> semantic diff.
+- [ ] Add round-trip tests: FoM -> realization -> independent extraction -> semantic diff.
 - [ ] Complete the Winnie-the-Pooh round trip with an independent realization.
 - [x] Add the historical anecdote combat test.
 - [x] Add deliberate multi-meaning tests.
 - [x] Add audience-dependent decoding tests.
 - [x] Add source-report vs event-reality tests.
 - [ ] Add long-form trajectory tests with spoilers and delayed disclosure.
-- [x] Add executable source/candidate/expected-diff corruption fixtures for first six dimensions.
+- [x] Add executable controlled corruption fixtures for eight dimensions.
+- [x] Tie seven post-freeze benchmark cases to executable gold FoM source/corrupted pairs.
 - [ ] Add refinement/abstraction equivalence tests.
 - [ ] Add scope-inheritance conflict tests.
 - [ ] Add temporal-consistency tests.
@@ -92,13 +93,13 @@ Working list of unfinished FoM research and implementation tasks.
 
 ## Engineering
 
-- [ ] Implement FoM Text parser.
+- [x] Implement FoM Text parser.
 - [ ] Implement canonicalizer.
-- [ ] Implement schema validator.
+- [x] Implement first-pass structural/schema validator.
 - [ ] Implement macro expander.
 - [ ] Implement graph visualizer.
-- [ ] Implement semantic diff.
-- [ ] Implement constraint validator.
+- [x] Implement first executable semantic-diff subset.
+- [ ] Implement semantic constraint evaluator beyond static structural validation.
 - [ ] Implement simple realizer/extractor experiments.
 - [x] Add CI tests; full current FoM corpus passes structural validation.
 
