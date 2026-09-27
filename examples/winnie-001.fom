@@ -131,8 +131,11 @@
   (constraint final-self-awareness
     (ambiguity
       {:candidates
-       [(genuine-self-justification pooh)
-        (emerging-self-aware-joke pooh)]}))
+       [(believes pooh (saved honey))
+        (recognizes pooh
+          (mismatch
+            (saved honey)
+            (merely-resisted-eating pooh honey)))]}))
 
   (constraint tone
     (preserve
