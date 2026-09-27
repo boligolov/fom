@@ -74,6 +74,8 @@ The project deliberately avoids a giant closed ontology. Domain meaning can use 
 - [Core relation operators](docs/research-core-operators.md)
 - [Temporal model](docs/research-temporal-model.md)
 - [Scope semantics](docs/research-scope-semantics.md)
+- [Deliberate multi-meaning](docs/research-multimeaning.md)
+- [TODO](TODO.md)
 
 ## Status
 
