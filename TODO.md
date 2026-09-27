@@ -9,8 +9,8 @@ Working list of unfinished FoM research and implementation tasks.
 - [x] Add first executable torture-test discipline rule against phenomenon-name predicates.
 - [x] Add prior-art comparison matrix: FoM vs AMR/UMR, DRT/dynamic semantics, common ground, speech acts, Allen, supervaluation, questions/discourse frameworks.
 - [x] Design annotation-agreement experiment.
-- [ ] Run annotation-agreement pilot with independent annotators.
-- [ ] Define first narrow end-to-end use case: translation/retelling preservation validation.
+- [ ] Run annotation-agreement pilot with independent annotators (requires genuinely independent annotators/models).
+- [x] Define first narrow end-to-end use case: translation/retelling preservation validation.
 
 - [ ] Define the canonical FoM schema precisely enough to implement a parser/canonicalizer.
 - [ ] Specify deterministic macro expansions for the standard library.
@@ -60,6 +60,9 @@ Working list of unfinished FoM research and implementation tasks.
 - [ ] Define extension namespaces and compatibility rules.
 - [ ] Define graph partitioning / partial loading.
 - [ ] Define canonical serialization format (JSON-like first; binary later if useful).
+
+- [x] Add post-freeze original mini-corpus for the translation/retelling experiment.
+- [x] Validate the mini-corpus schema in CI.
 
 ## Validation / testing
 
