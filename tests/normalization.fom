@@ -1,7 +1,15 @@
 (fom test-normalization
   {:kind :test}
 
-  ;; Alpha-equivalent patterns.
+  (node book {:type :object})
+  (node event-a {:type :event})
+  (node event-b {:type :event})
+  (node john {:type :person})
+  (node mary {:type :person})
+
+  (subgraph proposition-p
+    (proposition-content))
+
   (pattern alpha-a [?x]
     (where (student ?x))
     (require (read ?x book)))
@@ -13,7 +21,6 @@
   (constraint expect-alpha-equivalent
     (canonical-equivalent alpha-a alpha-b))
 
-  ;; Exact temporal inverse.
   (subgraph temporal-a
     (rel ta before {:left event-a :right event-b}))
 
@@ -23,7 +30,6 @@
   (constraint expect-temporal-equivalent
     (canonical-equivalent temporal-a temporal-b))
 
-  ;; Do NOT normalize quantifier negation.
   (subgraph qneg-a
     (not
       (for-each [?x]
@@ -38,7 +44,6 @@
   (constraint keep-distinct-qneg
     (not (canonical-equivalent qneg-a qneg-b)))
 
-  ;; Do NOT collapse repeated occurrences solely by structure.
   (subgraph occurrence-a
     (rel says-a says
       {:speaker john
@@ -52,7 +57,6 @@
   (constraint keep-occurrences
     (not (identity says-a says-b)))
 
-  ;; Scope overlay remains an overlay, not a materialized copy.
   (scope base
     (accept (door-open)))
 
