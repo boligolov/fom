@@ -4,6 +4,7 @@
   (node newton {:type :person})
   (node stukeley {:type :person})
   (node conduitt {:type :person})
+  (node apple {:type :object})
 
   (node source-stukeley
     {:type :historical-document
@@ -19,6 +20,10 @@
     {:type :event
      :date "1726-04-15"})
 
+  (rel conversation-participants participants
+    {:event conversation-1726
+     :members [newton stukeley]})
+
   (subgraph apple-story
     (rel apple-fall fall
       {:object apple
@@ -29,11 +34,13 @@
        :content (question newton
                   (why-falls-toward-earth apple))}))
 
-  ;; Strong source-level claim:
-  ;; Stukeley records Newton recounting the apple story.
+  (rel conversation-story recounts
+    {:event conversation-1726
+     :speaker newton
+     :content apple-story})
+
   (scope stukeley-report
     {:source source-stukeley}
-
     (accept
       (told newton stukeley apple-story)
       {:certainty :high}))
@@ -43,10 +50,8 @@
      :conclusion apple-story
      :source source-stukeley})
 
-  ;; Conduitt independently records an apple/gravity account.
   (scope conduitt-report
     {:source source-conduitt}
-
     (accept apple-story
       {:mode :reported-about-newton}))
 
@@ -54,21 +59,18 @@
     {:evidence source-conduitt
      :conclusion apple-story})
 
-  ;; Historical synthesis does not automatically equal source assertion.
   (scope historical-reconstruction
     {:mode :historian-model}
-
     (accept apple-story
       {:certainty :supported-by-testimony}))
 
-  ;; Popular embellishments are separate.
   (subgraph head-hit
-    (rel hits
+    (rel head-hit-event hits
       {:object apple
        :target (head newton)}))
 
   (subgraph instant-complete-theory
-    (rel causes
+    (rel instant-cause causes
       {:cause apple-fall
        :effect (complete-theory-of-universal-gravitation newton)
        :mode :instant}))
