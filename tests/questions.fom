@@ -2,6 +2,8 @@
   {:kind :test
    :language :ru}
 
+  (node ivan {:type :person})
+  (node speaker {:type :person})
   (node q-who-came {:type :question})
 
   (pattern came-pattern [?x]
@@ -10,7 +12,7 @@
     (require
       (came ?x)))
 
-  (rel question-pattern
+  (rel who-pattern question-pattern
     {:question q-who-came
      :pattern came-pattern})
 
@@ -27,23 +29,20 @@
       {:question q-who-came
        :state :open}))
 
-  ;; Polar question.
   (node q-ivan-came {:type :question})
 
-  (rel alternatives
+  (rel ivan-alternatives alternatives
     {:question q-ivan-came
      :members [(came ivan)
                (not (came ivan))]
      :exhaustive true})
 
-  ;; Biased polar question: "Разве Иван пришёл?"
   (scope speaker-stance
     {:owner speaker}
     (accept
       (expected (not (came ivan)))
       {:salience :high}))
 
-  ;; Partial answer narrows but does not resolve.
   (delta partial-answer
     {:target q-who-came}
     (update q-who-came
