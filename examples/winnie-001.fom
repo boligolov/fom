@@ -1,0 +1,135 @@
+(fom winnie-001
+  {:kind :short-fiction
+   :status :example}
+
+  (node pooh {:type :person})
+  (node piglet {:type :person})
+  (node owl {:type :person})
+  (node rabbit {:type :person})
+  (node jar {:type :object :concept :honey-jar})
+  (node honey {:type :substance})
+  (node note {:type :signal :modality :written})
+  (node evening {:type :time})
+
+  (rel contains {:container jar :content honey})
+
+  (subgraph note-content
+    (rel prohibited
+      {:action (open pooh jar)
+       :before evening}))
+
+  (rel expresses {:signal note :meaning note-content})
+
+  (constraint reason-hidden
+    (disclosure
+      (reason-for note-content)
+      {:before rabbit-reveal :prohibited
+       :after rabbit-reveal :required}))
+
+  (scope pooh-initial
+    {:owner pooh}
+    (accept note-content)
+    (unknown (reason-for note-content)))
+
+  (subgraph h-not-ready
+    (rel causes
+      {:cause (open pooh jar :before evening)
+       :effect (bad-because-not-ready honey)}))
+
+  (subgraph h-danger
+    (rel causes
+      {:cause (open pooh jar :before evening)
+       :effect (bad-or-dangerous-outcome honey)}))
+
+  (scope pooh-after-piglet
+    {:owner pooh}
+    (accept h-not-ready {:certainty :possible})
+    (accept h-danger {:certainty :possible :salience :high}))
+
+  (rel observes {:observer pooh :content (appears-ready honey)})
+  (rel evidence-against {:evidence (appears-ready honey)
+                         :conclusion h-not-ready})
+
+  (subgraph owl-explanation
+    (rel asserts
+      {:agent owl
+       :content (should-avoid (open pooh jar :before evening))}))
+
+  (rel equivalent-under-abstraction
+    {:left owl-explanation :right note-content})
+
+  (rel fails-to-answer
+    {:content owl-explanation
+     :question (why note-content)})
+
+  (scope owl-self-model
+    {:owner owl}
+    (accept (owl-successfully-explained)))
+
+  (scope piglet-after-owl
+    {:owner piglet}
+    (accept (owl-added-no-new-explanation)))
+
+  (subgraph owl-humor
+    (rel contrasts-with
+      {:left (owl-successfully-explained)
+       :right (owl-added-no-new-explanation)}))
+
+  (scope pooh-safety-model
+    {:owner pooh}
+    (accept (possibly-dangerous honey))
+    (accept (possible-consumer pooh jar)))
+
+  (rel moves
+    {:actor pooh
+     :object jar
+     :destination :pooh-home
+     :purpose (prevent (accidental-consumption jar))})
+
+  (constraint correct-behavior-wrong-model
+    (preserve
+      {:behavior (jar-remains-closed-before evening)
+       :rationale h-danger}
+      {:strength :required}))
+
+  (subgraph careful-not-opening-humor
+    (rel contrasts-with
+      {:left (absence-of (open pooh jar))
+       :right (repeated-intentional-achievement
+                (not (open pooh jar)))})
+    (rel evidence-for
+      {:evidence (carefully-not-opened pooh jar)
+       :conclusion (strong-temptation pooh honey)}))
+
+  (node rabbit-reveal {:type :checkpoint})
+
+  (subgraph actual-reason
+    (rel state {:subject honey :property :temperature :value :warm})
+    (rel causes
+      {:cause (open jar :too-early)
+       :effect (possible-bad-lid-fit jar)}))
+
+  (delta pooh-model-correction
+    {:trigger rabbit-reveal}
+    (reject h-danger)
+    (accept actual-reason {:certainty :high}))
+
+  (constraint no-retroactive-danger
+    (fixed (not (dangerous honey))))
+
+  (constraint preserve-earlier-danger-model
+    (preserve
+      (pooh-previously-considered (dangerous honey))
+      {:strength :required}))
+
+  (constraint final-self-awareness
+    (ambiguity
+      {:candidates
+       [(genuine-self-justification pooh)
+        (emerging-self-aware-joke pooh)]}))
+
+  (constraint tone
+    (preserve
+      {:tone :gentle-comic
+       :danger :apparent-not-real}
+      {:strength :required})))
