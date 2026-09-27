@@ -74,6 +74,13 @@ The project deliberately avoids a giant closed ontology. Domain meaning can use 
 - [Core relation operators](docs/research-core-operators.md)
 - [Temporal model](docs/research-temporal-model.md)
 - [Scope semantics](docs/research-scope-semantics.md)
+- [Historical source semantics](docs/research-historical-sources.md)
+- [Idiom literalization](docs/research-idiom-literalization.md)
+- [Mention vs use](docs/research-mention-use.md)
+- [Non-at-issue meaning](docs/research-non-at-issue.md)
+- [Questions and alternatives](docs/research-questions.md)
+- [Canonicalization and normal forms](docs/research-normal-forms.md)
+- [Audience and world knowledge](docs/research-audience-world-knowledge.md)
 - [Deliberate multi-meaning](docs/research-multimeaning.md)
 - [TODO](TODO.md)
 
