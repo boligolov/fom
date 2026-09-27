@@ -10,21 +10,24 @@
   (node honey {:type :substance})
   (node note {:type :signal :modality :written})
   (node evening {:type :time})
+  (node rabbit-reveal {:type :checkpoint})
 
-  (rel contains {:container jar :content honey})
+  (rel jar-contains contains
+    {:container jar :content honey})
 
   (subgraph note-content
-    (rel prohibited
+    (rel note-prohibition prohibited
       {:action (open pooh jar)
        :before evening}))
 
-  (rel expresses {:signal note :meaning note-content})
+  (rel note-expresses expresses
+    {:signal note :meaning note-content})
 
   (constraint reason-hidden
     (disclosure
       (reason-for note-content)
-      {:before rabbit-reveal :prohibited
-       :after rabbit-reveal :required}))
+      {:prohibited-before rabbit-reveal
+       :required-after rabbit-reveal}))
 
   (scope pooh-initial
     {:owner pooh}
@@ -32,12 +35,12 @@
     (unknown (reason-for note-content)))
 
   (subgraph h-not-ready
-    (rel causes
+    (rel not-ready-cause causes
       {:cause (open pooh jar :before evening)
        :effect (bad-because-not-ready honey)}))
 
   (subgraph h-danger
-    (rel causes
+    (rel danger-cause causes
       {:cause (open pooh jar :before evening)
        :effect (bad-or-dangerous-outcome honey)}))
 
@@ -46,19 +49,22 @@
     (accept h-not-ready {:certainty :possible})
     (accept h-danger {:certainty :possible :salience :high}))
 
-  (rel observes {:observer pooh :content (appears-ready honey)})
-  (rel evidence-against {:evidence (appears-ready honey)
-                         :conclusion h-not-ready})
+  (rel ready-observation observes
+    {:observer pooh :content (appears-ready honey)})
+
+  (rel ready-evidence evidence-against
+    {:evidence (appears-ready honey)
+     :conclusion h-not-ready})
 
   (subgraph owl-explanation
-    (rel asserts
+    (rel owl-assertion asserts
       {:agent owl
        :content (should-avoid (open pooh jar :before evening))}))
 
-  (rel equivalent-under-abstraction
+  (rel owl-equivalence equivalent-under-abstraction
     {:left owl-explanation :right note-content})
 
-  (rel fails-to-answer
+  (rel owl-fails-answer fails-to-answer
     {:content owl-explanation
      :question (why note-content)})
 
@@ -71,7 +77,7 @@
     (accept (owl-added-no-new-explanation)))
 
   (subgraph owl-humor
-    (rel contrasts-with
+    (rel owl-contrast contrasts-with
       {:left (owl-successfully-explained)
        :right (owl-added-no-new-explanation)}))
 
@@ -80,7 +86,7 @@
     (accept (possibly-dangerous honey))
     (accept (possible-consumer pooh jar)))
 
-  (rel moves
+  (rel jar-move moves
     {:actor pooh
      :object jar
      :destination :pooh-home
@@ -93,26 +99,26 @@
       {:strength :required}))
 
   (subgraph careful-not-opening-humor
-    (rel contrasts-with
+    (rel careful-contrast contrasts-with
       {:left (absence-of (open pooh jar))
        :right (repeated-intentional-achievement
                 (not (open pooh jar)))})
-    (rel evidence-for
+    (rel temptation-evidence evidence-for
       {:evidence (carefully-not-opened pooh jar)
        :conclusion (strong-temptation pooh honey)}))
 
-  (node rabbit-reveal {:type :checkpoint})
-
   (subgraph actual-reason
-    (rel state {:subject honey :property :temperature :value :warm})
-    (rel causes
+    (rel honey-temperature state
+      {:subject honey :property :temperature :value :warm})
+    (rel lid-cause causes
       {:cause (open jar :too-early)
        :effect (possible-bad-lid-fit jar)}))
 
   (delta pooh-model-correction
     {:trigger rabbit-reveal}
-    (reject h-danger)
-    (accept actual-reason {:certainty :high}))
+    (add (reject pooh-safety-model h-danger))
+    (add (accept pooh-safety-model actual-reason
+           {:certainty :high})))
 
   (constraint no-retroactive-danger
     (fixed (not (dangerous honey))))
