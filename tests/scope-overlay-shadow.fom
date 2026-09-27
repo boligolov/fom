@@ -1,31 +1,39 @@
 (fom test-scope-overlay-shadow
   {:kind :test}
 
+  (subgraph p-content
+    (proposition-p))
+
+  (subgraph q-content
+    (proposition-q))
+
+  (subgraph r-content
+    (proposition-r))
+
   (scope base
     {:mode :reality}
-    (accept P)
-    (accept Q))
+    (accept p-content)
+    (accept q-content))
 
-  ;; Child keeps Q, but deliberately removes commitment to P.
   (scope child
     {:inherits-status-from base
      :inherit-mode :overlay}
-
-    (uncommit P))
+    (uncommit p-content))
 
   (constraint expected-child-view
     (preserve
       {:scope child
+       :content-p p-content
        :status-P :uncommitted
+       :content-q q-content
        :status-Q :accept}
       {:strength :required}))
 
-  ;; Multiple bases conflict.
   (scope base-a
-    (accept R))
+    (accept r-content))
 
   (scope base-b
-    (reject R))
+    (reject r-content))
 
   (scope merged
     {:inherits-status-from [base-a base-b]
@@ -34,6 +42,6 @@
   (constraint preserve-base-conflict
     (unresolved
       {:scope merged
-       :content R
+       :content r-content
        :indeterminacy-source :source-conflict}))
 )
