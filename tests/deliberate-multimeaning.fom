@@ -1,0 +1,100 @@
+(fom test-deliberate-multimeaning
+  {:kind :test
+   :language :ru}
+
+  (node ogre
+    {:type :person
+     :concept :cannibal})
+
+  (node wife
+    {:type :person})
+
+  (node guests
+    {:type :group})
+
+  (node lunch-event
+    {:type :event})
+
+  (node signal-1
+    {:type :signal
+     :modality :speech
+     :form "Сегодня у нас на обед будут гости"})
+
+  (subgraph hospitality-reading
+    (rel visit-1 visit
+      {:visitors guests
+       :host-household [ogre wife]})
+
+    (rel participate-1 participates-in
+      {:participants guests
+       :event lunch-event}))
+
+  (subgraph cannibal-reading
+    (rel food-1 food-of
+      {:food guests
+       :meal lunch-event})
+
+    (rel eat-1 eat
+      {:eaters [ogre wife]
+       :patient guests
+       :event lunch-event}))
+
+  (rel semiotic-a semiotic-maps-to
+    {:signal signal-1
+     :meaning hospitality-reading
+     :intendedness :required})
+
+  (rel semiotic-b semiotic-maps-to
+    {:signal signal-1
+     :meaning cannibal-reading
+     :intendedness :required})
+
+  (subgraph frame-collision
+    (rel contrast-1 contrasts-with
+      {:left hospitality-reading
+       :right cannibal-reading})
+
+    (rel role-conflict-1 same-referent-different-role
+      {:referent guests
+       :role-in-left :meal-participant
+       :role-in-right :food}))
+
+  (constraint both-readings
+    (preserve
+      [hospitality-reading cannibal-reading]
+      {:aspect :recoverability
+       :strength :required}))
+
+  (constraint preserve-collision
+    (preserve
+      frame-collision
+      {:aspect :inference-path
+       :strength :required}))
+
+  (scope reader-initial
+    {:mode :trajectory-state}
+
+    (accept hospitality-reading
+      {:salience :high})
+
+    (accept cannibal-reading
+      {:salience :low}))
+
+  (scope reader-after-trigger
+    {:mode :trajectory-state
+     :inherits-status-from reader-initial
+     :inherit-mode :overlay}
+
+    (accept hospitality-reading
+      {:salience :high})
+
+    (accept cannibal-reading
+      {:salience :high}))
+
+  (constraint humor-effect
+    (preserve
+      {:coactivated [hospitality-reading cannibal-reading]
+       :relation frame-collision
+       :affect :comic}
+      {:strength :required}))
+)
