@@ -2,39 +2,45 @@
   {:kind :test
    :language :ru}
 
-  ;; "Если бы не дождь, матч бы состоялся."
+  (node rain-event {:type :event})
+  (node match-held-state {:type :state})
+  (node match-cancellation {:type :event})
+  (node short-circuit {:type :event})
+  (node fire {:type :event})
+  (node fire-investigation-evidence {:type :evidence})
+  (node fire-a {:type :event})
+  (node fire-b {:type :event})
+  (node house-destroyed {:type :state})
+
   (scope reality
     {:mode :reality}
-    (accept (rain))
-    (reject (match-held)))
+    (accept rain-event)
+    (reject match-held-state))
 
   (scope no-rain-counterfactual
     {:mode :counterfactual
      :imports [reality]
      :inherits-status-from reality
      :inherit-mode :overlay}
-
-    (reject (rain))
-    (accept (match-held)))
+    (reject rain-event)
+    (accept match-held-state))
 
   (rel cf1 counterfactual-alternative
     {:base reality
      :alternative no-rain-counterfactual
-     :override (not (rain))})
+     :override (not rain-event)})
 
   (rel dep1 counterfactually-depends-on
-    {:outcome (match-held)
-     :condition (not (rain))
+    {:outcome match-held-state
+     :condition (not rain-event)
      :scope no-rain-counterfactual})
 
-  ;; Causal interpretation is separate.
   (scope causal-hypothesis
     {:mode :analysis}
     (accept
-      (causes rain match-cancellation)
+      (causes rain-event match-cancellation)
       {:certainty :plausible}))
 
-  ;; "Возможно, пожар начался из-за короткого замыкания."
   (subgraph causal-claim
     (rel cause-fire causes
       {:cause short-circuit
@@ -45,7 +51,6 @@
       {:content causal-claim
        :base fire-investigation-evidence}))
 
-  ;; Temporal order alone is not causal.
   (rel temporal-only before
     {:left short-circuit
      :right fire})
@@ -56,7 +61,6 @@
         temporal-only
         cause-fire)))
 
-  ;; Overdetermination: both fires present.
   (scope overdetermination
     {:mode :reality}
     (accept fire-a)
