@@ -5,98 +5,98 @@
 id = "unknown-owner"
 source_language = "ru"
 target_language = "en"
-source = "На остановке лежал мокрый зонт. Никто так и не выяснил, кто его оставил."
-valid = "A wet umbrella was lying at the bus stop. No one ever found out who had left it there."
-corrupted = "A wet umbrella that Anna had left was lying at the bus stop."
+source = '''На остановке лежал мокрый зонт. Никто так и не выяснил, кто его оставил.'''
+valid = '''A wet umbrella was lying at the bus stop. No one ever found out who had left it there.'''
+corrupted = '''A wet umbrella that Anna had left was lying at the bus stop.'''
 expected_dimensions = ["fixed_unknown", "resolution"]
-note = "The corruption invents an owner and resolves an explicitly preserved unknown."
+note = '''The corruption invents an owner and resolves an explicitly preserved unknown.'''
 
 [[case]]
 id = "source-attribution"
 source_language = "ru"
 target_language = "en"
-source = "По словам Марины, мост закрыли ночью. Других подтверждений у нас нет."
-valid = "According to Marina, the bridge was closed overnight. We have no other confirmation."
-corrupted = "The bridge was closed overnight. We have no other confirmation."
+source = '''По словам Марины, мост закрыли ночью. Других подтверждений у нас нет.'''
+valid = '''According to Marina, the bridge was closed overnight. We have no other confirmation.'''
+corrupted = '''The bridge was closed overnight. We have no other confirmation.'''
 expected_dimensions = ["source_attribution", "epistemic_status"]
-note = "The candidate upgrades an attributed report into narrator-level content."
+note = '''The candidate upgrades an attributed report into narrator-level content.'''
 
 [[case]]
 id = "inference-route"
 source_language = "ru"
 target_language = "en"
-source = "На столе стояли две чашки. Кресло напротив было ещё тёплым. Сергей ничего не сказал."
-valid = "There were two cups on the table. The chair opposite was still warm. Sergei said nothing."
-corrupted = "Someone had just been sitting opposite Sergei. There were two cups on the table, and Sergei said nothing."
+source = '''На столе стояли две чашки. Кресло напротив было ещё тёплым. Сергей ничего не сказал.'''
+valid = '''There were two cups on the table. The chair opposite was still warm. Sergei said nothing.'''
+corrupted = '''Someone had just been sitting opposite Sergei. There were two cups on the table, and Sergei said nothing.'''
 expected_dimensions = ["inference_path", "explicitness"]
-note = "The source offers evidence; the corruption states the conclusion directly."
+note = '''The source offers evidence; the corruption states the conclusion directly.'''
 
 [[case]]
 id = "delayed-reveal"
 source_language = "ru"
 target_language = "en"
-source = "В конверте ничего не было. Лена уже решила, что её разыграли. Только вечером она заметила письмо, приклеенное к внутренней стороне крышки коробки."
-valid = "The envelope was empty. Lena had already decided someone was playing a joke on her. Only that evening did she notice the letter stuck to the inside of the box lid."
-corrupted = "The letter was stuck to the inside of the box lid, though Lena did not notice it until evening. Earlier she had found the envelope empty."
+source = '''В конверте ничего не было. Лена уже решила, что её разыграли. Только вечером она заметила письмо, приклеенное к внутренней стороне крышки коробки.'''
+valid = '''The envelope was empty. Lena had already decided someone was playing a joke on her. Only that evening did she notice the letter stuck to the inside of the box lid.'''
+corrupted = '''The letter was stuck to the inside of the box lid, though Lena did not notice it until evening. Earlier she had found the envelope empty.'''
 expected_dimensions = ["disclosure"]
-note = "The factual content survives, but the reveal is given to the reader too early."
+note = '''The factual content survives, but the reveal is given to the reader too early.'''
 
 [[case]]
 id = "common-tongue"
 source_language = "ru"
 target_language = "en"
-source = "«Ну вот, наконец-то мы нашли общий язык», — сказал переводчик, вытаскивая из коробки протез языка."
-valid = ""At last we've found a common tongue," said the interpreter, pulling a prosthetic tongue from the box."
-corrupted = ""At last we've found a way to understand each other," said the interpreter, pulling a prosthetic tongue from the box."
+source = '''«Ну вот, наконец-то мы нашли общий язык», — сказал переводчик, вытаскивая из коробки протез языка.'''
+valid = '''"At last we've found a common tongue," said the interpreter, pulling a prosthetic tongue from the box.'''
+corrupted = '''"At last we've found a way to understand each other," said the interpreter, pulling a prosthetic tongue from the box.'''
 expected_dimensions = ["coactivation", "function"]
-note = "The corruption preserves the idiomatic reading but removes the literal reading that creates the wordplay."
+note = '''The corruption preserves the idiomatic reading but removes the literal reading that creates the wordplay.'''
 
 [[case]]
 id = "uncertain-train"
 source_language = "ru"
 target_language = "en"
-source = "Кажется, поезд уже ушёл."
-valid = "It seems the train has already left."
-corrupted = "The train has already left."
+source = '''Кажется, поезд уже ушёл.'''
+valid = '''It seems the train has already left.'''
+corrupted = '''The train has already left.'''
 expected_dimensions = ["epistemic_status"]
-note = "The candidate strengthens an uncertain claim into an assertion."
+note = '''The candidate strengthens an uncertain claim into an assertion.'''
 
 [[case]]
 id = "contrastive-focus"
 source_language = "ru"
 target_language = "en"
-source = "Именно Пётр отказался подписывать договор; остальные согласились."
-valid = "It was Peter who refused to sign the contract; everyone else agreed."
-corrupted = "Peter refused to sign the contract; everyone else agreed."
+source = '''Именно Пётр отказался подписывать договор; остальные согласились.'''
+valid = '''It was Peter who refused to sign the contract; everyone else agreed.'''
+corrupted = '''Peter refused to sign the contract; everyone else agreed.'''
 expected_dimensions = ["salience", "focus"]
-note = "Propositional content is nearly identical; contrastive focus is weakened."
+note = '''Propositional content is nearly identical; contrastive focus is weakened.'''
 
 [[case]]
 id = "failed-declaration"
 source_language = "ru"
 target_language = "en"
-source = "«Я объявляю заседание закрытым», — сказал случайный прохожий из коридора. Председатель продолжил обсуждение."
-valid = ""I declare the meeting closed," said a random passer-by from the corridor. The chair continued the discussion."
-corrupted = "A passer-by closed the meeting, after which the chair continued the discussion."
+source = '''«Я объявляю заседание закрытым», — сказал случайный прохожий из коридора. Председатель продолжил обсуждение.'''
+valid = '''"I declare the meeting closed," said a random passer-by from the corridor. The chair continued the discussion.'''
+corrupted = '''A passer-by closed the meeting, after which the chair continued the discussion.'''
 expected_dimensions = ["social_state", "attempted_vs_actual"]
-note = "The source contains an ineffective attempted declaration; the corruption turns it into an actual social change."
+note = '''The source contains an ineffective attempted declaration; the corruption turns it into an actual social change.'''
 
 [[case]]
 id = "conflicting-sources"
 source_language = "ru"
 target_language = "en"
-source = "Алиса говорит, что ключ у Бориса; Борис уверяет, что ключ у Алисы. Мы не знаем, кто прав."
-valid = "Alice says Boris has the key; Boris insists Alice has it. We do not know who is right."
-corrupted = "Boris has the key, although he claims Alice has it."
+source = '''Алиса говорит, что ключ у Бориса; Борис уверяет, что ключ у Алисы. Мы не знаем, кто прав.'''
+valid = '''Alice says Boris has the key; Boris insists Alice has it. We do not know who is right.'''
+corrupted = '''Boris has the key, although he claims Alice has it.'''
 expected_dimensions = ["source_attribution", "indeterminacy", "epistemic_status"]
-note = "The candidate resolves a source conflict in favor of one source without license."
+note = '''The candidate resolves a source conflict in favor of one source without license.'''
 
 [[case]]
 id = "exact-note"
 source_language = "ru"
 target_language = "en"
-source = "На записке было ровно одно слово: «нет»."
-valid = "There was exactly one word on the note: "no"."
-corrupted = "The note expressed a refusal."
+source = '''На записке было ровно одно слово: «нет».'''
+valid = '''There was exactly one word on the note: "no".'''
+corrupted = '''The note expressed a refusal.'''
 expected_dimensions = ["form", "explicitness"]
-note = "The source makes exact signal form part of the meaning; the paraphrase preserves only a likely function."
+note = '''The source makes exact signal form part of the meaning; the paraphrase preserves only a likely function.'''
