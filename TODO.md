@@ -29,14 +29,17 @@ Working list of unfinished FoM research and implementation tasks.
 - [ ] Test conventional implicatures and expressive meaning.
 - [ ] Test quotation, mention/use distinction, and metalinguistic negation.
 - [ ] Test questions, answers, alternatives, and open-question state more deeply.
-- [ ] Test comparatives and superlatives.
+- [x] Test comparatives and superlatives.
 - [ ] Test plurals, groups, mass nouns, and part-whole structure more deeply.
-- [ ] Test aspect and event structure.
-- [ ] Test vague predicates and sorites-like boundaries.
+- [x] Test aspect and event structure.
+- [x] Test vague predicates and sorites-like boundaries.
 - [ ] Test counterfactual causation and causal uncertainty.
 - [ ] Test evidentiality and source reliability.
 - [ ] Test conflicting sources and disagreement.
-- [ ] Test social authority / felicity conditions in declarations, promises, commands, permissions, and prohibitions.
+- [x] Test social authority / felicity conditions in declarations, promises, commands, permissions, and prohibitions.
+
+- [ ] Formalize a general uncertainty/indeterminacy provenance vocabulary (evidence gaps, vagueness, ambiguity, source conflict, etc.).
+- [ ] Formalize event phase / culmination / result patterns in the standard library.
 
 ## Representation questions
 
