@@ -1,0 +1,15 @@
+(fom unknown-owner-corrupted
+  {:case :unknown-owner}
+
+  (node umbrella {:type :object})
+  (node bus-stop {:type :place})
+  (node anna {:type :person})
+
+  (rel umbrella-location located-at
+    {:object umbrella
+     :place bus-stop})
+
+  (rel invented-owner owner-of
+    {:object umbrella
+     :owner anna})
+)
