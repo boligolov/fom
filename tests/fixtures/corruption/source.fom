@@ -7,6 +7,10 @@
   (node reveal-early {:type :checkpoint})
   (node reveal-late {:type :checkpoint})
 
+  (rel checkpoint-order before
+    {:left reveal-early
+     :right reveal-late})
+
   (subgraph departure
     (rel departure-event leaves
       {:actor lena
