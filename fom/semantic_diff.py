@@ -15,6 +15,16 @@ INFERENCE_PREDICATES = {
     "infers",
 }
 
+ATTRIBUTION_PREDICATES = {
+    "reported",
+    "reports",
+    "says",
+    "said",
+    "said-signal",
+    "attributed-to",
+    "source-of",
+}
+
 CERTAINTY_ORDER = {
     "low": 0,
     "possible": 1,
@@ -49,6 +59,8 @@ class Snapshot:
     statuses: dict[tuple[str, Any], StatusRecord]
     disclosures: dict[Any, tuple[tuple[str, Any], ...]]
     fixed_unknown: set[Any]
+    coactivations: set[Any]
+    order_edges: set[tuple[str, str]]
 
 
 def _symbol(expr: Expr) -> str | None:
@@ -96,14 +108,35 @@ def _qualifier_tuple(expr: MapExpr | None) -> tuple[tuple[str, Any], ...]:
     )
 
 
+def _qualifier_dict(
+    qualifiers: tuple[tuple[str, Any], ...],
+) -> dict[str, Any]:
+    return dict(qualifiers)
+
+
 def _scalar(norm_value: Any) -> Any:
     if (
         isinstance(norm_value, tuple)
         and len(norm_value) == 2
-        and norm_value[0] in {"keyword", "string", "number", "boolean"}
+        and norm_value[0] in {
+            "keyword",
+            "string",
+            "number",
+            "boolean",
+        }
     ):
         return norm_value[1]
     return norm_value
+
+
+def _symbol_from_normalized(value: Any) -> str | None:
+    if (
+        isinstance(value, tuple)
+        and len(value) == 2
+        and value[0] == "symbol"
+    ):
+        return str(value[1])
+    return None
 
 
 def _qualifier_value(
@@ -128,12 +161,14 @@ def snapshot(text: str, path: str = "<memory>") -> Snapshot:
     statuses: dict[tuple[str, Any], StatusRecord] = {}
     disclosures: dict[Any, tuple[tuple[str, Any], ...]] = {}
     fixed_unknown: set[Any] = set()
+    coactivations: set[Any] = set()
+    order_edges: set[tuple[str, str]] = set()
 
     def walk(
         expr: Expr,
         current_scope: str | None = None,
     ) -> None:
-        if isinstance(expr, (Atom,)):
+        if isinstance(expr, Atom):
             return
 
         if isinstance(expr, VectorExpr):
@@ -162,11 +197,19 @@ def snapshot(text: str, path: str = "<memory>") -> Snapshot:
         if head == "rel" and len(expr.items) == 4:
             rel_id = _symbol(expr.items[1])
             predicate = _symbol(expr.items[2])
+            args_expr = expr.items[3]
             if rel_id and predicate:
                 relations[rel_id] = RelationRecord(
                     predicate,
-                    normalize(expr.items[3]),
+                    normalize(args_expr),
                 )
+
+                if predicate == "before" and isinstance(args_expr, MapExpr):
+                    args = _map_dict(args_expr)
+                    left = _symbol(args.get("left")) if args.get("left") else None
+                    right = _symbol(args.get("right")) if args.get("right") else None
+                    if left and right:
+                        order_edges.add((left, right))
             return
 
         if head == "scope" and len(expr.items) >= 2:
@@ -184,11 +227,21 @@ def snapshot(text: str, path: str = "<memory>") -> Snapshot:
 
             if scope_id is not None and len(args) in {1, 2}:
                 content = args[0]
-                q = args[1] if len(args) == 2 and isinstance(args[1], MapExpr) else None
+                q = (
+                    args[1]
+                    if len(args) == 2
+                    and isinstance(args[1], MapExpr)
+                    else None
+                )
             elif len(args) in {2, 3}:
                 scope_id = _symbol(args[0])
                 content = args[1]
-                q = args[2] if len(args) == 3 and isinstance(args[2], MapExpr) else None
+                q = (
+                    args[2]
+                    if len(args) == 3
+                    and isinstance(args[2], MapExpr)
+                    else None
+                )
             else:
                 return
 
@@ -206,13 +259,48 @@ def snapshot(text: str, path: str = "<memory>") -> Snapshot:
             if i < len(expr.items):
                 body = expr.items[i]
                 body_head = _head(body)
+
                 if isinstance(body, ListExpr) and body_head == "disclosure":
-                    if len(body.items) >= 3 and isinstance(body.items[-1], MapExpr):
+                    if (
+                        len(body.items) >= 3
+                        and isinstance(body.items[-1], MapExpr)
+                    ):
                         target = normalize(body.items[1])
-                        disclosures[target] = _qualifier_tuple(body.items[-1])
-                elif isinstance(body, ListExpr) and body_head == "fixed-unknown":
+                        disclosures[target] = _qualifier_tuple(
+                            body.items[-1]
+                        )
+
+                elif (
+                    isinstance(body, ListExpr)
+                    and body_head == "fixed-unknown"
+                ):
                     if len(body.items) >= 2:
                         fixed_unknown.add(normalize(body.items[1]))
+
+                elif (
+                    isinstance(body, ListExpr)
+                    and body_head == "preserve"
+                    and len(body.items) >= 2
+                    and isinstance(body.items[1], MapExpr)
+                ):
+                    preserve_map = _map_dict(body.items[1])
+                    if "coactivated" in preserve_map:
+                        coactivations.add(
+                            normalize(preserve_map["coactivated"])
+                        )
+                    elif (
+                        "readings" in preserve_map
+                        and "coactivation" in preserve_map
+                    ):
+                        flag = preserve_map["coactivation"]
+                        if (
+                            isinstance(flag, Atom)
+                            and flag.kind == "boolean"
+                            and flag.value is True
+                        ):
+                            coactivations.add(
+                                normalize(preserve_map["readings"])
+                            )
             return
 
         for child in expr.items[1:]:
@@ -225,6 +313,8 @@ def snapshot(text: str, path: str = "<memory>") -> Snapshot:
         statuses=statuses,
         disclosures=disclosures,
         fixed_unknown=fixed_unknown,
+        coactivations=coactivations,
+        order_edges=order_edges,
     )
 
 
@@ -242,6 +332,73 @@ def _ordered_change(
     return "CHANGED"
 
 
+def _is_before(
+    edges: set[tuple[str, str]],
+    left: str,
+    right: str,
+) -> bool:
+    if left == right:
+        return False
+
+    frontier = [left]
+    seen = {left}
+
+    while frontier:
+        current = frontier.pop()
+        for a, b in edges:
+            if a != current or b in seen:
+                continue
+            if b == right:
+                return True
+            seen.add(b)
+            frontier.append(b)
+
+    return False
+
+
+def _relation_dimension(
+    left: RelationRecord | None,
+    right: RelationRecord | None,
+) -> str:
+    predicates = {
+        record.predicate
+        for record in (left, right)
+        if record is not None
+    }
+
+    if predicates & INFERENCE_PREDICATES:
+        return "inference_path"
+
+    if predicates & ATTRIBUTION_PREDICATES:
+        return "source_attribution"
+
+    return "content"
+
+
+def _disclosure_change_status(
+    source: Snapshot,
+    left: tuple[tuple[str, Any], ...],
+    right: tuple[tuple[str, Any], ...],
+) -> str:
+    left_map = _qualifier_dict(left)
+    right_map = _qualifier_dict(right)
+
+    old_after = _symbol_from_normalized(
+        left_map.get("required-after")
+    )
+    new_after = _symbol_from_normalized(
+        right_map.get("required-after")
+    )
+
+    if old_after and new_after and old_after != new_after:
+        if _is_before(source.order_edges, new_after, old_after):
+            return "EARLY"
+        if _is_before(source.order_edges, old_after, new_after):
+            return "LATE"
+
+    return "CHANGED"
+
+
 def diff_texts(
     source_text: str,
     candidate_text: str,
@@ -256,22 +413,17 @@ def diff_texts(
         "epistemic_status": [],
         "salience": [],
         "inference_path": [],
+        "source_attribution": [],
         "disclosure": [],
         "fixed_unknown": [],
+        "coactivation": [],
     }
 
     all_rel_ids = sorted(set(source.relations) | set(candidate.relations))
     for rel_id in all_rel_ids:
         left = source.relations.get(rel_id)
         right = candidate.relations.get(rel_id)
-        dimension = (
-            "inference_path"
-            if (
-                (left and left.predicate in INFERENCE_PREDICATES)
-                or (right and right.predicate in INFERENCE_PREDICATES)
-            )
-            else "content"
-        )
+        dimension = _relation_dimension(left, right)
 
         if left is None:
             result[dimension].append(
@@ -339,12 +491,18 @@ def diff_texts(
                 }
             )
 
-    for key in sorted(set(source.statuses) - set(candidate.statuses), key=repr):
+    for key in sorted(
+        set(source.statuses) - set(candidate.statuses),
+        key=repr,
+    ):
         result["epistemic_status"].append(
             {"target": repr(key), "status": "LOST"}
         )
 
-    for key in sorted(set(candidate.statuses) - set(source.statuses), key=repr):
+    for key in sorted(
+        set(candidate.statuses) - set(source.statuses),
+        key=repr,
+    ):
         result["epistemic_status"].append(
             {"target": repr(key), "status": "INVENTED"}
         )
@@ -353,6 +511,7 @@ def diff_texts(
     for target in sorted(all_disclosure, key=repr):
         left = source.disclosures.get(target)
         right = candidate.disclosures.get(target)
+
         if left is None:
             result["disclosure"].append(
                 {"target": repr(target), "status": "INVENTED"}
@@ -363,7 +522,14 @@ def diff_texts(
             )
         elif left != right:
             result["disclosure"].append(
-                {"target": repr(target), "status": "CHANGED"}
+                {
+                    "target": repr(target),
+                    "status": _disclosure_change_status(
+                        source,
+                        left,
+                        right,
+                    ),
+                }
             )
 
     for target in sorted(
@@ -379,6 +545,22 @@ def diff_texts(
         key=repr,
     ):
         result["fixed_unknown"].append(
+            {"target": repr(target), "status": "INVENTED"}
+        )
+
+    for target in sorted(
+        source.coactivations - candidate.coactivations,
+        key=repr,
+    ):
+        result["coactivation"].append(
+            {"target": repr(target), "status": "LOST"}
+        )
+
+    for target in sorted(
+        candidate.coactivations - source.coactivations,
+        key=repr,
+    ):
+        result["coactivation"].append(
             {"target": repr(target), "status": "INVENTED"}
         )
 
