@@ -1,0 +1,9 @@
+(fom coactivation-loss
+  {:kind :diff-fixture}
+
+  (subgraph reading-a
+    (visitor-reading))
+
+  (subgraph reading-b
+    (meal-reading))
+)
