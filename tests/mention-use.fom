@@ -8,18 +8,16 @@
     {:type :signal-type
      :form "Москва"})
 
-  (rel refers-to
+  (rel name-reference refers-to
     {:signal moscow-name
      :target moscow-city})
 
-  ;; Ordinary use.
   (subgraph use-reading
-    (rel large
+    (rel city-large large
       {:subject moscow-city}))
 
-  ;; Metalinguistic mention.
   (subgraph mention-reading
-    (rel letter-count
+    (rel name-length letter-count
       {:subject moscow-name
        :value 6}))
 
@@ -31,7 +29,7 @@
     {:type :signal
      :form "Москва состоит из шести букв."})
 
-  (rel expresses
+  (rel mention-expression expresses
     {:signal signal-mention
      :meaning mention-reading})
 
