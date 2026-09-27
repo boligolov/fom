@@ -22,13 +22,13 @@ Working list of unfinished FoM research and implementation tasks.
 - [ ] Finish temporal semantics: tense, deixis, duration, recurrence, habituality.
 - [x] Finish first-pass scope overlay conflict rules.
 - [x] Define default constraint inheritance policy across scopes.
-- [ ] Define world-knowledge licensing during realization.
+- [x] Define first-pass world-knowledge licensing during realization.
 - [x] Define a sparse audience model.
 - [x] Formalize deliberate multi-meaning / co-activation of readings.
 - [ ] Test lexical polysemy, homonymy, puns, double entendre, and frame collision.
-- [ ] Test conventional implicatures and expressive meaning.
+- [x] Test conventional implicatures / scalar / contrastive / expressive side meaning (first pass).
 - [x] Test quotation, mention/use distinction, and metalinguistic negation.
-- [ ] Test questions, answers, alternatives, and open-question state more deeply.
+- [x] Test questions, alternatives, and partial resolution (first pass).
 - [x] Test comparatives and superlatives.
 - [x] Test plurals, groups, mass nouns, and part-whole structure (first pass).
 - [x] Test aspect and event structure.
@@ -69,11 +69,11 @@ Working list of unfinished FoM research and implementation tasks.
 
 ## Realization
 
-- [ ] Define PRESERVE_REFERENT / FUNCTION / EFFECT / FORM semantics more precisely.
-- [ ] Define realization freedom and licensed invention operationally.
-- [ ] Define when background world knowledge may be used.
-- [ ] Define audience-sensitive recoverability checks.
-- [ ] Define realization validation against disclosure windows and inference constraints.
+- [x] Define first-pass PRESERVE_REFERENT / FUNCTION / EFFECT / FORM semantics.
+- [x] Define first-pass realization freedom and licensed invention rules.
+- [x] Define first-pass background world-knowledge licensing.
+- [x] Define first-pass audience-sensitive recoverability checks.
+- [x] Define first-pass realization validation model.
 
 ## Engineering
 
