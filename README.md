@@ -62,6 +62,31 @@ The project deliberately avoids a giant closed ontology. Domain meaning can use 
 - Semantic equivalence is primarily constraint satisfaction, not a scalar similarity score.
 - Realization may invent compatible details only when they do not change required meaning or inference space.
 
+## Tooling
+
+The repository now includes a dependency-free Python parser and static validator for FoM Text.
+
+Run:
+
+```bash
+python -m fom check examples tests
+```
+
+The validator currently checks the surface grammar, declaration/reference integrity, duplicate IDs, lexical variable binding, and several structural forms. GitHub Actions runs both Python unit tests and validation of the full `.fom` corpus.
+
+The corpus currently passes CI. This is intentionally only a **structural validity** milestone; it is not yet a proof of semantic correctness.
+
+Torture tests also have an executable discipline check that forbids selected phenomenon names from being smuggled into semantic predicate heads. This is an initial guard against making a test unfalsifiable by naming the phenomenon being tested.
+
+## Current research phase
+
+Broad semantic expansion is temporarily paused. The current priorities are:
+
+1. executable validation and semantic-diff fixtures;
+2. explicit comparison with prior work (AMR/UMR, DRT/dynamic semantics, common-ground and speech-act theories, temporal/vagueness formalisms);
+3. annotation agreement;
+4. one narrow end-to-end evaluation use case.
+
 ## Repository structure
 
 - [Conceptual specification](docs/specification.md)
