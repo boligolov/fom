@@ -1,0 +1,65 @@
+(fom test-quotation-metalinguistic
+  {:kind :test
+   :language :ru}
+
+  ;; Direct quote.
+  (node ivan-quote
+    {:type :signal
+     :form "Я устал"
+     :modality :speech})
+
+  (scope quote-context
+    {:owner ivan
+     :center ivan})
+
+  (subgraph tired-content
+    (rel tired-1 tired
+      {:subject (self)}))
+
+  (rel quote-expresses expresses
+    {:signal ivan-quote
+     :meaning tired-content
+     :context quote-context})
+
+  (rel said-1 said-signal
+    {:speaker ivan
+     :signal ivan-quote})
+
+  (constraint direct-quote-form
+    (preserve
+      ivan-quote
+      {:aspect :form
+       :strength :required}))
+
+  ;; Metalinguistic negation:
+  ;; "Он не умный — он гениальный."
+  (node smart-word
+    {:type :signal-fragment
+     :form "умный"})
+
+  (subgraph smart-content
+    (rel intelligent-1 intelligent
+      {:subject target-person}))
+
+  (rel smart-mapping semiotic-maps-to
+    {:signal smart-word
+     :meaning smart-content})
+
+  (scope speaker-model
+    {:owner speaker}
+
+    (accept smart-content)
+
+    (accept
+      (genius target-person))
+
+    (reject
+      (adequate-expression
+        smart-mapping
+        :for-current-intended-strength)))
+
+  (constraint no-propositional-misparse
+    (not
+      (required
+        (reject speaker-model smart-content))))
+)
