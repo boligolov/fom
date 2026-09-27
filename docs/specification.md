@@ -211,7 +211,7 @@ Examples include:
 - donkey anaphora;
 - modal quantification over accessible scopes.
 
-Binding accessibility determines where a bound variable remains referable.
+Binding accessibility determines where a bound variable remains referable. Graph/reference accessibility is distinct from semantic-status inheritance across scopes.
 
 ## 6. Relation architecture
 
@@ -254,7 +254,7 @@ Causality and inference remain distinct:
 
 Semiotic relations are also independent: representation/expression is neither causation nor evidence.
 
-Identity has graph-merging consequences.
+Identity has equivalence semantics within the relevant scope. Physical graph-node merging is only an optional optimization when no semantically relevant scope distinguishes the references.
 
 ### Structural relations
 
@@ -622,3 +622,63 @@ Format of Meaning is a sparse, typed, scope-aware graph IR representing an inten
 It consists of addressable semantic objects and relations, perspective-relative scopes, graph-state deltas, and constraints over content, uncertainty, inference, timing, focus, affect, social state, recoverability, and realization.
 
 Its semantic resolution is demand-driven: concepts remain atomic until their internal distinctions become relevant, and refinement is allowed only where required meaning and uncertainty are preserved.
+
+
+## 24. Scope inheritance
+
+Reference visibility and semantic-status inheritance are distinct.
+
+A nested scope may refer to the same entities and subgraphs as an outer scope without inheriting its ACCEPT/REJECT statuses.
+
+The safe default is:
+
+```
+reference accessibility: available through graph/import rules
+status inheritance: none
+```
+
+Explicit overlay inheritance may be used for counterfactuals, trajectory checkpoints, and other derived models.
+
+A scope link such as `parent` must not imply truth inheritance by itself.
+
+## 25. Identity refinement
+
+Semantic identity must not be implemented as unconditional global graph merging.
+
+Different scopes may disagree about whether two references identify the same entity.
+
+Therefore:
+
+```
+IDENTITY(reference-A, reference-B)
+```
+
+is semantic content whose status is scope-relative.
+
+Physical graph unification is permitted only when doing so cannot erase a relevant distinction, such as mistaken identity, re-identification, de se/de re structure, or later discovery.
+
+## 26. Temporal model
+
+FoM distinguishes at least:
+
+- represented-world time;
+- discourse/reader trajectory order;
+- signal-processing order.
+
+These must not be collapsed into one generic ordering relation.
+
+For represented-world intervals, a qualitative temporal algebra may use a normalized relation set such as:
+
+```
+BEFORE
+MEETS
+OVERLAPS
+STARTS
+DURING
+FINISHES
+EQUAL
+```
+
+with inverse relations derived by argument reversal.
+
+FoM must preserve partial temporal information. A source that only licenses `A BEFORE B` does not license exact duration or distance between A and B.
