@@ -1,0 +1,87 @@
+(fom test-generic-degree-modality
+  {:kind :test}
+
+  ;; GENERIC != ALL and != MOST.
+  (node bird-kind {:type :kind})
+
+  (subgraph birds-fly-generic
+    (generic
+      {:kind bird-kind
+       :property can-fly
+       :normality-context biological-normality}))
+
+  (node penguin {:type :kind})
+  (rel subtype-of {:child penguin :parent bird-kind})
+
+  (subgraph penguin-exception
+    (generic
+      {:kind penguin
+       :property (not can-fly)
+       :normality-context biological-normality}))
+
+  ;; ALMOST: target false, close from non-satisfying side.
+  (subgraph almost-late
+    (rel degree
+      {:subject ivan
+       :scale lateness-scale
+       :value ?d})
+    (constraint target-not-attained
+      (not (late ivan)))
+    (constraint near-threshold
+      (near ?d lateness-threshold)))
+
+  ;; BARELY: target true, close to same boundary.
+  (subgraph barely-passed
+    (accept reality (passed maria exam))
+    (rel degree
+      {:subject (performance maria exam)
+       :scale exam-score-scale
+       :value ?score})
+    (constraint near-pass-boundary
+      (near ?score pass-threshold)))
+
+  ;; TOO includes goal-relative blocking.
+  (subgraph too-hot-to-drink
+    (rel degree
+      {:subject tea
+       :scale temperature-scale
+       :value ?temp})
+    (constraint excessive-for-goal
+      (above ?temp drinkable-threshold))
+    (rel prevents
+      {:state (temperature tea ?temp)
+       :goal (drink person tea)}))
+
+  ;; ENOUGH is sufficiency relative to goal.
+  (subgraph enough-water
+    (rel amount {:substance water :value ?amount})
+    (constraint sufficient
+      (at-least ?amount survival-water-threshold))
+    (rel threshold-for
+      {:threshold survival-water-threshold
+       :goal (survive person)}))
+
+  ;; Epistemic possibility.
+  (subgraph may-be-home
+    (possible
+      {:content (home ivan)
+       :base epistemic-evidence
+       :anchor speaker-model}))
+
+  ;; Deontic necessity.
+  (subgraph must-be-home
+    (necessary
+      {:content (home ivan)
+       :base applicable-rules
+       :anchor normative-model}))
+
+  ;; Ability requires control, not bare possibility.
+  (subgraph can-open-door
+    (possible
+      {:content (open ivan door)
+       :base ivan-capabilities
+       :anchor current-circumstances})
+    (rel controls
+      {:agent ivan
+       :transition (closed-to-open door)}))
+)
