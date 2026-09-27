@@ -1,0 +1,15 @@
+(fom common-tongue-source
+  {:case :common-tongue}
+
+  (subgraph communication-reading
+    (shared-language-achieved))
+
+  (subgraph anatomical-reading
+    (prosthetic-tongue-found))
+
+  (constraint dual-reading
+    (preserve
+      {:coactivated
+       [communication-reading anatomical-reading]}
+      {:strength :required}))
+)
