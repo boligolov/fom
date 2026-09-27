@@ -1,0 +1,44 @@
+(fom test-mention-use
+  {:kind :test
+   :language :ru}
+
+  (node moscow-city {:type :city})
+
+  (node moscow-name
+    {:type :signal-type
+     :form "Москва"})
+
+  (rel refers-to
+    {:signal moscow-name
+     :target moscow-city})
+
+  ;; Ordinary use.
+  (subgraph use-reading
+    (rel large
+      {:subject moscow-city}))
+
+  ;; Metalinguistic mention.
+  (subgraph mention-reading
+    (rel letter-count
+      {:subject moscow-name
+       :value 6}))
+
+  (constraint signal-referent-distinction
+    (fixed
+      (not (identity moscow-name moscow-city))))
+
+  (node signal-mention
+    {:type :signal
+     :form "Москва состоит из шести букв."})
+
+  (rel expresses
+    {:signal signal-mention
+     :meaning mention-reading})
+
+  (constraint no-city-letter-reading
+    (fixed
+      (not
+        (letter-count
+          {:subject moscow-city
+           :value 6}))))
+)
