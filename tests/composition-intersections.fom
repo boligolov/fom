@@ -1,0 +1,85 @@
+(fom test-composition-intersections
+  {:kind :test
+   :language :ru}
+
+  ;; "Он тонул, но не утонул."
+  ;; Process is compatible with failed culmination.
+  (node drowning-process {:type :event})
+  (node drowning-culmination {:type :event})
+  (node death-by-drowning {:type :state})
+
+  (rel drowning-1 drowning
+    {:event drowning-process
+     :patient ivan})
+
+  (rel culmination-1 culminates
+    {:process drowning-process
+     :event drowning-culmination})
+
+  (rel result-1 initiates
+    {:event drowning-culmination
+     :state death-by-drowning})
+
+  (scope reality
+    (accept drowning-process)
+    (reject drowning-culmination)
+    (reject death-by-drowning))
+
+  (constraint drowning-consistency
+    (consistent
+      [(accept reality drowning-process)
+       (reject reality drowning-culmination)]))
+
+  ;; "Иван почти перестал курить."
+  ;; STOP contributes prior smoking; ALMOST scopes over the cessation transition.
+  (subgraph smoking-habit
+    (habitual
+      {:event-pattern (smoke ivan)}))
+
+  (subgraph stop-smoking-transition
+    (presuppose
+      (prior smoking-habit))
+    (terminated smoking-habit))
+
+  (subgraph almost-stopped-smoking
+    (almost stop-smoking-transition))
+
+  (constraint almost-stop-not-complete
+    (reject reality stop-smoking-transition))
+
+  (constraint closeness-source-unresolved
+    (unknown
+      (relevant-scale
+        almost-stopped-smoking)))
+
+  ;; "Я разрешаю вам уйти." uttered without authority.
+  (node permission-signal
+    {:type :signal
+     :form "Я разрешаю вам уйти."})
+
+  (subgraph leave-content
+    (rel leave-1 leave
+      {:agent addressee}))
+
+  (delta permission-attempt
+    {:role :attempted
+     :agent speaker}
+    (add
+      (permission addressee leave-content)))
+
+  (constraint permission-felicity
+    (requires
+      (authorized speaker permission-domain)))
+
+  (scope unauthorized-context
+    {:mode :social-world}
+    (reject
+      (authorized speaker permission-domain)))
+
+  (constraint attempted-not-actual
+    (preserve
+      {:attempt permission-attempt
+       :actual-effect :none}
+      {:in unauthorized-context
+       :strength :required}))
+)
