@@ -6,7 +6,7 @@ Working list of unfinished FoM research and implementation tasks.
 
 - [ ] Define the canonical FoM schema precisely enough to implement a parser/canonicalizer.
 - [ ] Specify deterministic macro expansions for the standard library.
-- [ ] Define canonicalization / normal-form rules.
+- [x] Define canonicalization / normal-form rules.
 - [ ] Decide how stable IDs, generated IDs, and cross-document references work.
 - [ ] Specify module/import semantics for larger FoM documents.
 - [ ] Build a minimal parser for FoM Text.
@@ -23,8 +23,8 @@ Working list of unfinished FoM research and implementation tasks.
 - [ ] Finish scope overlay conflict rules.
 - [ ] Define constraint inheritance across scopes.
 - [ ] Define world-knowledge licensing during realization.
-- [ ] Define a sparse audience model.
-- [ ] Formalize deliberate multi-meaning / co-activation of readings.
+- [x] Define a sparse audience model.
+- [x] Formalize deliberate multi-meaning / co-activation of readings.
 - [ ] Test lexical polysemy, homonymy, puns, double entendre, and frame collision.
 - [ ] Test conventional implicatures and expressive meaning.
 - [ ] Test quotation, mention/use distinction, and metalinguistic negation.
@@ -53,10 +53,10 @@ Working list of unfinished FoM research and implementation tasks.
 
 - [ ] Add round-trip tests: FoM -> realization -> extraction -> semantic diff.
 - [ ] Complete the Winnie-the-Pooh round trip with an independent realization.
-- [ ] Add the historical anecdote combat test.
-- [ ] Add deliberate multi-meaning tests.
-- [ ] Add audience-dependent decoding tests.
-- [ ] Add source-report vs event-reality tests.
+- [x] Add the historical anecdote combat test.
+- [x] Add deliberate multi-meaning tests.
+- [x] Add audience-dependent decoding tests.
+- [x] Add source-report vs event-reality tests.
 - [ ] Add long-form trajectory tests with spoilers and delayed disclosure.
 - [ ] Add semantic corruption fixtures with expected validator outcomes.
 - [ ] Add refinement/abstraction equivalence tests.
