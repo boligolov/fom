@@ -264,3 +264,37 @@ scope-ID differences
 ```
 
 can still create structural diff noise.
+
+
+## Refinement / abstraction matching
+
+Semantic diff now has a first executable resolution-equivalence mechanism.
+
+A Concept Contract can declare how a coarse predicate may be refined into lower-level relations.
+
+The current test contract is:
+
+```
+transfer-control
+    -> controls-before(source, theme)
+    -> controls-after(recipient, theme)
+```
+
+When the contract is satisfied:
+
+```
+coarse source -> refined candidate
+    RESOLUTION = EQUIVALENT_UNDER_REFINEMENT
+
+refined source -> coarse candidate
+    RESOLUTION = EQUIVALENT_UNDER_ABSTRACTION
+```
+
+The matched coarse/refined relations are removed from ordinary CONTENT loss/invention reporting.
+
+Negative tests require:
+
+- every contract-required relation to be present;
+- source/candidate role bindings to match.
+
+This is not yet a general theorem prover. It is a contract-driven equivalence mechanism intended to make Minimum Sufficient Resolution testable.
