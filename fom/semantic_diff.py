@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
+from .alignment import align_node_aliases
 from .model import Atom, Expr, ListExpr, MapExpr, VectorExpr
 from .parser import parse
 from .signature import SemanticResolver
@@ -156,14 +157,18 @@ def _qualifier_value(
     return None
 
 
-def snapshot(text: str, path: str = "<memory>") -> Snapshot:
+def snapshot(
+    text: str,
+    path: str = "<memory>",
+    aliases: dict[str, str] | None = None,
+) -> Snapshot:
     validation = validate_text(text, path)
     if validation.errors:
         rendered = "\n".join(d.render() for d in validation.errors)
         raise ValueError(f"cannot diff invalid FoM:\n{rendered}")
 
     root = parse(text)
-    resolver = SemanticResolver(root)
+    resolver = SemanticResolver(root, aliases)
     norm = resolver.normalize
 
     relations: dict[str, RelationRecord] = {}
@@ -415,8 +420,24 @@ def diff_texts(
     source_path: str = "<source>",
     candidate_path: str = "<candidate>",
 ) -> dict[str, list[dict[str, Any]]]:
-    source = snapshot(source_text, source_path)
-    candidate = snapshot(candidate_text, candidate_path)
+    source_root = parse(source_text)
+    candidate_root = parse(candidate_text)
+
+    source_aliases, candidate_aliases = align_node_aliases(
+        source_root,
+        candidate_root,
+    )
+
+    source = snapshot(
+        source_text,
+        source_path,
+        source_aliases,
+    )
+    candidate = snapshot(
+        candidate_text,
+        candidate_path,
+        candidate_aliases,
+    )
 
     result: dict[str, list[dict[str, Any]]] = {
         "content": [],
