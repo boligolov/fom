@@ -7,8 +7,9 @@ Working list of unfinished FoM research and implementation tasks.
 - [x] Freeze broad semantic expansion while tooling and empirical validation catch up.
 - [x] Make the current FoM corpus parse and structurally validate in CI.
 - [x] Add first executable torture-test discipline rule against phenomenon-name predicates.
-- [ ] Add prior-art comparison matrix: FoM vs AMR/UMR, DRT/dynamic semantics, common ground, speech acts, Allen, supervaluation, questions/discourse frameworks.
-- [ ] Design and run annotation-agreement experiment.
+- [x] Add prior-art comparison matrix: FoM vs AMR/UMR, DRT/dynamic semantics, common ground, speech acts, Allen, supervaluation, questions/discourse frameworks.
+- [x] Design annotation-agreement experiment.
+- [ ] Run annotation-agreement pilot with independent annotators.
 - [ ] Define first narrow end-to-end use case: translation/retelling preservation validation.
 
 - [ ] Define the canonical FoM schema precisely enough to implement a parser/canonicalizer.
@@ -18,7 +19,8 @@ Working list of unfinished FoM research and implementation tasks.
 - [ ] Specify module/import semantics for larger FoM documents.
 - [x] Build a minimal parser for FoM Text.
 - [x] Build first-pass validator for syntax, references, bindings, scopes, and structural constraints.
-- [ ] Build a semantic-diff prototype.
+- [x] Build first executable semantic-diff subset (content, certainty, salience, inference, disclosure, fixed-unknown).
+- [ ] Extend semantic diff beyond ID-stable corruption fixtures.
 
 ## Semantics still under research
 
@@ -68,7 +70,7 @@ Working list of unfinished FoM research and implementation tasks.
 - [x] Add audience-dependent decoding tests.
 - [x] Add source-report vs event-reality tests.
 - [ ] Add long-form trajectory tests with spoilers and delayed disclosure.
-- [ ] Replace semantic-corruption declarations with executable source/candidate/expected-diff fixtures.
+- [x] Add executable source/candidate/expected-diff corruption fixtures for first six dimensions.
 - [ ] Add refinement/abstraction equivalence tests.
 - [ ] Add scope-inheritance conflict tests.
 - [ ] Add temporal-consistency tests.
