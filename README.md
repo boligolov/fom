@@ -69,13 +69,18 @@ The repository now includes a dependency-free Python parser and static validator
 Run:
 
 ```bash
-python -m fom check examples tests
+python -m fom check examples tests experiments/translation-retelling/gold
+python -m fom canonical examples/story-001-platform.fom
 python -m fom diff tests/fixtures/corruption/source.fom tests/fixtures/corruption/content.fom
 ```
 
 The validator currently checks the surface grammar, declaration/reference integrity, duplicate IDs, lexical variable binding, and several structural forms. GitHub Actions runs both Python unit tests and validation of the full `.fom` corpus.
 
 The corpus currently passes CI. This is intentionally only a **structural validity** milestone; it is not yet a proof of semantic correctness.
+
+The first-pass canonicalizer emits deterministic JSON records and normalizes map ordering, scope-status shorthand, anonymous applications, and pattern variable names.
+
+Semantic diff no longer requires identical relation/subgraph IDs. It also performs conservative node alignment when a node's structural fingerprint is unique on both sides. Ambiguous symmetric nodes are deliberately left unmatched rather than guessed.
 
 Torture tests also have an executable discipline check that forbids selected phenomenon names from being smuggled into semantic predicate heads. This is an initial guard against making a test unfalsifiable by naming the phenomenon being tested.
 
