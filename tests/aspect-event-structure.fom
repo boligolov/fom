@@ -2,7 +2,10 @@
   {:kind :test
    :language :ru}
 
-  ;; Иван строил дом, но не построил его.
+  (node ivan {:type :person})
+  (node house {:type :object})
+  (node door {:type :object})
+
   (node build-process {:type :event})
   (node build-culmination {:type :event})
   (node house-complete {:type :state})
@@ -30,7 +33,6 @@
       [(accept reality build-process)
        (reject reality build-culmination)]))
 
-  ;; Дверь открылась: result without invented agent.
   (node open-transition {:type :event})
   (node door-open-state {:type :state})
 
@@ -42,14 +44,12 @@
   (constraint no-agent-invention
     (unknown (agent-of open-transition)))
 
-  ;; Иван перестал курить.
   (subgraph stop-smoking
     (presuppose
       (prior (habitual (smoke ivan))))
     (accept reality
       (terminated (habitual (smoke ivan)))))
 
-  ;; Three knocks != habitual knocking.
   (pattern three-knocks [?e]
     (where
       (knock-event ?e)
