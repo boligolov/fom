@@ -1,0 +1,24 @@
+(fom corruption-inference
+  {:kind :diff-fixture}
+  (node lena {:type :person})
+  (node victor {:type :person})
+  (node letter {:type :object})
+  (node reveal-early {:type :checkpoint})
+  (node reveal-late {:type :checkpoint})
+  (subgraph departure
+    (rel departure-event leaves {:actor lena :time :tomorrow}))
+  (subgraph distress-conclusion (distressed victor))
+  (subgraph calm-conclusion (calm victor))
+  (rel fold-action folds-carefully {:actor victor :object letter})
+  (rel fold-inference evidence-for
+    {:evidence fold-action :conclusion calm-conclusion})
+  (scope victor-model
+    {:owner victor}
+    (accept departure {:certainty :high :salience :high}))
+  (constraint reason-unknown
+    (fixed-unknown (reason-for departure)))
+  (constraint reveal-rule
+    (disclosure departure
+      {:prohibited-before reveal-early
+       :required-after reveal-late}))
+)
