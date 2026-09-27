@@ -488,6 +488,33 @@ def diff_texts(
             }
         )
 
+    abstraction_matches = find_refinement_matches(
+        candidate_text,
+        source_text,
+    )
+
+    for match in abstraction_matches:
+        candidate_coarse_id = match.source_relation_id
+        source_refined_ids = set(match.candidate_relation_ids)
+
+        if candidate_coarse_id not in candidate_left:
+            continue
+        if not source_refined_ids.issubset(source_left):
+            continue
+
+        candidate_left.discard(candidate_coarse_id)
+        for rel_id in source_refined_ids:
+            source_left.discard(rel_id)
+
+        result["resolution"].append(
+            {
+                "id": candidate_coarse_id,
+                "status": "EQUIVALENT_UNDER_ABSTRACTION",
+                "contract": match.contract_name,
+                "source_relations": sorted(source_refined_ids),
+            }
+        )
+
     candidate_by_record: dict[RelationRecord, list[str]] = {}
     for rel_id, record in candidate.relations.items():
         candidate_by_record.setdefault(record, []).append(rel_id)
