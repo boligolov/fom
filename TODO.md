@@ -22,7 +22,8 @@ Working list of unfinished FoM research and implementation tasks.
 - [x] Build first-pass validator for syntax, references, bindings, scopes, and structural constraints.
 - [x] Build first executable semantic-diff subset (content, certainty, salience, inference, disclosure, fixed-unknown).
 - [x] Remove relation/subgraph ID dependence and add conservative unique-node structural alignment.
-- [ ] Extend semantic diff to ambiguous graph matching, refinement/abstraction and independently decomposed graphs.
+- [ ] Extend semantic diff to ambiguous graph matching and broadly independently decomposed graphs.
+- [x] Add first contract-driven refinement/abstraction matching.
 
 ## Semantics still under research
 
@@ -80,7 +81,7 @@ Working list of unfinished FoM research and implementation tasks.
 - [ ] Add long-form trajectory tests with spoilers and delayed disclosure.
 - [x] Add executable controlled corruption fixtures for eight dimensions.
 - [x] Tie seven post-freeze benchmark cases to executable gold FoM source/corrupted pairs.
-- [ ] Add refinement/abstraction equivalence tests.
+- [x] Add first executable refinement/abstraction equivalence tests using Concept Contracts.
 - [ ] Add scope-inheritance conflict tests.
 - [ ] Add temporal-consistency tests.
 - [ ] Add de se / de re mistaken-identity tests.
