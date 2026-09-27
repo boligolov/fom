@@ -32,6 +32,7 @@ def head(expr: Expr) -> str | None:
 @dataclass
 class SemanticResolver:
     root: Expr
+    aliases: dict[str, str] | None = None
 
     def __post_init__(self) -> None:
         self.relations: dict[str, ListExpr] = {}
@@ -96,6 +97,9 @@ class SemanticResolver:
                         name,
                         stack + (key,),
                     )
+
+                if self.aliases and name in self.aliases:
+                    return ("symbol", self.aliases[name])
 
             return (expr.kind, expr.value)
 
