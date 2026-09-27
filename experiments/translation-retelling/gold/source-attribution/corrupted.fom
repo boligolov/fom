@@ -1,0 +1,16 @@
+(fom source-attribution-corrupted
+  {:case :source-attribution}
+
+  (node marina {:type :person})
+  (node bridge {:type :object})
+
+  (subgraph closure
+    (rel bridge-closed closed
+      {:object bridge
+       :time :overnight}))
+
+  (scope narrator
+    {:mode :narrator}
+    (accept closure
+      {:certainty :high}))
+)
