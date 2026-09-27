@@ -1,0 +1,84 @@
+(fom test-non-at-issue
+  {:kind :test
+   :language :ru}
+
+  ;; "Даже Иван пришёл."
+  (node signal-even
+    {:type :signal
+     :form "Даже Иван пришёл."})
+
+  (subgraph even-assertion
+    (rel came-ivan came
+      {:actor ivan}))
+
+  (subgraph even-scale
+    (rel ranked-lower-expectation
+      {:member ivan
+       :alternatives relevant-people
+       :dimension :expected-to-come}))
+
+  (rel even-main expresses
+    {:signal signal-even
+     :meaning even-assertion
+     :mode :asserted})
+
+  (rel even-side conventionally-activates
+    {:signal signal-even
+     :meaning even-scale
+     :mode :scalar})
+
+  ;; "Иван бедный, но честный."
+  (node signal-but
+    {:type :signal
+     :form "Иван бедный, но честный."})
+
+  (subgraph but-content
+    (rel poor-1 poor {:subject ivan})
+    (rel honest-1 honest {:subject ivan}))
+
+  (subgraph but-contrast
+    (rel contrasts-with-expectation
+      {:content (honest ivan)
+       :expectation-source contextual-stereotype
+       :trigger (poor ivan)}))
+
+  (rel but-main expresses
+    {:signal signal-but
+     :meaning but-content
+     :mode :asserted})
+
+  (rel but-side conventionally-activates
+    {:signal signal-but
+     :meaning but-contrast
+     :mode :contrast})
+
+  ;; "Иван, этот идиот, пришёл."
+  (node signal-expressive
+    {:type :signal
+     :form "Иван, этот идиот, пришёл."})
+
+  (subgraph expressive-assertion
+    (rel came-2 came {:actor ivan}))
+
+  (subgraph expressive-evaluation
+    (rel negative-evaluation
+      {:evaluator speaker
+       :target ivan
+       :content :idiot}))
+
+  (rel ex-main expresses
+    {:signal signal-expressive
+     :meaning expressive-assertion
+     :mode :asserted})
+
+  (rel ex-side conventionally-expresses
+    {:signal signal-expressive
+     :meaning expressive-evaluation
+     :mode :expressive})
+
+  (constraint preserve-channels
+    (preserve
+      {:asserted expressive-assertion
+       :expressive expressive-evaluation}
+      {:strength :required}))
+)
