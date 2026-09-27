@@ -1,0 +1,39 @@
+(fom test-scope-overlay-shadow
+  {:kind :test}
+
+  (scope base
+    {:mode :reality}
+    (accept P)
+    (accept Q))
+
+  ;; Child keeps Q, but deliberately removes commitment to P.
+  (scope child
+    {:inherits-status-from base
+     :inherit-mode :overlay}
+
+    (uncommit P))
+
+  (constraint expected-child-view
+    (preserve
+      {:scope child
+       :status-P :uncommitted
+       :status-Q :accept}
+      {:strength :required}))
+
+  ;; Multiple bases conflict.
+  (scope base-a
+    (accept R))
+
+  (scope base-b
+    (reject R))
+
+  (scope merged
+    {:inherits-status-from [base-a base-b]
+     :inherit-mode :overlay})
+
+  (constraint preserve-base-conflict
+    (unresolved
+      {:scope merged
+       :content R
+       :indeterminacy-source :source-conflict}))
+)
