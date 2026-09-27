@@ -4,9 +4,10 @@
   (node lena {:type :person})
   (node victor {:type :person})
   (node letter {:type :object})
+  (node letter-read {:type :checkpoint})
 
   (subgraph base-content
-    (rel leaves
+    (rel leave-event leaves
       {:actor lena
        :time :tomorrow}))
 
@@ -18,55 +19,60 @@
   (constraint disclosure
     (disclosure
       base-content
-      {:before :letter-read :prohibited
-       :after :letter-read :required}))
+      {:prohibited-before letter-read
+       :required-after letter-read}))
 
   (subgraph restrained-reaction
-    (rel folds-carefully
+    (rel fold-action folds-carefully
       {:actor victor
        :object letter})
-    (rel evidence-for
+    (rel fold-evidence evidence-for
       {:evidence (folds-carefully victor letter)
        :conclusion (distress victor)
        :explicitness :inferable}))
 
-  ;; Expected corruption classes for validators / diff tools.
+  (constraint corruption-content
+    (expected-diff {:content :contradicted}))
 
-  (node corruption-content
-    {:expected-diff {:content :contradicted}})
+  (constraint corruption-certainty
+    (expected-diff {:epistemic-status :weakened}))
 
-  (node corruption-certainty
-    {:expected-diff {:epistemic-status :weakened}})
+  (constraint corruption-explicitness
+    (expected-diff
+      {:content :preserved
+       :explicitness :strengthened
+       :inference-path :lost}))
 
-  (node corruption-explicitness
-    {:expected-diff {:content :preserved
-                     :explicitness :strengthened
-                     :inference-path :lost}})
+  (constraint corruption-timing
+    (expected-diff
+      {:content :preserved
+       :timing :early
+       :trajectory :contradicted}))
 
-  (node corruption-timing
-    {:expected-diff {:content :preserved
-                     :timing :early
-                     :trajectory :contradicted}})
+  (constraint corruption-focus
+    (expected-diff
+      {:content :preserved
+       :focus :weakened}))
 
-  (node corruption-focus
-    {:expected-diff {:content :preserved
-                     :focus :weakened}})
+  (constraint corruption-affect
+    (expected-diff
+      {:content :preserved
+       :affect :contradicted}))
 
-  (node corruption-affect
-    {:expected-diff {:content :preserved
-                     :affect :contradicted}})
+  (constraint corruption-inference
+    (expected-diff
+      {:event :preserved
+       :signal-meaning :contradicted
+       :inference-path :broken}))
 
-  (node corruption-inference
-    {:expected-diff {:event :preserved
-                     :signal-meaning :contradicted
-                     :inference-path :broken}})
+  (constraint corruption-fixed-unknown
+    (expected-diff
+      {:fixed-unknown :violated
+       :invention :unlicensed}))
 
-  (node corruption-fixed-unknown
-    {:expected-diff {:fixed-unknown :violated
-                     :invention :unlicensed}})
-
-  (node corruption-presupposition
-    {:expected-diff {:content :preserved
-                     :presupposition :invented
-                     :prior-state :contradicted}})
+  (constraint corruption-presupposition
+    (expected-diff
+      {:content :preserved
+       :presupposition :invented
+       :prior-state :contradicted}))
 )
