@@ -12,7 +12,8 @@ Working list of unfinished FoM research and implementation tasks.
 - [ ] Run annotation-agreement pilot with independent annotators (requires genuinely independent annotators/models).
 - [x] Define first narrow end-to-end use case: translation/retelling preservation validation.
 
-- [ ] Define the canonical FoM schema precisely enough to implement a parser/canonicalizer.
+- [x] Define enough canonical schema for first-pass parser/canonicalizer implementation.
+- [ ] Tighten canonical schema for macros, provenance, extension contracts and generated-ID stability.
 - [ ] Specify deterministic macro expansions for the standard library.
 - [x] Define canonicalization / normal-form rules.
 - [ ] Decide how stable IDs, generated IDs, and cross-document references work.
@@ -20,7 +21,8 @@ Working list of unfinished FoM research and implementation tasks.
 - [x] Build a minimal parser for FoM Text.
 - [x] Build first-pass validator for syntax, references, bindings, scopes, and structural constraints.
 - [x] Build first executable semantic-diff subset (content, certainty, salience, inference, disclosure, fixed-unknown).
-- [ ] Extend semantic diff beyond ID-stable corruption fixtures.
+- [x] Remove relation/subgraph ID dependence and add conservative unique-node structural alignment.
+- [ ] Extend semantic diff to ambiguous graph matching, refinement/abstraction and independently decomposed graphs.
 
 ## Semantics still under research
 
@@ -94,7 +96,7 @@ Working list of unfinished FoM research and implementation tasks.
 ## Engineering
 
 - [x] Implement FoM Text parser.
-- [ ] Implement canonicalizer.
+- [x] Implement first-pass canonicalizer (structural normalization; macro expansion and full schema remain incomplete).
 - [x] Implement first-pass structural/schema validator.
 - [ ] Implement macro expander.
 - [ ] Implement graph visualizer.
