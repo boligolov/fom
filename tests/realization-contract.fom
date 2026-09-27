@@ -2,6 +2,8 @@
   {:kind :test}
 
   (node person-x {:type :person})
+  (node guests {:type :group})
+  (node source-pun-form {:type :signal})
 
   (constraint gender-unknown
     (fixed-unknown
@@ -10,16 +12,14 @@
   (subgraph arrival
     (rel arrive-1 arrived
       {:actor person-x
-       :time yesterday}))
+       :time :yesterday}))
 
-  ;; A candidate realization that exposes a gender value would fail.
   (constraint no-forced-gender
     (preserve
       (gender person-x)
       {:aspect :unknown
        :strength :required}))
 
-  ;; Multi-meaning may license lexical invention.
   (subgraph reading-a
     (rel role-a guest-participant
       {:referent guests}))
@@ -41,7 +41,6 @@
       {:aspect :form
        :strength :optional}))
 
-  ;; A free realization slot.
   (node weather-detail
     {:type :realization-slot
      :freedom :free})
@@ -49,5 +48,6 @@
   (constraint invention-audit
     (licensed-only
       {:must-not-resolve [gender-unknown]
-       :must-preserve [pun-function]}))
+       :must-preserve [pun-function]
+       :free-slots [weather-detail]}))
 )
