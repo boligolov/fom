@@ -1,0 +1,70 @@
+(fom test-vagueness-comparatives
+  {:kind :test
+   :language :ru}
+
+  (node height-scale {:type :scale})
+  (node context-adults {:type :comparison-class})
+
+  (rel deg-ivan degree
+    {:subject ivan
+     :dimension :height
+     :scale height-scale
+     :value ?ivan-height})
+
+  (rel deg-petr degree
+    {:subject petr
+     :dimension :height
+     :scale height-scale
+     :value ?petr-height})
+
+  ;; Comparative can be determinate.
+  (constraint ivan-taller
+    (> ?ivan-height ?petr-height))
+
+  ;; Positive vague predicate via admissible precisifications.
+  (scope tall-precisification-a
+    {:mode :precisification}
+    (accept
+      (threshold
+        {:predicate tall
+         :comparison-class context-adults
+         :value threshold-a}))
+    (accept (tall ivan)))
+
+  (scope tall-precisification-b
+    {:mode :precisification}
+    (accept
+      (threshold
+        {:predicate tall
+         :comparison-class context-adults
+         :value threshold-b}))
+    (reject (tall ivan)))
+
+  (constraint ivan-borderline-tall
+    (borderline
+      {:content (tall ivan)
+       :precisifications
+       [tall-precisification-a
+        tall-precisification-b]
+       :source :vagueness}))
+
+  ;; Much taller = comparative + contextually large gap.
+  (constraint much-taller
+    (contextually-large
+      (difference ?ivan-height ?petr-height)))
+
+  ;; Superlative over a comparison class.
+  (pattern tallest-in-group [?x]
+    (where
+      (member-of ?x group))
+    (require
+      (>= ?ivan-height
+          (degree-of ?x :height))))
+
+  (constraint ivan-tallest
+    (for-each [?x]
+      (where (member-of ?x group))
+      (require
+        (>= ?ivan-height
+            (degree-of ?x :height)))))
+)
