@@ -1,0 +1,43 @@
+(fom test-indeterminacy-provenance
+  {:kind :test}
+
+  (scope epistemic-unknown
+    {:owner alice}
+    (unknown
+      (home ivan)
+      {:indeterminacy-source :missing-evidence}))
+
+  (node ref-slot {:type :unresolved-reference})
+  (constraint reference-ambiguity
+    (ambiguity
+      {:target ref-slot
+       :candidates [ivan petr]
+       :indeterminacy-source :reference-ambiguity}))
+
+  (constraint vague-tall
+    (borderline
+      {:content (tall ivan)
+       :precisifications [p1 p2]
+       :indeterminacy-source :vagueness}))
+
+  (scope source-a
+    (accept P))
+  (scope source-b
+    (reject P))
+
+  (constraint conflicting-sources
+    (unresolved
+      {:content P
+       :evidence-scopes [source-a source-b]
+       :indeterminacy-source :source-conflict}))
+
+  (constraint withheld-secret
+    (unknown
+      secret-content
+      {:indeterminacy-source :withheld}))
+
+  (constraint required-unknown
+    (fixed-unknown
+      secret-content
+      {:indeterminacy-source :fixed-unknown}))
+)
