@@ -1,0 +1,8 @@
+(fom attribution-loss
+  {:kind :diff-fixture}
+
+  (node alice {:type :person})
+
+  (subgraph proposition-p
+    (train-left))
+)
