@@ -1,0 +1,17 @@
+[[concepts]]
+predicate = "transfer-control"
+roles = ["source", "theme", "recipient"]
+
+[[concepts.refinement]]
+predicate = "controls-before"
+
+[concepts.refinement.args]
+holder = "$source"
+theme = "$theme"
+
+[[concepts.refinement]]
+predicate = "controls-after"
+
+[concepts.refinement.args]
+holder = "$recipient"
+theme = "$theme"
