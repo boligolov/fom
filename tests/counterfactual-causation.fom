@@ -1,0 +1,79 @@
+(fom test-counterfactual-causation
+  {:kind :test
+   :language :ru}
+
+  ;; "Если бы не дождь, матч бы состоялся."
+  (scope reality
+    {:mode :reality}
+    (accept (rain))
+    (reject (match-held)))
+
+  (scope no-rain-counterfactual
+    {:mode :counterfactual
+     :imports [reality]
+     :inherits-status-from reality
+     :inherit-mode :overlay}
+
+    (reject (rain))
+    (accept (match-held)))
+
+  (rel cf1 counterfactual-alternative
+    {:base reality
+     :alternative no-rain-counterfactual
+     :override (not (rain))})
+
+  (rel dep1 counterfactually-depends-on
+    {:outcome (match-held)
+     :condition (not (rain))
+     :scope no-rain-counterfactual})
+
+  ;; Causal interpretation is separate.
+  (scope causal-hypothesis
+    {:mode :analysis}
+    (accept
+      (causes rain match-cancellation)
+      {:certainty :plausible}))
+
+  ;; "Возможно, пожар начался из-за короткого замыкания."
+  (subgraph causal-claim
+    (rel cause-fire causes
+      {:cause short-circuit
+       :effect fire}))
+
+  (subgraph possible-cause
+    (possible
+      {:content causal-claim
+       :base fire-investigation-evidence}))
+
+  ;; Temporal order alone is not causal.
+  (rel temporal-only before
+    {:left short-circuit
+     :right fire})
+
+  (constraint no-temporal-collapse
+    (not
+      (entails-by-default
+        temporal-only
+        cause-fire)))
+
+  ;; Overdetermination: both fires present.
+  (scope overdetermination
+    {:mode :reality}
+    (accept fire-a)
+    (accept fire-b)
+    (accept house-destroyed))
+
+  (scope remove-fire-a
+    {:mode :counterfactual
+     :inherits-status-from overdetermination
+     :inherit-mode :overlay}
+    (reject fire-a)
+    (accept fire-b)
+    (accept house-destroyed))
+
+  (constraint but-for-not-definition
+    (not
+      (definitionally-equivalent
+        (cause fire-a house-destroyed)
+        (counterfactual-dependence house-destroyed fire-a))))
+)
