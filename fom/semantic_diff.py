@@ -6,6 +6,7 @@ from typing import Any
 from .alignment import align_node_aliases
 from .model import Atom, Expr, ListExpr, MapExpr, VectorExpr
 from .macros import parse_expanded as parse
+from .status import STATUS_FORMS, status_value
 from .refinement import find_refinement_matches
 from .signature import SemanticResolver
 from .validator import validate_text
@@ -241,11 +242,13 @@ def snapshot(
                 walk(child, scope_id)
             return
 
-        if head in {"accept", "reject"}:
+        if head in STATUS_FORMS:
             args = list(expr.items[1:])
             scope_id = current_scope
 
-            if scope_id is not None and len(args) in {1, 2}:
+            if scope_id is not None and (len(args) == 1 or (
+                len(args) == 2 and isinstance(args[1], MapExpr)
+            )):
                 content = args[0]
                 q = (
                     args[1]
@@ -267,7 +270,7 @@ def snapshot(
 
             if scope_id is not None:
                 statuses[(scope_id, norm(content))] = StatusRecord(
-                    head,
+                    status_value(head),
                     _qualifier_tuple(q, norm),
                 )
             return

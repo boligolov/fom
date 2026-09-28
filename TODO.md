@@ -84,7 +84,7 @@ Working list of unfinished FoM research and implementation tasks.
 - [x] Add executable controlled corruption fixtures for eight dimensions.
 - [x] Tie seven post-freeze benchmark cases to executable gold FoM source/corrupted pairs.
 - [x] Add first executable refinement/abstraction equivalence tests using Concept Contracts.
-- [ ] Add scope-inheritance conflict tests.
+- [x] Add executable scope-inheritance conflict, shadow, cycle, and isolation tests.
 - [ ] Add temporal-consistency tests.
 - [ ] Add de se / de re mistaken-identity tests.
 
@@ -106,6 +106,7 @@ Working list of unfinished FoM research and implementation tasks.
 - [ ] Implement graph visualizer.
 - [x] Implement first executable semantic-diff subset.
 - [ ] Implement semantic constraint evaluator beyond static structural validation.
+- [x] Implement first derived scope-status resolver for none/overlay inheritance and explicit uncommitted shadows (not a generic constraint evaluator).
 - [ ] Implement simple realizer/extractor experiments.
 - [x] Add CI tests; full current FoM corpus passes structural validation.
 

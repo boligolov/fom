@@ -5,6 +5,7 @@ from typing import Any
 
 from .model import Atom, Expr, ListExpr, MapExpr, VectorExpr
 from .macros import expand_macros
+from .status import STATUS_FORMS, status_value
 from .parser import parse
 from .validator import validate_text
 
@@ -331,13 +332,15 @@ class Canonicalizer:
         env: dict[str, str] | None,
     ) -> str | None:
         status = _head(expr)
-        assert status in {"accept", "reject"}
+        assert status in STATUS_FORMS
 
         args = list(expr.items[1:])
         scope_id = current_scope
         qualifiers: MapExpr | None = None
 
-        if current_scope is not None and len(args) in {1, 2}:
+        if current_scope is not None and (len(args) == 1 or (
+            len(args) == 2 and isinstance(args[1], MapExpr)
+        )):
             content = args[0]
             if len(args) == 2 and isinstance(args[1], MapExpr):
                 qualifiers = args[1]
@@ -355,7 +358,7 @@ class Canonicalizer:
                 "id": status_id,
                 "kind": "status",
                 "scope": {"ref": scope_id} if scope_id else None,
-                "value": status,
+                "value": status_value(status),
                 "content": self._value(content, env),
                 "qualifiers": self._metadata(qualifiers, env),
             }
@@ -546,7 +549,7 @@ class Canonicalizer:
         if record_id is not None:
             origin = (
                 "status-form"
-                if _head(expr) in {"accept", "reject"}
+                if _head(expr) in STATUS_FORMS
                 else "declaration"
             )
             self._record_origin(record_id, expr, origin)
@@ -665,7 +668,7 @@ class Canonicalizer:
 
             return scope_id
 
-        if head in {"accept", "reject"}:
+        if head in STATUS_FORMS:
             return self._process_status(
                 expr,
                 current_scope,

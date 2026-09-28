@@ -5,6 +5,7 @@ from dataclasses import dataclass, replace
 
 from .model import Atom, Expr, ListExpr, MapExpr, VectorExpr
 from .parser import parse
+from .status import STATUS_FORMS
 
 
 class MacroError(ValueError):
@@ -70,7 +71,7 @@ def expand_macros(root: Expr) -> tuple[Expr, list[Expansion]]:
         if name == "scope":
             # A new perspective never silently borrows the outer center or owner.
             center = declared_center(expr)
-        elif (name in {"accept", "reject"} and len(expr.items) in {3, 4}
+        elif (name in STATUS_FORMS and len(expr.items) in {3, 4}
               and isinstance(expr.items[1], Atom) and expr.items[1].kind == "symbol"
               and not isinstance(expr.items[2], MapExpr)):
             # Explicit status scope is equivalent to lexical status shorthand.

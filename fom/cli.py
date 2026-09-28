@@ -6,6 +6,7 @@ from pathlib import Path
 
 from .canonical import canonicalize_text
 from .semantic_diff import diff_texts, nonempty_diff
+from .scope_resolution import resolve_status
 from .validator import validate_path
 
 
@@ -163,6 +164,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="include source locations for canonical records",
     )
 
+    resolve = sub.add_parser("resolve", help="resolve an exact content reference in a scope")
+    resolve.add_argument("path")
+    resolve.add_argument("scope")
+    resolve.add_argument("content")
+
     return parser
 
 
@@ -184,5 +190,15 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "canonical":
         return cmd_canonical(args.path, args.provenance)
+
+    if args.command == "resolve":
+        try:
+            graph = canonicalize_text(Path(args.path).read_text(encoding="utf-8"), args.path)
+            result = resolve_status(graph, args.scope, args.content)
+        except (OSError, ValueError) as exc:
+            print(f"fom resolve: {exc}")
+            return 2
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+        return 0
 
     return 2

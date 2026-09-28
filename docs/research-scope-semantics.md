@@ -299,3 +299,41 @@ local REJECT
 ```
 
 This remains compatible with the five-part Core but must be represented in the canonical graph.
+
+## 16. Executable resolution profile
+
+`python -m fom resolve FILE SCOPE CONTENT_ID` now resolves one exact canonical
+content reference. The API is `resolve_status(canonical_graph, scope_id, content_id)`.
+This profile implements `none` and `overlay`; selective inheritance, explicit
+base precedence, and generic constraint evaluation remain unimplemented.
+
+Both `uncommit` (used by the original shadow fixture) and `uncommitted` are
+status forms normalized to canonical `uncommitted`, alongside ACCEPT/REJECT.
+They support lexical shorthand, explicit scopes, and optional qualifiers.
+Previously the canonicalizer silently dropped the fixture's `uncommit` form.
+
+The result contains `status`, the distinct explicit `alternatives`, and
+`evidence` with originating record IDs, scopes, values, and qualifiers.
+No explicit evidence yields `uncommitted` with an empty evidence list.
+An explicit shadow yields `uncommitted` with evidence, preserving this distinction.
+
+Local records override all inherited records for the queried content. Multiple
+incompatible local records or inherited records yield `conflict`, a result
+classification rather than a fourth stored truth value. Missing status in one
+base contributes no claim; an explicit shadow in one base and ACCEPT in another
+are conflicting claims when no local override exists. Qualifiers are retained
+per evidence record and are not merged or ordered by confidence.
+
+Shared ancestor evidence in diamond inheritance is deduplicated by record ID.
+Imports and lexical nesting never imply inheritance. Overlay cycles, unknown
+scope/content references, non-scope bases, and unsupported inheritance modes
+raise errors. Cycles are checked even when a local record would mask their
+current result. The input graph and all parent records remain unchanged.
+
+Content matching here is exact reference identity. Independently reified
+anonymous applications are not unified by this resolver. Use a named relation
+or subgraph for content shared across scopes. Semantic diff still compares
+explicit status records; it does not yet compare these derived inherited views.
+
+The original `scope-overlay-shadow.fom` fixture is now checked executably for
+the child shadow, inherited Q, unchanged parent P, and conflicting merged R.

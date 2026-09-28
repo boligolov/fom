@@ -5,6 +5,7 @@ from pathlib import Path
 
 from .lexer import LexError
 from .macros import MacroError, parse_expanded
+from .status import STATUS_FORMS
 from .model import Atom, Expr, ListExpr, Loc, MapExpr, VectorExpr
 from .parser import ParseError
 
@@ -462,7 +463,7 @@ class Validator:
             )
             return
 
-        if head in {"accept", "reject"}:
+        if head in STATUS_FORMS:
             self._validate_status(
                 expr,
                 current_scope,

@@ -72,6 +72,7 @@ Run:
 python -m fom check examples tests experiments/translation-retelling/gold
 python -m fom canonical examples/story-001-platform.fom
 python -m fom canonical examples/story-001-platform.fom --provenance
+python -m fom resolve tests/scope-overlay-shadow.fom child p-content
 python -m fom diff tests/fixtures/corruption/source.fom tests/fixtures/corruption/content.fom
 ```
 
@@ -88,6 +89,11 @@ and do not change the semantic records or generated IDs.
 The first executable macro, `SELF`, resolves to the current scope's explicit
 center across validation, canonicalization, and semantic diff. Invalid or
 missing centers are rejected. Other standard macros are not yet expanded.
+
+`resolve` computes a derived status for an exact content reference in a scope.
+It supports `none`/`overlay`, explicit uncommitted shadows, and preserved
+conflicts between bases, without mutating the canonical graph. This is a
+first executable scope view, not a general semantic constraint evaluator.
 
 Semantic diff no longer requires identical relation/subgraph IDs. It also performs conservative node alignment when a node's structural fingerprint is unique on both sides. Ambiguous symmetric nodes are deliberately left unmatched rather than guessed.
 

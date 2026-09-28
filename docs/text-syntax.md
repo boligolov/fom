@@ -402,6 +402,12 @@ The following properties are reserved for scope linkage:
 
 `:inherits-status-from` controls semantic-status inheritance.
 
+Explicit status shadows use `(uncommit content)` inside a scope or
+`(uncommit scope content)` outside it. `uncommitted` is an equivalent spelling.
+Both accept an optional qualifier map and canonicalize to a status record
+whose value is `uncommitted`. A shadow is different from an absent status:
+it masks inherited ACCEPT/REJECT without rejecting the content.
+
 No status inheritance occurs merely because `:parent` is present.
 
 ## 11. ACCEPT and REJECT

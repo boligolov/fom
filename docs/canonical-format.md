@@ -499,3 +499,9 @@ An explicit local `uncommitted` record masks inherited status.
 If multiple inherited bases provide incompatible statuses and no precedence rule is declared, canonicalization must preserve the conflict rather than choose one.
 
 Constraint inheritance is independent from status inheritance and defaults to none.
+
+The `resolve` command implements a derived view for `none` and `overlay`.
+It preserves explicit evidence and returns `conflict` for incompatible
+statuses instead of selecting a base arbitrarily. It does not rewrite this
+canonical representation or resolve generic constraints. See the executable
+profile in [scope semantics](research-scope-semantics.md#16-executable-resolution-profile).
