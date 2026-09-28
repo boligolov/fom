@@ -55,6 +55,7 @@ Working list of unfinished FoM research and implementation tasks.
 - [ ] Formalize event phase / culmination / result patterns in the standard library.
 
 - [ ] Run layered-architecture experiment: standalone FoM vs UMR/content carrier + FoM overlay on the post-freeze corpus.
+- [x] Run seven-pair carrier/overlay feasibility pilot and audit all ten source cases; independent annotation cost/agreement and actual UMR validation remain open (experiments/layered_architecture).
 - [ ] Define a representation-agnostic semantic-carrier interface if the layered experiment succeeds.
 
 ## Representation questions

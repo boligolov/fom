@@ -1,0 +1,291 @@
+{
+  "protocol": "v1",
+  "carrier": "experiment-specific; not UMR",
+  "corpus_cases": 10,
+  "executable_cases": 7,
+  "missing_gold": [
+    "failed-declaration",
+    "conflicting-sources",
+    "exact-note"
+  ],
+  "annotation_time": null,
+  "independent_agreement": null,
+  "totals": {
+    "standalone": 7,
+    "layered": 7,
+    "carrier_only": 2
+  },
+  "rows": [
+    {
+      "case": "unknown-owner",
+      "expected": "fixed_unknown/LOST",
+      "hits": {
+        "standalone": true,
+        "layered": true,
+        "carrier_only": false
+      },
+      "signatures": {
+        "standalone": [
+          "content/INVENTED",
+          "fixed_unknown/LOST"
+        ],
+        "layered": [
+          "content/INVENTED",
+          "fixed_unknown/LOST"
+        ],
+        "carrier_only": [
+          "content/INVENTED"
+        ]
+      },
+      "self_controls": {
+        "standalone": [],
+        "layered": [],
+        "carrier_only": []
+      },
+      "source_records": {
+        "standalone": 5,
+        "layered_total": 5,
+        "carrier": 3,
+        "overlay": 2
+      },
+      "source_bytes": {
+        "standalone_fom": 279,
+        "layered_compact_json": 413
+      }
+    },
+    {
+      "case": "source-attribution",
+      "expected": "source_attribution/LOST",
+      "hits": {
+        "standalone": true,
+        "layered": true,
+        "carrier_only": true
+      },
+      "signatures": {
+        "standalone": [
+          "epistemic_status/INVENTED",
+          "epistemic_status/LOST",
+          "source_attribution/LOST"
+        ],
+        "layered": [
+          "epistemic_status/INVENTED",
+          "epistemic_status/LOST",
+          "source_attribution/LOST"
+        ],
+        "carrier_only": [
+          "epistemic_status/INVENTED",
+          "epistemic_status/LOST",
+          "source_attribution/LOST"
+        ]
+      },
+      "self_controls": {
+        "standalone": [],
+        "layered": [],
+        "carrier_only": []
+      },
+      "source_records": {
+        "standalone": 8,
+        "layered_total": 8,
+        "carrier": 8,
+        "overlay": 0
+      },
+      "source_bytes": {
+        "standalone_fom": 415,
+        "layered_compact_json": 551
+      }
+    },
+    {
+      "case": "inference-route",
+      "expected": "inference_path/LOST",
+      "hits": {
+        "standalone": true,
+        "layered": true,
+        "carrier_only": false
+      },
+      "signatures": {
+        "standalone": [
+          "epistemic_status/INVENTED",
+          "inference_path/LOST"
+        ],
+        "layered": [
+          "epistemic_status/INVENTED",
+          "inference_path/LOST"
+        ],
+        "carrier_only": [
+          "epistemic_status/INVENTED"
+        ]
+      },
+      "self_controls": {
+        "standalone": [],
+        "layered": [],
+        "carrier_only": []
+      },
+      "source_records": {
+        "standalone": 11,
+        "layered_total": 11,
+        "carrier": 10,
+        "overlay": 1
+      },
+      "source_bytes": {
+        "standalone_fom": 586,
+        "layered_compact_json": 749
+      }
+    },
+    {
+      "case": "delayed-reveal",
+      "expected": "disclosure/EARLY",
+      "hits": {
+        "standalone": true,
+        "layered": true,
+        "carrier_only": false
+      },
+      "signatures": {
+        "standalone": [
+          "disclosure/EARLY"
+        ],
+        "layered": [
+          "disclosure/EARLY"
+        ],
+        "carrier_only": []
+      },
+      "self_controls": {
+        "standalone": [],
+        "layered": [],
+        "carrier_only": []
+      },
+      "source_records": {
+        "standalone": 6,
+        "layered_total": 6,
+        "carrier": 2,
+        "overlay": 4
+      },
+      "source_bytes": {
+        "standalone_fom": 435,
+        "layered_compact_json": 539
+      }
+    },
+    {
+      "case": "common-tongue",
+      "expected": "coactivation/LOST",
+      "hits": {
+        "standalone": true,
+        "layered": true,
+        "carrier_only": false
+      },
+      "signatures": {
+        "standalone": [
+          "coactivation/LOST"
+        ],
+        "layered": [
+          "coactivation/LOST"
+        ],
+        "carrier_only": []
+      },
+      "self_controls": {
+        "standalone": [],
+        "layered": [],
+        "carrier_only": []
+      },
+      "source_records": {
+        "standalone": 5,
+        "layered_total": 5,
+        "carrier": 4,
+        "overlay": 1
+      },
+      "source_bytes": {
+        "standalone_fom": 326,
+        "layered_compact_json": 421
+      }
+    },
+    {
+      "case": "uncertain-train",
+      "expected": "epistemic_status/STRENGTHENED",
+      "hits": {
+        "standalone": true,
+        "layered": true,
+        "carrier_only": true
+      },
+      "signatures": {
+        "standalone": [
+          "epistemic_status/STRENGTHENED"
+        ],
+        "layered": [
+          "epistemic_status/STRENGTHENED"
+        ],
+        "carrier_only": [
+          "epistemic_status/STRENGTHENED"
+        ]
+      },
+      "self_controls": {
+        "standalone": [],
+        "layered": [],
+        "carrier_only": []
+      },
+      "source_records": {
+        "standalone": 5,
+        "layered_total": 5,
+        "carrier": 5,
+        "overlay": 0
+      },
+      "source_bytes": {
+        "standalone_fom": 261,
+        "layered_compact_json": 349
+      }
+    },
+    {
+      "case": "contrastive-focus",
+      "expected": "salience/WEAKENED",
+      "hits": {
+        "standalone": true,
+        "layered": true,
+        "carrier_only": false
+      },
+      "signatures": {
+        "standalone": [
+          "salience/WEAKENED"
+        ],
+        "layered": [
+          "salience/WEAKENED"
+        ],
+        "carrier_only": []
+      },
+      "self_controls": {
+        "standalone": [],
+        "layered": [],
+        "carrier_only": []
+      },
+      "source_records": {
+        "standalone": 5,
+        "layered_total": 5,
+        "carrier": 3,
+        "overlay": 2
+      },
+      "source_bytes": {
+        "standalone_fom": 269,
+        "layered_compact_json": 334
+      }
+    }
+  ],
+  "input_sha256_lf_utf8": {
+    "experiments/layered_architecture/adapter.py": "4bafa983c288d7c01fe7f6892a8635c54b3949c8f028378a505d74d3dbd9336f",
+    "experiments/layered_architecture/fixtures.py": "af07da0b8ab99ca18a120f03ae862bda350f44592e2157bf856b2cf423290185",
+    "experiments/layered_architecture/PROTOCOL.md": "9ee7f7ebd7649952f09f831fb417e86ddc9cf5215a0c33c15771b5f12976a533",
+    "experiments/layered_architecture/run.py": "7dcaddf21bae417f3e448ea41691068db4ad01232bb1c2537b4233db38810a28",
+    "experiments/translation-retelling/corpus/cases.toml": "808e0c5b664ad98c217fe6b0894b0498d4505316d0e8204598b26eded73b17c1",
+    "experiments/translation-retelling/gold/common-tongue/corrupted.fom": "a95b2b3bf7405f7afbb849afc7c8baf17033d2110ffa79ec6f63a14fe0bcdd6b",
+    "experiments/translation-retelling/gold/common-tongue/source.fom": "b55df3cb7d648d3f9da34643a908af7ece4d9c4c21b44c90629d9360c9bb2b4a",
+    "experiments/translation-retelling/gold/contrastive-focus/corrupted.fom": "3431f52a8c8bd9705c303f911305a97a46d2b6fb8ccb926731d4bc82765616d5",
+    "experiments/translation-retelling/gold/contrastive-focus/source.fom": "d16bd971a4a6fe2cacb6bbdcd35cf9b2cd1564153d06353832cea75c5ac5ac40",
+    "experiments/translation-retelling/gold/delayed-reveal/corrupted.fom": "74681cadb12011ae478553e20846e8870b4464fd7e29ff83ccba7b1e6bbe4997",
+    "experiments/translation-retelling/gold/delayed-reveal/source.fom": "437c199c8109799145be835a55221bd3277a02bfb98ad83a6b691c5edadacaf6",
+    "experiments/translation-retelling/gold/expected.toml": "8e9021bd42fa0614d3331e71347c5f45cb381214f0571cc9552ea1a280f3728c",
+    "experiments/translation-retelling/gold/inference-route/corrupted.fom": "30bb78f2d215b1379ee95df83797713092863a86bc4bb49ada5565cac51e60f3",
+    "experiments/translation-retelling/gold/inference-route/source.fom": "f0fcdd2cea17a02c4023652e1f1d924a4eb9fcdce4045e1a52806214957dc71d",
+    "experiments/translation-retelling/gold/source-attribution/corrupted.fom": "b331cb0d998a91108679ce0e8e7e63af8be030ff67516a316b306131cb510c2f",
+    "experiments/translation-retelling/gold/source-attribution/source.fom": "14b3429ed4f89afe5d5b2fafddc83f0094ae146b92175df53f8efd354af58411",
+    "experiments/translation-retelling/gold/uncertain-train/corrupted.fom": "6477077ce0e1aa9b006a819d9c49783ac3aa11f73dc39ad827ed5ff9513ebfdc",
+    "experiments/translation-retelling/gold/uncertain-train/source.fom": "4f5ceea101c5170b6e60eb00caec974b01428ba39558e626aaf3c730894cda64",
+    "experiments/translation-retelling/gold/unknown-owner/corrupted.fom": "e8350dfe77b9d635eeb4021bd638ae92539821481524fb6fad221cbaa7716a71",
+    "experiments/translation-retelling/gold/unknown-owner/source.fom": "941b3a50517c8f40383f9e2d37da2a2570bfa7e676686c2571a2ca543b89b3c3"
+  }
+}

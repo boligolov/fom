@@ -2,6 +2,13 @@
 
 Status: architectural hypothesis under test
 
+The first [carrier/overlay pilot](../experiments/layered_architecture/README.md)
+preserves all seven existing gold target findings with 35 carrier-owned and
+10 overlay-owned source records, versus 45 standalone records. This is
+shared-engine feasibility, not UMR conformance or reduced total complexity.
+The all-ten-case audit identifies incomplete gold coverage; architecture
+selection remains open pending independent annotation cost/agreement.
+
 UMR is currently the most important neighboring representation for FoM.
 
 This document asks a concrete question:

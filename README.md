@@ -122,6 +122,7 @@ Broad semantic expansion is temporarily paused. The current priorities are:
 - [Testing and semantic diff](docs/testing.md)
 - [Prior art and positioning](docs/prior-art.md)
 - [FoM ↔ UMR mapping](docs/umr-mapping.md)
+- [Carrier/overlay architectural pilot and coverage audit](experiments/layered_architecture/README.md)
 - [Annotation agreement design](docs/annotation-evaluation.md)
 - [Pilot annotation guide](docs/annotation-guide.md)
 - [Translation/retelling experiment](experiments/translation-retelling/README.md)
