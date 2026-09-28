@@ -14,6 +14,7 @@ Working list of unfinished FoM research and implementation tasks.
 
 - [x] Define enough canonical schema for first-pass parser/canonicalizer implementation.
 - [ ] Tighten canonical schema for macros, provenance, extension contracts and generated-ID stability.
+- [x] Prevent generated relation/status IDs from colliding with explicit declarations, including later and nested declarations.
 - [ ] Specify deterministic macro expansions for the standard library.
 - [x] Define canonicalization / normal-form rules.
 - [ ] Decide how stable IDs, generated IDs, and cross-document references work.

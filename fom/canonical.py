@@ -108,8 +108,7 @@ class Canonicalizer:
         self.constraints: list[dict[str, Any]] = []
         self.subgraphs: list[dict[str, Any]] = []
         self.patterns: list[dict[str, Any]] = []
-        self._anon_counter = 0
-        self._status_counter = 0
+        self._generated_counters: dict[str, int] = {}
         self._collect_ids(self.root)
 
     def _collect_ids(self, expr: Expr) -> None:
@@ -139,13 +138,22 @@ class Canonicalizer:
         for child in expr.items[1:]:
             self._collect_ids(child)
 
+    def _next_generated_id(self, prefix: str) -> str:
+        counter = self._generated_counters.get(prefix, 0)
+        while True:
+            counter += 1
+            candidate = f"_{prefix}-{counter:04d}"
+            if candidate not in self.ids:
+                self._generated_counters[prefix] = counter
+                # Reserve before descending into nested applications.
+                self.ids.add(candidate)
+                return candidate
+
     def _next_anon(self) -> str:
-        self._anon_counter += 1
-        return f"_anon-{self._anon_counter:04d}"
+        return self._next_generated_id("anon")
 
     def _next_status(self) -> str:
-        self._status_counter += 1
-        return f"_status-{self._status_counter:04d}"
+        return self._next_generated_id("status")
 
     def _value(
         self,

@@ -151,6 +151,17 @@ may become conceptually:
 
 Generated IDs are document-local implementation identifiers.
 
+The current implementation assigns `_anon-NNNN` and `_status-NNNN`
+in deterministic traversal order, skipping every explicit declaration ID
+in the document, including declarations encountered later or nested inside
+other forms. Each generated ID is reserved before processing its children.
+Explicit user IDs are preserved; these prefixes are not reserved syntax.
+
+This guarantees collision-free generated IDs and reproducibility for the
+same input (including normalized map-key order). It does **not** guarantee
+stable generated IDs after inserting or reordering forms. Persistent IDs,
+macro-generated IDs, and cross-document addressing remain open work.
+
 Semantic diff MUST NOT rely on generated-ID equality across independently canonicalized documents.
 
 ## 7. Scopes
