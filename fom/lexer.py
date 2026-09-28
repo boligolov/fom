@@ -10,6 +10,7 @@ class Token:
     kind: str
     text: str
     loc: Loc
+    end: Loc | None = None
 
 
 class LexError(ValueError):
@@ -54,8 +55,8 @@ def lex(text: str) -> list[Token]:
         loc = Loc(line, col)
 
         if ch in DELIMS:
-            out.append(Token(ch, ch, loc))
             advance(ch)
+            out.append(Token(ch, ch, loc, Loc(line, col)))
             i += 1
             continue
 
@@ -68,7 +69,7 @@ def lex(text: str) -> list[Token]:
                 if ch == '"':
                     advance(ch)
                     i += 1
-                    out.append(Token("STRING", "".join(buf), loc))
+                    out.append(Token("STRING", "".join(buf), loc, Loc(line, col)))
                     break
                 if ch == "\\":
                     advance(ch)
@@ -105,6 +106,6 @@ def lex(text: str) -> list[Token]:
             advance(text[i])
             i += 1
 
-        out.append(Token("ATOM", text[start:i], loc))
+        out.append(Token("ATOM", text[start:i], loc, Loc(line, col)))
 
     return out

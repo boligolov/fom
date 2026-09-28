@@ -6,7 +6,7 @@ from importlib.resources import files
 from typing import Any
 
 from .model import Atom, Expr, ListExpr, MapExpr, VectorExpr
-from .parser import parse
+from .macros import parse_expanded as parse
 
 
 @dataclass(frozen=True)

@@ -34,10 +34,12 @@ class ProvenanceTests(unittest.TestCase):
             self.assertEqual(status_origin["origin"], "status-form")
             self.assertEqual(status_origin["source"], {
                 "path": "story.fom", "line": line, "column": 5,
+                "end_line": line, "end_column": 25,
             })
             self.assertEqual(application_origin["origin"], "anonymous-application")
             self.assertEqual(application_origin["source"], {
                 "path": "story.fom", "line": line, "column": 13,
+                "end_line": line, "end_column": 24,
             })
         self.assertEqual(origins["anna"]["origin"], "declaration")
         self.assertEqual(origins["anna"]["source"]["line"], 2)
@@ -75,6 +77,7 @@ class ProvenanceTests(unittest.TestCase):
                     loc = origin["source"]
                     self.assertEqual(loc["path"], str(path))
                     self.assertEqual(lines[loc["line"] - 1][loc["column"] - 1], "(")
+                    self.assertEqual(lines[loc["end_line"] - 1][loc["end_column"] - 2], ")")
 
     def test_cli_emits_requested_provenance(self):
         with tempfile.TemporaryDirectory() as directory:

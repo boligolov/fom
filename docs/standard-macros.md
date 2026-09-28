@@ -30,6 +30,31 @@ Expansion: reference to the current scope's center.
 
 Failure: using `self` without a center is invalid.
 
+### Executable SELF profile
+
+SELF is implemented as a pre-validation expansion shared by `check`,
+`canonical`, and `diff` (including refinement matching). It takes no arguments
+and substitutes the symbolic `:center` of the lexically containing scope
+or the explicit scope of an ACCEPT/REJECT form. Explicit status scope references
+may precede their declarations and behave like lexical status shorthand.
+The center must resolve as an ordinary graph reference. The scope and its
+center metadata remain in the graph; no global identity merging occurs.
+
+Each nested scope starts a new context. An absent center is not inherited
+from an outer scope, inferred from `:owner`, or borrowed from a sibling.
+SELF in a scope's metadata uses that scope's declared symbolic center.
+Content attached through a relation's `:context` does not implicitly gain
+that scope's lexical context: place the content inside the scope explicitly.
+This rule fixes the previously unscoped SELF in the quotation fixture.
+
+`--provenance` records each substitution's complete source span and target
+in `macro_provenance`. SELF creates no relation or generated ID. Expanding
+an already expanded AST is a no-op. This implements the existing reference
+substitution contract, not a general solution for de se/de re equivalence.
+
+Only SELF is currently executable. The remaining macro descriptions below
+are specifications or research sketches, not implemented expansion rules.
+
 ## 2. UNKNOWN
 
 Surface:

@@ -4,8 +4,9 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from .lexer import LexError
+from .macros import MacroError, parse_expanded
 from .model import Atom, Expr, ListExpr, Loc, MapExpr, VectorExpr
-from .parser import ParseError, parse
+from .parser import ParseError
 
 
 DECL_FORMS = {
@@ -739,15 +740,15 @@ def validate_text(
     path: str = "<memory>",
 ) -> ValidationResult:
     try:
-        root = parse(text)
-    except (LexError, ParseError) as exc:
+        root = parse_expanded(text)
+    except (LexError, ParseError, MacroError) as exc:
         return ValidationResult(
             [
                 Diagnostic(
                     "error",
                     path,
                     exc.loc,
-                    "P001",
+                    "M001" if isinstance(exc, MacroError) else "P001",
                     exc.message,
                 )
             ]

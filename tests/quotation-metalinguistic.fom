@@ -13,11 +13,10 @@
 
   (scope quote-context
     {:owner ivan
-     :center ivan})
-
-  (subgraph tired-content
-    (rel tired-1 tired
-      {:subject (self)}))
+     :center ivan}
+    (subgraph tired-content
+      (rel tired-1 tired
+        {:subject (self)})))
 
   (rel quote-expresses expresses
     {:signal ivan-quote

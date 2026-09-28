@@ -13,28 +13,28 @@ class ParseError(ValueError):
 
 def _atom(tok: Token) -> Atom:
     if tok.kind == "STRING":
-        return Atom("string", tok.text, tok.loc)
+        return Atom("string", tok.text, tok.loc, tok.end)
 
     s = tok.text
 
     if s.startswith(":"):
-        return Atom("keyword", s[1:], tok.loc)
+        return Atom("keyword", s[1:], tok.loc, tok.end)
 
     if s.startswith("?"):
-        return Atom("variable", s, tok.loc)
+        return Atom("variable", s, tok.loc, tok.end)
 
     if s == "true":
-        return Atom("boolean", True, tok.loc)
+        return Atom("boolean", True, tok.loc, tok.end)
 
     if s == "false":
-        return Atom("boolean", False, tok.loc)
+        return Atom("boolean", False, tok.loc, tok.end)
 
     try:
         if any(c in s for c in ".eE"):
-            return Atom("number", float(s), tok.loc)
-        return Atom("number", int(s), tok.loc)
+            return Atom("number", float(s), tok.loc, tok.end)
+        return Atom("number", int(s), tok.loc, tok.end)
     except ValueError:
-        return Atom("symbol", s, tok.loc)
+        return Atom("symbol", s, tok.loc, tok.end)
 
 
 def parse(text: str) -> Expr:
@@ -61,7 +61,7 @@ def parse(text: str) -> Expr:
                     raise ParseError("unclosed '(' container", tok.loc)
                 if tokens[pos].kind == ")":
                     pos += 1
-                    return ListExpr(tuple(items), tok.loc)
+                    return ListExpr(tuple(items), tok.loc, tokens[pos - 1].end)
                 items.append(read())
 
         if tok.kind == "[":
@@ -71,7 +71,7 @@ def parse(text: str) -> Expr:
                     raise ParseError("unclosed '[' container", tok.loc)
                 if tokens[pos].kind == "]":
                     pos += 1
-                    return VectorExpr(tuple(items), tok.loc)
+                    return VectorExpr(tuple(items), tok.loc, tokens[pos - 1].end)
                 items.append(read())
 
         if tok.kind == "{":
@@ -102,7 +102,7 @@ def parse(text: str) -> Expr:
                 seen.add(key.value)
                 pairs.append((key, raw[i + 1]))
 
-            return MapExpr(tuple(pairs), tok.loc)
+            return MapExpr(tuple(pairs), tok.loc, tokens[pos - 1].end)
 
         if tok.kind in {")", "]", "}"}:
             raise ParseError(

@@ -5,7 +5,7 @@ from typing import Any
 
 from .alignment import align_node_aliases
 from .model import Atom, Expr, ListExpr, MapExpr, VectorExpr
-from .parser import parse
+from .macros import parse_expanded as parse
 from .refinement import find_refinement_matches
 from .signature import SemanticResolver
 from .validator import validate_text

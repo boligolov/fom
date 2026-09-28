@@ -62,8 +62,8 @@ Working list of unfinished FoM research and implementation tasks.
 - [ ] Decide whether ordered scales require a special relation family or remain standard semantic patterns.
 - [ ] Decide how generic/default knowledge is represented without turning FoM into a knowledge base.
 - [ ] Decide the exact representation of open questions and alternative sets.
-- [ ] Define provenance records and source maps.
-- [x] Implement optional record-level source starts (file, line, column), including anonymous applications and statuses; full spans remain open.
+- [x] Define first-pass provenance records and source maps with complete source spans.
+- [x] Implement optional record-level source spans, including anonymous applications and statuses.
 - [ ] Define macro provenance and pretty-printing back to FoM Text.
 - [ ] Define extension namespaces and compatibility rules.
 - [ ] Define graph partitioning / partial loading.
@@ -102,6 +102,7 @@ Working list of unfinished FoM research and implementation tasks.
 - [x] Implement first-pass canonicalizer (structural normalization; macro expansion and full schema remain incomplete).
 - [x] Implement first-pass structural/schema validator.
 - [ ] Implement macro expander.
+- [x] Implement the first macro expansion (SELF), shared by check/canonical/diff, with scope validation and substitution provenance.
 - [ ] Implement graph visualizer.
 - [x] Implement first executable semantic-diff subset.
 - [ ] Implement semantic constraint evaluator beyond static structural validation.

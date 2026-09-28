@@ -390,13 +390,19 @@ constraints, subgraphs, and patterns has exactly one entry:
 {
   "target": {"ref": "_anon-0001"},
   "origin": "anonymous-application",
-  "source": {"path": "story.fom", "line": 4, "column": 13}
+  "source": {
+    "path": "story.fom", "line": 4, "column": 13,
+    "end_line": 4, "end_column": 24
+  }
 }
 ```
 
 `origin` is `declaration`, `status-form`, or `anonymous-application`.
-Locations identify the opening parenthesis of the originating form, using
-one-based lines and character columns (a tab counts as one character).
+Locations cover the originating form from its opening parenthesis through
+its closing parenthesis. End positions are exclusive. Lines and character
+columns are one-based (a tab counts as one character, not a tab stop;
+Unicode characters count as Python string characters, not UTF-8 bytes).
+Escapes are measured in the source spelling, not the decoded string value.
 The path is the caller-supplied label, defaulting to `<memory>`; it is not
 resolved to an absolute path. Entries are sorted by target ID. The document
 header itself does not receive a record-level entry.
@@ -406,8 +412,18 @@ anonymous occurrences remain distinct objects with separate source locations.
 Consumers comparing canonical graphs must exclude this optional section:
 moving a form or renaming a source file changes provenance, not graph meaning.
 
-This profile records source starts only. Full spans, expansion chains,
-macro provenance, and provenance-targeting constraints remain unimplemented.
+With `--provenance`, a document using implemented macros also contains
+`macro_provenance`: an ordered list of substitution events with `macro`,
+`target` (a reference), and `source` (the same span shape as above).
+For SELF the target is the existing center node, not a newly generated object.
+Multiple occurrences remain separate events. This optional list must also be
+excluded from semantic equality. It is absent when no expansions occurred or
+provenance is disabled.
+
+The parser retains spans for all expression types. Programmatically created
+AST objects may omit the end position; their record provenance then contains
+only the start. Expansion chains for structure-generating macros and
+provenance-targeting constraints remain unimplemented.
 
 ## 16. Canonical ordering
 

@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from .model import Atom, Expr, ListExpr, MapExpr, VectorExpr
+from .macros import expand_macros
 from .parser import parse
 from .validator import validate_text
 
@@ -160,14 +161,18 @@ class Canonicalizer:
 
     def _record_origin(self, record_id: str, expr: Expr, origin: str) -> None:
         if self.include_provenance:
+            source = {
+                "path": self.source_path,
+                "line": expr.loc.line,
+                "column": expr.loc.col,
+            }
+            if expr.end is not None:
+                source["end_line"] = expr.end.line
+                source["end_column"] = expr.end.col
             self.provenance.append({
                 "target": {"ref": record_id},
                 "origin": origin,
-                "source": {
-                    "path": self.source_path,
-                    "line": expr.loc.line,
-                    "column": expr.loc.col,
-                },
+                "source": source,
             })
 
     def _value(
@@ -737,4 +742,21 @@ def canonicalize_text(
             f"cannot canonicalize invalid FoM:\n{rendered}"
         )
 
-    return Canonicalizer(parse(text), path, include_provenance).build()
+    root, expansions = expand_macros(parse(text))
+    result = Canonicalizer(root, path, include_provenance).build()
+    if include_provenance and expansions:
+        result["macro_provenance"] = [
+            {
+                "macro": expansion.macro,
+                "target": {"ref": expansion.target},
+                "source": {
+                    "path": path,
+                    "line": expansion.source.loc.line,
+                    "column": expansion.source.loc.col,
+                    "end_line": expansion.source.end.line,
+                    "end_column": expansion.source.end.col,
+                },
+            }
+            for expansion in expansions
+        ]
+    return result

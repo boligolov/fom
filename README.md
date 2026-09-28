@@ -82,8 +82,12 @@ The corpus currently passes CI. This is intentionally only a **structural validi
 The first-pass canonicalizer emits deterministic JSON records and normalizes map ordering, scope-status shorthand, anonymous applications, and pattern variable names.
 
 The optional `--provenance` flag traces each emitted graph record to its source
-file, line, and column. Source locations stay in a separate provenance section
+file and complete source span. Source locations stay in a separate provenance section
 and do not change the semantic records or generated IDs.
+
+The first executable macro, `SELF`, resolves to the current scope's explicit
+center across validation, canonicalization, and semantic diff. Invalid or
+missing centers are rejected. Other standard macros are not yet expanded.
 
 Semantic diff no longer requires identical relation/subgraph IDs. It also performs conservative node alignment when a node's structural fingerprint is unique on both sides. Ambiguous symmetric nodes are deliberately left unmatched rather than guessed.
 
