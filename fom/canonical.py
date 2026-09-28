@@ -97,6 +97,8 @@ def _family(predicate: str) -> str:
 @dataclass
 class Canonicalizer:
     root: Expr
+    source_path: str = "<memory>"
+    include_provenance: bool = False
 
     def __post_init__(self) -> None:
         self.ids: set[str] = set()
@@ -108,6 +110,7 @@ class Canonicalizer:
         self.constraints: list[dict[str, Any]] = []
         self.subgraphs: list[dict[str, Any]] = []
         self.patterns: list[dict[str, Any]] = []
+        self.provenance: list[dict[str, Any]] = []
         self._generated_counters: dict[str, int] = {}
         self._collect_ids(self.root)
 
@@ -154,6 +157,18 @@ class Canonicalizer:
 
     def _next_status(self) -> str:
         return self._next_generated_id("status")
+
+    def _record_origin(self, record_id: str, expr: Expr, origin: str) -> None:
+        if self.include_provenance:
+            self.provenance.append({
+                "target": {"ref": record_id},
+                "origin": origin,
+                "source": {
+                    "path": self.source_path,
+                    "line": expr.loc.line,
+                    "column": expr.loc.col,
+                },
+            })
 
     def _value(
         self,
@@ -214,6 +229,7 @@ class Canonicalizer:
 
         if reify_applications and head not in DECLARATION_HEADS:
             rel_id = self._next_anon()
+            self._record_origin(rel_id, expr, "anonymous-application")
 
             if (
                 len(expr.items) == 2
@@ -521,6 +537,22 @@ class Canonicalizer:
         current_scope: str | None = None,
         env: dict[str, str] | None = None,
     ) -> str | None:
+        record_id = self._process_form_record(expr, current_scope, env)
+        if record_id is not None:
+            origin = (
+                "status-form"
+                if _head(expr) in {"accept", "reject"}
+                else "declaration"
+            )
+            self._record_origin(record_id, expr, origin)
+        return record_id
+
+    def _process_form_record(
+        self,
+        expr: Expr,
+        current_scope: str | None = None,
+        env: dict[str, str] | None = None,
+    ) -> str | None:
         if not isinstance(expr, ListExpr) or not expr.items:
             return None
 
@@ -682,13 +714,18 @@ class Canonicalizer:
             "constraints": sorted_records(self.constraints),
             "subgraphs": sorted_records(self.subgraphs),
             "patterns": sorted_records(self.patterns),
-            "provenance": [],
+            "provenance": sorted(
+                self.provenance,
+                key=lambda record: record["target"]["ref"],
+            ),
         }
 
 
 def canonicalize_text(
     text: str,
     path: str = "<memory>",
+    *,
+    include_provenance: bool = False,
 ) -> dict[str, Any]:
     validation = validate_text(text, path)
     if validation.errors:
@@ -700,4 +737,4 @@ def canonicalize_text(
             f"cannot canonicalize invalid FoM:\n{rendered}"
         )
 
-    return Canonicalizer(parse(text)).build()
+    return Canonicalizer(parse(text), path, include_provenance).build()

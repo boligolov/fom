@@ -375,6 +375,40 @@ Possible provenance includes:
 
 Provenance must not affect semantic equivalence unless a constraint explicitly refers to it.
 
+### Implemented source-location profile
+
+`python -m fom canonical story.fom --provenance` enables an optional source
+map. The Python API exposes the same option as
+`canonicalize_text(text, path, include_provenance=True)`.
+Without this option, `provenance` remains an empty list for compatibility
+with existing canonical comparisons.
+
+Each emitted record in nodes, relations, scopes, statuses, deltas,
+constraints, subgraphs, and patterns has exactly one entry:
+
+```json
+{
+  "target": {"ref": "_anon-0001"},
+  "origin": "anonymous-application",
+  "source": {"path": "story.fom", "line": 4, "column": 13}
+}
+```
+
+`origin` is `declaration`, `status-form`, or `anonymous-application`.
+Locations identify the opening parenthesis of the originating form, using
+one-based lines and character columns (a tab counts as one character).
+The path is the caller-supplied label, defaulting to `<memory>`; it is not
+resolved to an absolute path. Entries are sorted by target ID. The document
+header itself does not receive a record-level entry.
+
+Enabling source maps does not change IDs or semantic records. Two identical
+anonymous occurrences remain distinct objects with separate source locations.
+Consumers comparing canonical graphs must exclude this optional section:
+moving a form or renaming a source file changes provenance, not graph meaning.
+
+This profile records source starts only. Full spans, expansion chains,
+macro provenance, and provenance-targeting constraints remain unimplemented.
+
 ## 16. Canonical ordering
 
 Serialization order is not semantic.

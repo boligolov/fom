@@ -71,6 +71,7 @@ Run:
 ```bash
 python -m fom check examples tests experiments/translation-retelling/gold
 python -m fom canonical examples/story-001-platform.fom
+python -m fom canonical examples/story-001-platform.fom --provenance
 python -m fom diff tests/fixtures/corruption/source.fom tests/fixtures/corruption/content.fom
 ```
 
@@ -79,6 +80,10 @@ The validator currently checks the surface grammar, declaration/reference integr
 The corpus currently passes CI. This is intentionally only a **structural validity** milestone; it is not yet a proof of semantic correctness.
 
 The first-pass canonicalizer emits deterministic JSON records and normalizes map ordering, scope-status shorthand, anonymous applications, and pattern variable names.
+
+The optional `--provenance` flag traces each emitted graph record to its source
+file, line, and column. Source locations stay in a separate provenance section
+and do not change the semantic records or generated IDs.
 
 Semantic diff no longer requires identical relation/subgraph IDs. It also performs conservative node alignment when a node's structural fingerprint is unique on both sides. Ambiguous symmetric nodes are deliberately left unmatched rather than guessed.
 

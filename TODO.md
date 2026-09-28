@@ -63,6 +63,7 @@ Working list of unfinished FoM research and implementation tasks.
 - [ ] Decide how generic/default knowledge is represented without turning FoM into a knowledge base.
 - [ ] Decide the exact representation of open questions and alternative sets.
 - [ ] Define provenance records and source maps.
+- [x] Implement optional record-level source starts (file, line, column), including anonymous applications and statuses; full spans remain open.
 - [ ] Define macro provenance and pretty-printing back to FoM Text.
 - [ ] Define extension namespaces and compatibility rules.
 - [ ] Define graph partitioning / partial loading.

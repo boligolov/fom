@@ -99,13 +99,14 @@ def cmd_diff(source: str, candidate: str, as_json: bool = False) -> int:
     return 0
 
 
-def cmd_canonical(path: str) -> int:
+def cmd_canonical(path: str, include_provenance: bool = False) -> int:
     source_path = Path(path)
 
     try:
         result = canonicalize_text(
             source_path.read_text(encoding="utf-8"),
             str(source_path),
+            include_provenance=include_provenance,
         )
     except (OSError, ValueError) as exc:
         print(f"fom canonical: {exc}")
@@ -156,6 +157,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="emit first-pass canonical FoM graph as JSON",
     )
     canonical.add_argument("path")
+    canonical.add_argument(
+        "--provenance",
+        action="store_true",
+        help="include source locations for canonical records",
+    )
 
     return parser
 
@@ -177,6 +183,6 @@ def main(argv: list[str] | None = None) -> int:
         )
 
     if args.command == "canonical":
-        return cmd_canonical(args.path)
+        return cmd_canonical(args.path, args.provenance)
 
     return 2
