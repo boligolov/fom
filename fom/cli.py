@@ -7,6 +7,7 @@ from pathlib import Path
 from .canonical import canonicalize_text
 from .semantic_diff import diff_texts, nonempty_diff
 from .scope_resolution import resolve_status
+from .evaluation import evaluate_constraints
 from .validator import validate_path
 
 
@@ -169,6 +170,10 @@ def build_parser() -> argparse.ArgumentParser:
     resolve.add_argument("scope")
     resolve.add_argument("content")
 
+    evaluate = sub.add_parser("evaluate", help="evaluate the supported source constraints against a state")
+    evaluate.add_argument("source")
+    evaluate.add_argument("candidate", nargs="?")
+
     return parser
 
 
@@ -200,5 +205,19 @@ def main(argv: list[str] | None = None) -> int:
             return 2
         print(json.dumps(result, indent=2, ensure_ascii=False))
         return 0
+
+    if args.command == "evaluate":
+        try:
+            source = canonicalize_text(Path(args.source).read_text(encoding="utf-8"), args.source)
+            candidate = (
+                canonicalize_text(Path(args.candidate).read_text(encoding="utf-8"), args.candidate)
+                if args.candidate else None
+            )
+            result = evaluate_constraints(source, candidate)
+        except (OSError, ValueError) as exc:
+            print(f"fom evaluate: {exc}")
+            return 2
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+        return {"PASS": 0, "FAIL": 1}.get(result["outcome"], 2)
 
     return 2

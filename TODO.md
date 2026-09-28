@@ -106,6 +106,7 @@ Working list of unfinished FoM research and implementation tasks.
 - [ ] Implement graph visualizer.
 - [x] Implement first executable semantic-diff subset.
 - [ ] Implement semantic constraint evaluator beyond static structural validation.
+- [x] Implement first status-constraint evaluation profile (status-is/unknown) against source or candidate state, with explicit unsupported outcomes; generic preservation evaluation remains open.
 - [x] Implement first derived scope-status resolver for none/overlay inheritance and explicit uncommitted shadows (not a generic constraint evaluator).
 - [ ] Implement simple realizer/extractor experiments.
 - [x] Add CI tests; full current FoM corpus passes structural validation.

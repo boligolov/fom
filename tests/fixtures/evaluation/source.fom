@@ -1,0 +1,10 @@
+(fom status-contract
+  (subgraph secret (secret-content))
+  (subgraph known (known-content))
+  (scope base (accept secret) (accept known))
+  (scope reader {:inherits-status-from base :inherit-mode :overlay}
+    (uncommit secret))
+  (constraint keep-secret-unknown
+    (unknown secret {:scope reader}))
+  (constraint retain-known-status
+    (status-is known {:scope reader :value :accept})))

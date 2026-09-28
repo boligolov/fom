@@ -1,0 +1,5 @@
+(fom corrupted-state
+  (subgraph secret (secret-content))
+  (subgraph known (known-content))
+  (scope base (accept secret) (accept known))
+  (scope reader {:inherits-status-from base :inherit-mode :overlay}))

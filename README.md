@@ -73,6 +73,7 @@ python -m fom check examples tests experiments/translation-retelling/gold
 python -m fom canonical examples/story-001-platform.fom
 python -m fom canonical examples/story-001-platform.fom --provenance
 python -m fom resolve tests/scope-overlay-shadow.fom child p-content
+python -m fom evaluate tests/fixtures/evaluation/source.fom
 python -m fom diff tests/fixtures/corruption/source.fom tests/fixtures/corruption/content.fom
 ```
 
@@ -94,6 +95,11 @@ missing centers are rejected. Other standard macros are not yet expanded.
 It supports `none`/`overlay`, explicit uncommitted shadows, and preserved
 conflicts between bases, without mutating the canonical graph. This is a
 first executable scope view, not a general semantic constraint evaluator.
+
+`evaluate SOURCE [CANDIDATE]` checks the first executable constraint profile:
+`status-is` and scope-specific `unknown`, using explicit shared content IDs.
+Unsupported required constraints produce an indeterminate result, not a pass.
+See [constraint evaluation](docs/constraint-evaluation.md) for outcomes and limits.
 
 Semantic diff no longer requires identical relation/subgraph IDs. It also performs conservative node alignment when a node's structural fingerprint is unique on both sides. Ambiguous symmetric nodes are deliberately left unmatched rather than guessed.
 

@@ -87,6 +87,10 @@ Diff is descriptive.
 
 Validation evaluates a diff against source constraints.
 
+The first [executable constraint profile](constraint-evaluation.md) can also
+evaluate status requirements directly against a represented state, using the
+scope resolver. It is not yet general diff-driven preservation validation.
+
 Example:
 
 ```
