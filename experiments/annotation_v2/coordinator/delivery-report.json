@@ -1,0 +1,22 @@
+{
+  "packet_sha256_lf_utf8": "b885363502e17cbee61a6f140ff86fb33889c89a0ca75aea3874948896ac41dd",
+  "responses": [
+    {
+      "response": "annotator-a.json",
+      "sha256_lf_utf8": "e09921dc7f284273f21595caf1e68b3855124dbb7311b0dacd71d0e85d8b62da",
+      "errors": [],
+      "items": 10,
+      "commitments": 35,
+      "measured_items": 0
+    },
+    {
+      "response": "annotator-b.json",
+      "sha256_lf_utf8": "e2cfc6d713be7a5f669750da64fac18a9593003681704239842d224c1e5a141b",
+      "errors": [],
+      "items": 10,
+      "commitments": 31,
+      "measured_items": 0
+    }
+  ],
+  "semantic_agreement_measured_by_this_script": false
+}

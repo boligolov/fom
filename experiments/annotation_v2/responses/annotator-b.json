@@ -1,0 +1,149 @@
+{
+  "version": "2.0",
+  "annotator": "Annotator B",
+  "model_or_background": "GPT-6 family as declared in system context; exact model/version unknown. General Russian/English language knowledge.",
+  "prior_exposure": "Fresh-context task inputs: C:/Users/alexa/.codex/.chatgpt-projects/g-p-6ab9a65a0dec8191862561a5bb457006/fom/experiments/annotation_v2/blind/packet.json and C:/Users/alexa/.codex/.chatgpt-projects/g-p-6ab9a65a0dec8191862561a5bb457006/fom/experiments/annotation_v2/blind/response-template.json only.",
+  "items": [
+    {
+      "id": "P01",
+      "summary": "The bridge's nighttime closure is reported on Marina's authority; the speaking group has no other corroboration.",
+      "commitments": [
+        {"id":"C01","claim":"According to Marina, an unspecified agent or agents closed the bridge at night.","evidence":["По словам Марины, мост закрыли ночью."],"scope":"Closure and its time are within the report attributed to Marina, not independently vouched for by the narrator.","status":"explicit","required":true},
+        {"id":"C02","claim":"The narrator's group has no other confirmations of that report.","evidence":["Других подтверждений у нас нет."],"scope":"Narrator's assertion about evidence available to 'us'; it does not deny evidence elsewhere.","status":"explicit","required":true}
+      ],
+      "unresolved": ["Which bridge, who closed it, which night, and who belongs to 'us' are unspecified.","Neither the truth of Marina's report nor the bridge's current state is established independently."],
+      "alternatives": ["The unspecified plural subject can be rendered using an English passive; it need not identify authorities or any particular people."],
+      "policy_assumptions": ["Preserve attribution before the reported closure and the subsequent limitation on corroboration. Do not turn lack of corroboration into proof that the report is false."],
+      "elapsed_seconds": null,
+      "notes": "No additional scenario supplied."
+    },
+    {
+      "id": "P02",
+      "summary": "Two cups were on the table, the armchair opposite was still warm, and Sergei said nothing.",
+      "commitments": [
+        {"id":"C01","claim":"There were two cups standing on the table.","evidence":["На столе стояли две чашки."],"scope":"Narrator's description of the scene.","status":"explicit","required":true},
+        {"id":"C02","claim":"The armchair opposite was still warm.","evidence":["Кресло напротив было ещё тёплым."],"scope":"Narrator's scene description; 'still' presents warmth as persisting.","status":"explicit","required":true},
+        {"id":"C03","claim":"Sergei said nothing in the described situation.","evidence":["Сергей ничего не сказал."],"scope":"Narrator's assertion, limited to this occasion.","status":"explicit","required":true},
+        {"id":"C04","claim":"Someone may recently have occupied the warm armchair, and the cups may suggest more than one participant.","evidence":["На столе стояли две чашки.","Кресло напротив было ещё тёплым."],"scope":"Defeasible reader inference, not an asserted visitor or departure.","status":"inferred","required":false}
+      ],
+      "unresolved": ["Opposite what or whom is not stated.","Cup contents, owners, users, the source of the chair's warmth, and the reason for Sergei's silence are unknown."],
+      "alternatives": ["The details can invite a recent-presence inference but can also be simple observations. They do not establish a secret meeting or Sergei's emotions."],
+      "policy_assumptions": ["Keep the three observations in order and leave their connection implicit. Preserve the cues that allow an inference without adding its conclusion."],
+      "elapsed_seconds": null,
+      "notes": "No special narrative explanation is required by the text."
+    },
+    {
+      "id": "P03",
+      "summary": "A wet umbrella lay at the stop, and nobody ever established who left it.",
+      "commitments": [
+        {"id":"C01","claim":"A wet umbrella was lying at a stop.","evidence":["На остановке лежал мокрый зонт."],"scope":"Narrator's assertion.","status":"explicit","required":true},
+        {"id":"C02","claim":"Nobody succeeded in finding out who had left the umbrella.","evidence":["Никто так и не выяснил, кто его оставил."],"scope":"Narrator's assertion about the unresolved inquiry; 'его' refers to the umbrella.","status":"explicit","required":true},
+        {"id":"C03","claim":"The question treats the umbrella as something someone left there, while withholding that person's identity.","evidence":["кто его оставил"],"scope":"Background assumption of the embedded identity question, not an identified person's action.","status":"explicit","required":true}
+      ],
+      "unresolved": ["The person who left the umbrella, its owner, how it got wet, and whether leaving it was intentional remain unspecified.","The type of transport stop is unspecified."],
+      "alternatives": ["'Never did find out' or 'never found out' can carry the eventual nonresolution; the wording does not by itself describe any particular investigation.","A bus stop is a common interpretation, but a tram or other transit stop is possible."],
+      "policy_assumptions": ["Do not supply an owner or resolve the identity. Preserve the wetness, location, and sustained failure to find out."],
+      "elapsed_seconds": null,
+      "notes": "Not finding out does not necessarily mean that every person, including the person who left it, lacked knowledge."
+    },
+    {
+      "id": "P04",
+      "summary": "The note bore exactly one word, quoted as 'no'.",
+      "commitments": [
+        {"id":"C01","claim":"There was exactly one word on the note.","evidence":["На записке было ровно одно слово"],"scope":"Narrator's assertion, with an explicit exact count.","status":"explicit","required":true},
+        {"id":"C02","claim":"The one word is supplied as quoted text: 'нет' (English 'no').","evidence":["«нет»"],"scope":"Quotation of the note's wording, rather than a bare narrator assertion of negation.","status":"explicit","required":true}
+      ],
+      "unresolved": ["The author, addressee, and question or proposal to which 'no' responds are unknown."],
+      "alternatives": ["The word can deny, refuse, or indicate absence depending on context; no such contextual choice is established here."],
+      "policy_assumptions": ["The packet permits idiomatic translation of quoted wording and does not require Cyrillic graphemes. Preserve quotation status and the explicit one-word count; a one-word English 'no' meets both constraints."],
+      "elapsed_seconds": null,
+      "notes": "The word count is source content; permission to translate the quoted token is task policy."
+    },
+    {
+      "id": "P05",
+      "summary": "A chance passerby spoke a formal declaration closing the meeting from the corridor; the chair continued the discussion.",
+      "commitments": [
+        {"id":"C01","claim":"The speaker uttered the quoted first-person declaration that he was declaring the meeting closed.","evidence":["«Я объявляю заседание закрытым»"],"scope":"Quoted speech act and its content, not an independent assertion that the meeting became closed.","status":"explicit","required":true},
+        {"id":"C02","claim":"The speaker is described as a chance passerby speaking from the corridor.","evidence":["сказал случайный прохожий из коридора"],"scope":"Narrator's attribution and spatial description.","status":"explicit","required":true},
+        {"id":"C03","claim":"The chair continued the discussion.","evidence":["Председатель продолжил обсуждение."],"scope":"Narrator's assertion after the quoted declaration.","status":"explicit","required":true},
+        {"id":"C04","claim":"The passerby's declaration apparently did not bring the ongoing discussion to a close and may lack institutional authority.","evidence":["случайный прохожий","Председатель продолжил обсуждение."],"scope":"Pragmatic interpretation of the juxtaposition; no explicit ruling on institutional validity is supplied.","status":"inferred","required":false}
+      ],
+      "unresolved": ["The passerby's authority, intentions, and any formal effect of the words are unstated.","Whether the chair heard, ignored, or rejected the words is not specified."],
+      "alternatives": ["'Meeting' or 'session' can render заседание; the setting does not determine which.","The ordinary interpretation is an ineffective declaration, but discussion continuing alone cannot establish every procedural fact."],
+      "policy_assumptions": ["Preserve the quoted performative wording, the apparently incongruous speaker description, and the chair's continuation in that order. Do not add an explanation of why the declaration failed."],
+      "elapsed_seconds": null,
+      "notes": "An asserted utterance is distinct from successful performance of the institutional act it names."
+    },
+    {
+      "id": "P06",
+      "summary": "A translator says that they have finally found a common language while pulling a prosthetic tongue from a box, creating a language/tongue play.",
+      "commitments": [
+        {"id":"C01","claim":"The translator says, in direct quotation, that 'we' have finally found a common language, with an introductory expression of arrival or satisfaction.","evidence":["«Ну вот, наконец-то мы нашли общий язык»","сказал переводчик"],"scope":"Translator's quoted claim; the narrator does not independently certify mutual understanding.","status":"explicit","required":true},
+        {"id":"C02","claim":"While speaking, the translator was pulling a prosthetic tongue out of a box.","evidence":["вытаскивая из коробки протез языка"],"scope":"Narrator's description of concurrent action.","status":"explicit","required":true},
+        {"id":"C03","claim":"The ordinary idiom for reaching mutual understanding is juxtaposed with a literal tongue, inviting wordplay through the two senses of язык.","evidence":["мы нашли общий язык","протез языка"],"scope":"Strongly supported linguistic interpretation; not an assertion that the prosthesis is literally shared by the group.","status":"inferred","required":true}
+      ],
+      "unresolved": ["Who belongs to 'we', who needs or owns the prosthesis, and whether anyone actually achieved mutual understanding are unspecified.","The precise physical nature or purpose of the prosthesis is not further described."],
+      "alternatives": ["The quoted idiom supports mutual understanding; the following tongue reference prompts a literal reinterpretation. Neither reading should require adding a new event.","English 'common tongue' can retain language/tongue overlap, though the best idiomatic phrasing may require judgment."],
+      "policy_assumptions": ["Preserve the idiomatic/literal interaction as far as English permits, including the later revealing action. This preservation judgment follows the instruction to preserve content and information order; the packet does not explicitly prescribe a particular pun translation."],
+      "elapsed_seconds": null,
+      "notes": "The required flag on the inferred wordplay concerns retaining the source's linguistic effect, not promoting an inferred fictional event into asserted fact."
+    },
+    {
+      "id": "P07",
+      "summary": "Pyotr is singled out as the person who refused to sign the contract, whereas the others agreed.",
+      "commitments": [
+        {"id":"C01","claim":"Pyotr refused to sign the contract.","evidence":["Пётр отказался подписывать договор"],"scope":"Narrator's assertion.","status":"explicit","required":true},
+        {"id":"C02","claim":"The sentence emphatically identifies Pyotr as the relevant refuser.","evidence":["Именно Пётр"],"scope":"Focus on the identity of the person refusing, not merely on refusal occurring.","status":"explicit","required":true},
+        {"id":"C03","claim":"The other members of the relevant group agreed, with signing the contract understood as what they agreed to.","evidence":["остальные согласились","подписывать договор"],"scope":"Narrator's contrasting assertion; the complement of 'agreed' is recovered from the preceding clause.","status":"explicit","required":true}
+      ],
+      "unresolved": ["The relevant group, the contract, and reasons for the refusal are unspecified.","Agreement to sign does not establish that the others actually signed."],
+      "alternatives": ["An English cleft or an appropriately emphatic construction can preserve the focus.","The contrast singles Pyotr out within the contextually relevant group, not among every possible person."],
+      "policy_assumptions": ["Preserve the focused identity and refusal/agreement contrast without strengthening agreement into completed signing."],
+      "elapsed_seconds": null,
+      "notes": "No need to attribute unwillingness or disagreement with particular contract terms."
+    },
+    {
+      "id": "P08",
+      "summary": "Alice says Boris has the key; Boris insists Alice has it. The speaking group does not know who is right.",
+      "commitments": [
+        {"id":"C01","claim":"Alice says that Boris has the key.","evidence":["Алиса говорит, что ключ у Бориса"],"scope":"Narrator asserts Alice's report; Boris's possession is embedded under that report.","status":"explicit","required":true},
+        {"id":"C02","claim":"Boris assures or insists that Alice has the key.","evidence":["Борис уверяет, что ключ у Алисы"],"scope":"Narrator asserts Boris's more emphatic report; Alice's possession is embedded under that report.","status":"explicit","required":true},
+        {"id":"C03","claim":"The narrator's group does not know which person is right.","evidence":["Мы не знаем, кто прав."],"scope":"Narrator's explicitly unresolved epistemic position, not ignorance attributed to everyone.","status":"explicit","required":true}
+      ],
+      "unresolved": ["Who actually has the key and who belongs to 'we' remain unknown.","The text does not establish lying, mistake, motive, or whether one speaker must be correct."],
+      "alternatives": ["'Has the key' ordinarily conveys possession or custody; 'the key is with' also leaves ownership open.","The two reports are presented as rival answers, but no extra exclusivity assumptions about access or multiple keys should be invented."],
+      "policy_assumptions": ["Maintain both attribution boundaries, the stronger force of уверяет, and the final suspension of judgment."],
+      "elapsed_seconds": null,
+      "notes": "The source does not authorize choosing either report as the narrator's settled account."
+    },
+    {
+      "id": "P09",
+      "summary": "It seems that the train has already departed.",
+      "commitments": [
+        {"id":"C01","claim":"The train's departure is presented as apparent or uncertain rather than asserted without qualification.","evidence":["Кажется, поезд уже ушёл."],"scope":"Sentence-level epistemic qualification; the experiencer or source of the impression is unexpressed.","status":"explicit","required":true},
+        {"id":"C02","claim":"Within that qualified proposition, the train has already left by the relevant reference time.","evidence":["поезд уже ушёл"],"scope":"Content under кажется; 'already' marks departure as having occurred by now or the contextual reference point.","status":"explicit","required":true}
+      ],
+      "unresolved": ["The train, reference time, evidence for the impression, and identity of the person having it are unspecified."],
+      "alternatives": ["'It seems' and 'apparently' can preserve the hedge; the source does not fix whether the basis is visual evidence, inference, or a report.","Already can suggest departure sooner than expected, but an expectation violation is not necessarily asserted."],
+      "policy_assumptions": ["Retain the uncertainty marker before the proposition and retain already. Do not claim a confirmed departure or add that the speaker missed the train."],
+      "elapsed_seconds": null,
+      "notes": "A short sentence can simply express a qualified observation; no additional mechanism is required."
+    },
+    {
+      "id": "P10",
+      "summary": "The envelope was empty. Lena had already concluded that someone had played a trick on her; only that evening did she notice a letter stuck to the inside of a box lid.",
+      "commitments": [
+        {"id":"C01","claim":"There was nothing in the envelope.","evidence":["В конверте ничего не было."],"scope":"Narrator's unqualified assertion about the envelope's contents at the described time.","status":"explicit","required":true},
+        {"id":"C02","claim":"Lena had already decided or concluded that someone had played a trick on her.","evidence":["Лена уже решила, что её разыграли."],"scope":"Narrator asserts Lena's conclusion; the trick is its embedded content, not independently established.","status":"explicit","required":true},
+        {"id":"C03","claim":"Only in the evening did Lena notice a letter.","evidence":["Только вечером она заметила письмо"],"scope":"Narrator's assertion of delayed noticing; 'она' refers to Lena.","status":"explicit","required":true},
+        {"id":"C04","claim":"The letter she noticed was glued or stuck to the inside surface of the box's lid.","evidence":["письмо, приклеенное к внутренней стороне крышки коробки"],"scope":"Narrator's description of the noticed letter and its physical placement.","status":"explicit","required":true},
+        {"id":"C05","claim":"The empty envelope may have prompted Lena's conclusion, and finding the letter may undermine it.","evidence":["В конверте ничего не было.","Лена уже решила, что её разыграли.","Только вечером она заметила письмо"],"scope":"Defeasible causal and narrative interpretation; neither causation nor a revised belief is stated.","status":"inferred","required":false}
+      ],
+      "unresolved": ["The relation between the envelope and the box is not supplied.","Who stuck the letter there, its contents, whether any prank occurred, and whether Lena revised her conclusion are unknown.","The text does not say the letter was meant to be in the envelope."],
+      "alternatives": ["The later discovery invites a correction of Lena's interpretation, but does not contradict the envelope's being empty: the letter is located on the box lid.","The narrative can be read as a reveal without implying that the earlier narrator assertion was false."],
+      "policy_assumptions": ["Preserve the order of empty envelope, Lena's conclusion, then evening discovery. Preserve the distinct envelope and box references rather than silently repairing or merging them."],
+      "elapsed_seconds": null,
+      "notes": "No missing physical relationship has been supplied by plausibility."
+    }
+  ]
+}

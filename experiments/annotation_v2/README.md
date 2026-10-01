@@ -1,6 +1,9 @@
 # Semantic commitments v2 and independent annotation packet
 
-Status: preparation complete; independent annotation has **not** been run.
+Status: a [same-model fresh-context Pass A pilot](coordinator/RESULTS-01.md)
+has been collected and reviewed. The independent human/different-model study
+has **not** been run. Raw responses, delivery hashes and a qualitative review
+ledger are retained; no annotation-time or numerical agreement claims are made.
 
 This version responds to the layered-architecture coverage audit without
 rewriting the original corpus, old gold pairs, or recorded pilot results.
