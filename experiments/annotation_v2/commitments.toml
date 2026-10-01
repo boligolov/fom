@@ -1,0 +1,116 @@
+version = "2.0"
+status = "frozen_author_proposal_not_adjudicated_gold"
+source_corpus = "experiments/translation-retelling/corpus/cases.toml"
+translation_policy = "Preserve source content, attribution, uncertainty and information order. Quoted words may be translated idiomatically; preserve explicitly stated word count and quotation status. Original-language graphemes are not required unless explicitly requested. No extra scenario facts are supplied."
+
+[[case]]
+id = "unknown-owner"
+requirements = [
+  { key = "location-wetness", dimension = "content", basis = "text", claim = "A wet umbrella lay at the bus stop.", evidence = ["На остановке лежал мокрый зонт."] },
+  { key = "leaver-unresolved", dimension = "uncertainty", basis = "text", claim = "The identity of the person who left the umbrella was never discovered in the narrated situation.", evidence = ["Никто так и не выяснил, кто его оставил."] },
+  { key = "retain-unresolved-leaver", dimension = "preservation", basis = "policy", claim = "A faithful realization must not name the leaver or turn the narrated non-discovery into a discovery.", evidence = ["Никто так и не выяснил, кто его оставил."] },
+]
+do_not_infer = ["The leaver owned the umbrella.", "Anna left it.", "The identity is unknowable forever or to every agent."]
+open_questions = ["Whether a separate owner slot is worth representing; ownership is not the unresolved slot stated by this text."]
+legacy_issues = ["Gold and corpus note substitute owner for leaver; wetness and failure-to-discover history are missing."]
+
+[[case]]
+id = "source-attribution"
+requirements = [
+  { key = "marina-report", dimension = "attribution", basis = "text", claim = "Marina is the attributed source of the bridge closure report.", evidence = ["По словам Марины, мост закрыли ночью."] },
+  { key = "closure-night", dimension = "content", basis = "text", claim = "The reported event is closure of the bridge at night; the report content and its attribution must remain distinct.", evidence = ["мост закрыли ночью"] },
+  { key = "no-other-confirmation", dimension = "epistemic", basis = "text", claim = "The narrating group has no other confirmation of the report.", evidence = ["Других подтверждений у нас нет."] },
+]
+do_not_infer = ["The bridge closure is independently established reality.", "Marina is unreliable or lying.", "No confirmation exists anywhere."]
+open_questions = ["The exact degree of narrator belief is not numerically specified."]
+legacy_issues = ["Gold omits lack of other confirmation and encodes reporting twice."]
+
+[[case]]
+id = "inference-route"
+requirements = [
+  { key = "cups-table", dimension = "content", basis = "text", claim = "There were two cups on the table.", evidence = ["На столе стояли две чашки."] },
+  { key = "chair-still-warm", dimension = "content", basis = "text", claim = "The armchair opposite was still warm; retain persistence conveyed by still.", evidence = ["Кресло напротив было ещё тёплым."] },
+  { key = "sergei-silence", dimension = "content", basis = "text", claim = "Sergei said nothing.", evidence = ["Сергей ничего не сказал."] },
+  { key = "do-not-promote-inference", dimension = "inference", basis = "policy", claim = "Retain the observations without promoting a recent visitor from a defeasible inference to an explicit narrator assertion.", evidence = ["На столе стояли две чашки.", "Кресло напротив было ещё тёплым."] },
+]
+do_not_infer = ["A visitor is logically entailed by chair warmth.", "The visitor's identity, relationship, or emotions.", "Sergei caused the warmth or was hiding something."]
+open_questions = ["Is a recent visitor required to be recoverable, or only one plausible reading? Let independent annotators decide.", "Opposite whom/what is contextually underspecified; do not hard-code opposite Sergei as an explicit fact."]
+legacy_issues = ["Gold omits silence and table; corrupted gold retains warmth although the corrupted text omits it."]
+
+[[case]]
+id = "delayed-reveal"
+requirements = [
+  { key = "empty-envelope", dimension = "content", basis = "text", claim = "The envelope was empty.", evidence = ["В конверте ничего не было."] },
+  { key = "lena-conclusion", dimension = "attribution", basis = "text", claim = "Lena had already concluded that someone had played a trick on her; this is her conclusion, not an established prank.", evidence = ["Лена уже решила, что её разыграли."] },
+  { key = "evening-discovery", dimension = "temporal", basis = "text", claim = "Only in the evening did Lena notice the letter attached to the inside of the box lid.", evidence = ["Только вечером она заметила письмо, приклеенное к внутренней стороне крышки коробки."] },
+  { key = "reader-disclosure", dimension = "trajectory", basis = "policy", claim = "Preserve the presentation sequence: empty envelope, Lena's conclusion, then the letter discovery/location. Do not disclose the letter location to the reader before this reveal.", evidence = ["В конверте ничего не было.", "Лена уже решила", "Только вечером"] },
+]
+do_not_infer = ["The letter was placed there in the evening.", "Lena's belief is narrator-confirmed truth.", "The envelope and the box are the same object."]
+open_questions = ["A particular suspense or surprise effect is not guaranteed for every reader."]
+legacy_issues = ["Gold encodes reveal timing only; empty envelope and Lena's conclusion are absent."]
+
+[[case]]
+id = "common-tongue"
+requirements = [
+  { key = "utterance-speaker", dimension = "attribution", basis = "text", claim = "An interpreter says that they have finally found a common tongue/language; retain finally and the plural participant perspective.", evidence = ["наконец-то мы нашли общий язык", "сказал переводчик"] },
+  { key = "prosthesis-action", dimension = "content", basis = "text", claim = "While speaking, the interpreter pulls a prosthetic tongue out of a box.", evidence = ["вытаскивая из коробки протез языка"] },
+  { key = "linked-readings", dimension = "function", basis = "policy", claim = "Preserve the link between the mutual-understanding reading of the utterance and the anatomical tongue made salient by the action; lexical substitution is allowed if both remain recoverable.", evidence = ["общий язык", "протез языка"] },
+]
+do_not_infer = ["The participants actually achieved mutual understanding.", "The prosthesis is shared property.", "Every reader must find this funny."]
+open_questions = ["How reliably does the proposed English wording activate both readings for the target audience? Requires independent judgment."]
+legacy_issues = ["Opaque reading predicates omit participants and action; coactivation metadata alone cannot demonstrate a successful pun."]
+
+[[case]]
+id = "uncertain-train"
+requirements = [
+  { key = "departure-content", dimension = "content", basis = "text", claim = "The proposition under consideration is that the train has departed.", evidence = ["поезд уже ушёл"] },
+  { key = "qualified-commitment", dimension = "epistemic", basis = "text", claim = "Seems qualifies the speaker's commitment; do not replace it with an unqualified factual assertion.", evidence = ["Кажется"] },
+  { key = "already", dimension = "temporal", basis = "text", claim = "Retain already: departure precedes the relevant current/reference situation with its aspectual/pragmatic contribution left intact.", evidence = ["уже"] },
+]
+do_not_infer = ["A numerical probability.", "A particular source of evidence.", "A precise departure time or the speaker's missed journey."]
+open_questions = ["Do not decide the full expectation structure of already without further context."]
+legacy_issues = ["Gold models certainty but drops already."]
+
+[[case]]
+id = "contrastive-focus"
+requirements = [
+  { key = "peter-refusal", dimension = "content", basis = "text", claim = "Peter refused to sign the contract.", evidence = ["Пётр отказался подписывать договор"] },
+  { key = "others-agreed", dimension = "content", basis = "text", claim = "The other contextually relevant participants agreed to sign; agreement does not entail completed signatures.", evidence = ["остальные согласились"] },
+  { key = "contrastive-identification", dimension = "focus", basis = "text", claim = "The utterance specifically singles out Peter against the alternatives; preserve that contrast rather than merely assigning him high attention.", evidence = ["Именно Пётр", "остальные согласились"] },
+]
+do_not_infer = ["Peter never signed later.", "Everyone else actually signed.", "The precise number of other participants."]
+open_questions = ["How much explicit focus marking is required in a natural English rendering is an annotation question, not a high/low salience threshold."]
+legacy_issues = ["Gold omits the contract and others' agreement and substitutes salience for contrastive focus."]
+
+[[case]]
+id = "failed-declaration"
+requirements = [
+  { key = "utterance-and-source", dimension = "attribution", basis = "text", claim = "A random passer-by speaking from the corridor utters a declaration that the meeting is closed.", evidence = ["«Я объявляю заседание закрытым»", "сказал случайный прохожий из коридора"] },
+  { key = "discussion-continues", dimension = "content", basis = "text", claim = "The chair continues the discussion.", evidence = ["Председатель продолжил обсуждение."] },
+  { key = "no-promoted-success", dimension = "social_state", basis = "policy", claim = "Do not turn the attempted verbal declaration into narrator-certified successful closure; retain the contrast with continued discussion.", evidence = ["сказал случайный прохожий", "Председатель продолжил обсуждение."] },
+]
+do_not_infer = ["The exact institutional rules or legal authority of all participants.", "A formal reopening occurred.", "The passer-by actually closed the meeting."]
+open_questions = ["The intended ineffective-declaration reading is strong, but absence of formal authority is not stated as an explicit institutional fact. Annotators must distinguish inference from assertion."]
+legacy_issues = ["No old executable gold pair; designer intent must not replace source evidence."]
+
+[[case]]
+id = "conflicting-sources"
+requirements = [
+  { key = "alice-report", dimension = "attribution", basis = "text", claim = "Alice says that Boris has the key.", evidence = ["Алиса говорит, что ключ у Бориса"] },
+  { key = "boris-insistence", dimension = "attribution", basis = "text", claim = "Boris insists that Alice has the key; retain the stronger stance expressed by assures/insists.", evidence = ["Борис уверяет, что ключ у Алисы"] },
+  { key = "unresolved-correctness", dimension = "uncertainty", basis = "text", claim = "The narrating group does not know who is right; neither source is selected as narrator-confirmed truth.", evidence = ["Мы не знаем, кто прав."] },
+]
+do_not_infer = ["One person is necessarily lying.", "A universal axiom prohibiting joint possession.", "Boris's insistence is greater reliability."]
+open_questions = ["The claims are presented as competing accounts; logical inconsistency depends on the intended possession/time interpretation and must not be inferred solely from two names."]
+legacy_issues = ["No old executable gold pair; source conflict and formal contradiction need separate treatment."]
+
+[[case]]
+id = "exact-note"
+requirements = [
+  { key = "note-one-word", dimension = "form", basis = "text", claim = "A note contains exactly one word.", evidence = ["На записке было ровно одно слово"] },
+  { key = "quoted-lexical-item", dimension = "form", basis = "text", claim = "The word is quoted as нет; preserve mention of a particular lexical item rather than only its inferred communicative function.", evidence = ["«нет»"] },
+  { key = "translated-quotation", dimension = "preservation", basis = "policy", claim = "Under this version's translation policy, quoted English no is permitted, with one-word form preserved. Exact Cyrillic graphemes are not required for the English target.", evidence = ["ровно одно слово", "«нет»"] },
+]
+do_not_infer = ["The note was definitely a refusal rather than an answer, denial, or another use of no.", "The author, addressee, handwriting or reason."]
+open_questions = ["A separate archival/exact-grapheme task would need a different policy and different valid candidates; it is not this version."]
+legacy_issues = ["No old executable gold pair; the label exact-form was ambiguous between original spelling and translated quotation."]

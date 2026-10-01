@@ -1,0 +1,108 @@
+{
+  "version": "2.0",
+  "annotator": null,
+  "model_or_background": null,
+  "prior_exposure": null,
+  "items": [
+    {
+      "id": "P01",
+      "summary": null,
+      "commitments": [],
+      "unresolved": [],
+      "alternatives": [],
+      "policy_assumptions": [],
+      "elapsed_seconds": null,
+      "notes": null
+    },
+    {
+      "id": "P02",
+      "summary": null,
+      "commitments": [],
+      "unresolved": [],
+      "alternatives": [],
+      "policy_assumptions": [],
+      "elapsed_seconds": null,
+      "notes": null
+    },
+    {
+      "id": "P03",
+      "summary": null,
+      "commitments": [],
+      "unresolved": [],
+      "alternatives": [],
+      "policy_assumptions": [],
+      "elapsed_seconds": null,
+      "notes": null
+    },
+    {
+      "id": "P04",
+      "summary": null,
+      "commitments": [],
+      "unresolved": [],
+      "alternatives": [],
+      "policy_assumptions": [],
+      "elapsed_seconds": null,
+      "notes": null
+    },
+    {
+      "id": "P05",
+      "summary": null,
+      "commitments": [],
+      "unresolved": [],
+      "alternatives": [],
+      "policy_assumptions": [],
+      "elapsed_seconds": null,
+      "notes": null
+    },
+    {
+      "id": "P06",
+      "summary": null,
+      "commitments": [],
+      "unresolved": [],
+      "alternatives": [],
+      "policy_assumptions": [],
+      "elapsed_seconds": null,
+      "notes": null
+    },
+    {
+      "id": "P07",
+      "summary": null,
+      "commitments": [],
+      "unresolved": [],
+      "alternatives": [],
+      "policy_assumptions": [],
+      "elapsed_seconds": null,
+      "notes": null
+    },
+    {
+      "id": "P08",
+      "summary": null,
+      "commitments": [],
+      "unresolved": [],
+      "alternatives": [],
+      "policy_assumptions": [],
+      "elapsed_seconds": null,
+      "notes": null
+    },
+    {
+      "id": "P09",
+      "summary": null,
+      "commitments": [],
+      "unresolved": [],
+      "alternatives": [],
+      "policy_assumptions": [],
+      "elapsed_seconds": null,
+      "notes": null
+    },
+    {
+      "id": "P10",
+      "summary": null,
+      "commitments": [],
+      "unresolved": [],
+      "alternatives": [],
+      "policy_assumptions": [],
+      "elapsed_seconds": null,
+      "notes": null
+    }
+  ]
+}

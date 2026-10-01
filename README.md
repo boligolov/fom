@@ -124,6 +124,7 @@ Broad semantic expansion is temporarily paused. The current priorities are:
 - [FoM ↔ UMR mapping](docs/umr-mapping.md)
 - [Carrier/overlay architectural pilot and coverage audit](experiments/layered_architecture/README.md)
 - [Annotation agreement design](docs/annotation-evaluation.md)
+- [Versioned commitments and blind annotation packets](experiments/annotation_v2/README.md)
 - [Pilot annotation guide](docs/annotation-guide.md)
 - [Translation/retelling experiment](experiments/translation-retelling/README.md)
 - [Canonical FoM graph](docs/canonical-format.md)

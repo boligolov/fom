@@ -2,6 +2,11 @@
 
 Status: experiment design
 
+An [evidence-backed v2 proposal and blind-at-delivery Pass A packet](../experiments/annotation_v2/README.md)
+now cover the ten original mini-corpus items. This prepares a smaller first
+collection than the aspirational 20–30 item study below. No independent
+responses or annotation-agreement measurements have yet been collected.
+
 FoM cannot assume that two competent annotators will produce identical graphs.
 
 Existing meaning-representation projects already show substantial structural disagreement, and FoM attempts to annotate additional pragmatic and trajectory-sensitive dimensions.

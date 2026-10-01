@@ -1,0 +1,58 @@
+{
+  "version": "2.0",
+  "mapping": [
+    {
+      "blind_id": "P01",
+      "source_id": "source-attribution",
+      "source_sha256": "33e1af689e2604056f0d633ea6784b9e91470a5cbb63551435d81dec4902c26e"
+    },
+    {
+      "blind_id": "P02",
+      "source_id": "inference-route",
+      "source_sha256": "372653bce7d3c03f2eabee0582c6a4d22422837d1563af3508113863efc0d393"
+    },
+    {
+      "blind_id": "P03",
+      "source_id": "unknown-owner",
+      "source_sha256": "c7ee1eeded86b2f751ec28337d2897a0b11ce446ee2de01e66809baf9a4480e2"
+    },
+    {
+      "blind_id": "P04",
+      "source_id": "exact-note",
+      "source_sha256": "3d63d69a7cffffaf04a55f689d4164e907416b5872aeb7b1d40dc53055c43dee"
+    },
+    {
+      "blind_id": "P05",
+      "source_id": "failed-declaration",
+      "source_sha256": "251810d02ff532bcccf7e0c781e8f6d32fe430ffca81c11e013e017d6734c892"
+    },
+    {
+      "blind_id": "P06",
+      "source_id": "common-tongue",
+      "source_sha256": "1580fee95094eb015482a5db0f5193b3c9def118ffb471f8d26d68ede5a1dbe6"
+    },
+    {
+      "blind_id": "P07",
+      "source_id": "contrastive-focus",
+      "source_sha256": "d88c4ff29fdf11433842f820f58e8c4996af8ab7298d30c9603d7c055848aa0e"
+    },
+    {
+      "blind_id": "P08",
+      "source_id": "conflicting-sources",
+      "source_sha256": "7ad0f678372bee4a4af9ac379bcbbdbf6fb1892c11fe28c71673452b386afa20"
+    },
+    {
+      "blind_id": "P09",
+      "source_id": "uncertain-train",
+      "source_sha256": "6606395e86400d3a496a392d588154e7d12c115326418a0ca4e97a462d4b9364"
+    },
+    {
+      "blind_id": "P10",
+      "source_id": "delayed-reveal",
+      "source_sha256": "4ac218e8f6bf535aee2a7833aa33dc2ce02bfb57751d4205da5f68a160090044"
+    }
+  ],
+  "corpus_sha256": "808e0c5b664ad98c217fe6b0894b0498d4505316d0e8204598b26eded73b17c1",
+  "proposal_sha256": "ec7432bdb3cdbcedff0eae96dc23310f11c644e73af06d7ed420d82ee49b39d8",
+  "packet_sha256": "bacc1db88237d41e1be615b0d63220edb74d920a71de26964439a0a93ccbf66c"
+}

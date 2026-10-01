@@ -10,6 +10,7 @@ Working list of unfinished FoM research and implementation tasks.
 - [x] Add prior-art comparison matrix: FoM vs AMR/UMR, DRT/dynamic semantics, common ground, speech acts, Allen, supervaluation, questions/discourse frameworks.
 - [x] Design annotation-agreement experiment.
 - [ ] Run annotation-agreement pilot with independent annotators (requires genuinely independent annotators/models).
+- [x] Freeze an evidence-backed v2 author proposal for all ten source texts and generate blind-at-delivery Pass A packets; independent responses and adjudication remain pending.
 - [x] Define first narrow end-to-end use case: translation/retelling preservation validation.
 
 - [x] Define enough canonical schema for first-pass parser/canonicalizer implementation.
