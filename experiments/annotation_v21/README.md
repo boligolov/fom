@@ -34,3 +34,9 @@ Run 02 collected one response with requested dispatch model GPT-5.6-terra.
 See [protocol](coordinator/RUN-02.md) and [qualitative results](coordinator/RESULTS-02.md).
 Reproduce delivery checks with `python -m experiments.annotation_v21.review_response`.
 The obligation boundary remains open; this is not adjudicated gold.
+
+Run 03 adds a fresh inherited-configuration response to the identical packet.
+See [protocol](coordinator/RUN-03.md), [object alignment](coordinator/alignment-03.json)
+and [findings and next contrast-set experiment](coordinator/RESULTS-03.md).
+Run `python -m experiments.annotation_v21.compare_responses` to reproduce
+delivery and alignment-reference checks; these do not adjudicate meaning.

@@ -6,10 +6,10 @@ from experiments.annotation_v2.prepare import digest
 from experiments.annotation_v21.prepare import HERE, validate_response
 
 
-def review():
+def review(response_name='annotator-terra.json'):
     packet_text = (HERE / 'blind/packet.json').read_text(encoding='utf-8')
     packet = json.loads(packet_text)
-    response_text = (HERE / 'responses/annotator-terra.json').read_text(encoding='utf-8')
+    response_text = (HERE / 'responses' / response_name).read_text(encoding='utf-8')
     response = json.loads(response_text)
     commitments = [c for item in response['items'] for c in item['commitments']]
     return dict(

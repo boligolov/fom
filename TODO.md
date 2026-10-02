@@ -14,7 +14,8 @@ Working list of unfinished FoM research and implementation tasks.
 - [x] Collect two same-model fresh-context Pass A responses, validate source evidence, and record a qualitative review (required wordplay remains disputed; external/different-model pilot remains pending).
 - [x] Version neutral source-status/preservation clarification and author errata without rewriting earlier responses (annotation_v21).
 - [x] Collect and review one fresh-context GPT-5.6-terra response under v2.1; model/instruction effects are confounded and P02/P05/P06 obligations remain open.
-- [ ] Collect same-instruction v2.1 responses and align preservation objects before adjudicating inference obligations or claiming cross-model agreement.
+- [x] Collect a fresh same-instruction v2.1 response and align preservation objects across dispatch configurations; exact model independence and semantic adjudication remain open (Run 03).
+- [ ] Build and independently review a realization contrast set for P02/P05/P06/P10 to test cue preservation versus separate inference obligations; do not force an invalid cue-preserving contrast.
 - [x] Define first narrow end-to-end use case: translation/retelling preservation validation.
 
 - [x] Define enough canonical schema for first-pass parser/canonicalizer implementation.

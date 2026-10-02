@@ -1,0 +1,341 @@
+{
+  "run": "03",
+  "reviewer": "Coordinator, nonblind; manual semantic judgments are provisional",
+  "items": [
+    {
+      "id": "P01",
+      "alignments": [
+        {
+          "object": "Attributed closure and evidential limit",
+          "terra_refs": [
+            "C01",
+            "C02"
+          ],
+          "fresh_refs": [
+            "C01",
+            "C02"
+          ],
+          "relation": "compatible"
+        },
+        {
+          "object": "Unspecified closing agent",
+          "terra_refs": [
+            "C01"
+          ],
+          "fresh_refs": [
+            "C03"
+          ],
+          "relation": "fresh makes an implicit nonaddition boundary explicit"
+        }
+      ],
+      "finding": "Both preserve report scope. Extra unresolved-agent row is decomposition, not a contradictory event.",
+      "disposition": "Provisional compatible core."
+    },
+    {
+      "id": "P02",
+      "alignments": [
+        {
+          "object": "Cups, warm opposite chair and silence",
+          "terra_refs": [
+            "C01",
+            "C02",
+            "C04"
+          ],
+          "fresh_refs": [
+            "C01",
+            "C02",
+            "C03"
+          ],
+          "relation": "compatible"
+        },
+        {
+          "object": "Recent occupancy versus particular visitor explanation",
+          "terra_refs": [
+            "C03"
+          ],
+          "fresh_refs": [
+            "C04"
+          ],
+          "relation": "overlapping but differently bounded objects; required versus unresolved"
+        }
+      ],
+      "finding": "Terra requires recent-occupancy availability; fresh leaves a particular visitor story beyond cues unresolved. Both preserve still-warm and neither asserts an occupant. The objects overlap without being identical.",
+      "disposition": "Open: test whether cue preservation and inference availability can diverge without added scenario facts."
+    },
+    {
+      "id": "P03",
+      "alignments": [
+        {
+          "object": "Umbrella, stop and unresolved leaver",
+          "terra_refs": [
+            "C01",
+            "C02"
+          ],
+          "fresh_refs": [
+            "C01",
+            "C02"
+          ],
+          "relation": "compatible"
+        },
+        {
+          "object": "Leaving background",
+          "terra_refs": [
+            "C02"
+          ],
+          "fresh_refs": [
+            "C03"
+          ],
+          "relation": "decomposition"
+        },
+        {
+          "object": "Stop type and owner/leaver boundary",
+          "terra_refs": [
+            "C01",
+            "C02"
+          ],
+          "fresh_refs": [
+            "C04"
+          ],
+          "relation": "fresh explicitly prohibits narrowing"
+        }
+      ],
+      "finding": "Both use generic stop. Fresh distinguishes backgrounded leaving and nonaddition boundaries; Terra mentions ownership uncertainty in unresolved prose.",
+      "disposition": "Provisional compatible core; retain generic-stop erratum."
+    },
+    {
+      "id": "P04",
+      "alignments": [
+        {
+          "object": "Exactly one quoted negative word",
+          "terra_refs": [
+            "C01",
+            "C02"
+          ],
+          "fresh_refs": [
+            "C01",
+            "C02"
+          ],
+          "relation": "compatible"
+        },
+        {
+          "object": "Original graphemes",
+          "terra_refs": [
+            "C02"
+          ],
+          "fresh_refs": [
+            "C03"
+          ],
+          "relation": "policy elaboration, not contrary decisions on translated meaning"
+        }
+      ],
+      "finding": "Fresh optional Cyrillic row is about original form. Terra permits idiomatic English in C02. Optional graphemes must not be compared to required negative meaning as if the object were identical.",
+      "disposition": "Compatible under shared policy; no requirement to add a second word."
+    },
+    {
+      "id": "P05",
+      "alignments": [
+        {
+          "object": "Declaration, passerby/corridor and continuation",
+          "terra_refs": [
+            "C01",
+            "C02"
+          ],
+          "fresh_refs": [
+            "C01",
+            "C02",
+            "C03"
+          ],
+          "relation": "compatible core with unresolved corridor attachment"
+        },
+        {
+          "object": "Failed effect versus contrast availability",
+          "terra_refs": [
+            "C03"
+          ],
+          "fresh_refs": [
+            "C04"
+          ],
+          "relation": "both required, but object breadth differs"
+        }
+      ],
+      "finding": "Terra names lack of operative effect; fresh requires contrast while leaving institutional explanations open. Matching required flags does not settle equivalence. Fresh narrows corridor to speech setting; Terra's summary and claim differ.",
+      "disposition": "Keep institutional-effect and corridor-attachment boundaries open."
+    },
+    {
+      "id": "P06",
+      "alignments": [
+        {
+          "object": "Attributed idiom and concurrent extraction",
+          "terra_refs": [
+            "C01",
+            "C02"
+          ],
+          "fresh_refs": [
+            "C01",
+            "C02"
+          ],
+          "relation": "compatible"
+        },
+        {
+          "object": "Lexical interplay versus comparable effect",
+          "terra_refs": [
+            "C03"
+          ],
+          "fresh_refs": [
+            "C03"
+          ],
+          "relation": "shared dual-reading requirement; realization latitude differs"
+        },
+        {
+          "object": "No literal shared ownership",
+          "terra_refs": [
+            "C03"
+          ],
+          "fresh_refs": [
+            "C04"
+          ],
+          "relation": "fresh explicitly states a nonaddition boundary"
+        }
+      ],
+      "finding": "Both mark inferred interplay required. Terra allows a comparably intelligible wordplay effect; fresh's policy rejects a different joke/scenario. No consensus license for replacement follows.",
+      "disposition": "Provisional shared dual-reading obligation, pending concrete realization review; old disagreement remains historical."
+    },
+    {
+      "id": "P07",
+      "alignments": [
+        {
+          "object": "Refusal and focus",
+          "terra_refs": [
+            "C01"
+          ],
+          "fresh_refs": [
+            "C01",
+            "C02"
+          ],
+          "relation": "one-to-many compatible core"
+        },
+        {
+          "object": "Others' agreement",
+          "terra_refs": [
+            "C02"
+          ],
+          "fresh_refs": [
+            "C03"
+          ],
+          "relation": "elliptical complement treatment differs"
+        }
+      ],
+      "finding": "Terra leaves the precise agreement object contextually supplied; fresh explicitly supplies agreeing to sign. Both avoid completed signatures. Exhaustive versus contrastive labels are not adjudicated.",
+      "disposition": "Retain local contrast; review complement scope before gold encoding."
+    },
+    {
+      "id": "P08",
+      "alignments": [
+        {
+          "object": "Opposed reports and uncertainty",
+          "terra_refs": [
+            "C01",
+            "C02",
+            "C03"
+          ],
+          "fresh_refs": [
+            "C01",
+            "C02",
+            "C03"
+          ],
+          "relation": "compatible"
+        },
+        {
+          "object": "No actual holder or liar selected",
+          "terra_refs": [
+            "C03"
+          ],
+          "fresh_refs": [
+            "C04"
+          ],
+          "relation": "fresh separates nonaddition already present in Terra prose"
+        }
+      ],
+      "finding": "Both retain stronger assurance and attribution. Extra unresolved row is not evidence that Terra endorses a real holder.",
+      "disposition": "Provisional compatible core."
+    },
+    {
+      "id": "P09",
+      "alignments": [
+        {
+          "object": "Tentative already-departed proposition",
+          "terra_refs": [
+            "C01"
+          ],
+          "fresh_refs": [
+            "C01",
+            "C02"
+          ],
+          "relation": "one-to-many compatible"
+        },
+        {
+          "object": "Unspecified evidence",
+          "terra_refs": [
+            "C01"
+          ],
+          "fresh_refs": [
+            "C03"
+          ],
+          "relation": "fresh separate row, Terra unresolved prose"
+        }
+      ],
+      "finding": "Fresh splits content and qualification without moving temporal content out of tentative scope.",
+      "disposition": "Provisional compatible core."
+    },
+    {
+      "id": "P10",
+      "alignments": [
+        {
+          "object": "Empty envelope, Lena's belief and later noticing",
+          "terra_refs": [
+            "C01",
+            "C02",
+            "C03"
+          ],
+          "fresh_refs": [
+            "C01",
+            "C02",
+            "C03"
+          ],
+          "relation": "compatible"
+        },
+        {
+          "object": "Delayed awareness",
+          "terra_refs": [
+            "C04"
+          ],
+          "fresh_refs": [
+            "C03"
+          ],
+          "relation": "Terra separates timing inference included in fresh explicit content"
+        },
+        {
+          "object": "Potential causal interpretation and reconsideration",
+          "terra_refs": [],
+          "fresh_refs": [
+            "C04"
+          ],
+          "relation": "fresh-only inference obligation; no Terra rejection inferred"
+        },
+        {
+          "object": "Unspecified object relations",
+          "terra_refs": [
+            "C01",
+            "C03"
+          ],
+          "fresh_refs": [
+            "C05"
+          ],
+          "relation": "fresh makes Terra prose boundary explicit"
+        }
+      ],
+      "finding": "Terra's separate inferred row concerns earlier non-noticing. Fresh's inferred row concerns possible causation/reconsideration, grounded in order. These are not interchangeable inferred commitments; neither asserts an actual belief change.",
+      "disposition": "Open: distinguish required order from an additional reconsideration obligation."
+    }
+  ]
+}

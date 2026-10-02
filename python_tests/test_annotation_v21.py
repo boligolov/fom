@@ -4,6 +4,7 @@ import unittest
 
 from experiments.annotation_v21.prepare import HERE, PREVIOUS, prepare, validate_response
 from experiments.annotation_v21.review_response import review
+from experiments.annotation_v21.compare_responses import compare, validate_ledger
 
 
 class AnnotationV21Tests(unittest.TestCase):
@@ -60,3 +61,23 @@ class AnnotationV21Tests(unittest.TestCase):
 
     def test_delivery_report_reproduces_raw_response(self):
         self.assertEqual(json.loads((HERE / 'coordinator/delivery-report.json').read_text(encoding='utf-8')), review())
+
+    def test_comparison_report_reproducible(self):
+        result = compare()
+        self.assertEqual(result['ledger_errors'], [])
+        self.assertEqual(json.loads((HERE / 'coordinator/comparison-report-03.json').read_text(encoding='utf-8')), result)
+
+    def test_alignment_rejects_missing_or_fabricated_references(self):
+        responses = {'terra': self.response, 'fresh': self.response}
+        ledger = {'items': [dict(id=i['id'], finding='test', disposition='test',
+            alignments=[dict(object='cue', relation='test', terra_refs=['C01'], fresh_refs=['C01'])])
+            for i in self.response['items']]}
+        self.assertEqual(validate_ledger(ledger, responses), [])
+        for defect in ('unknown', 'missing', 'coverage'):
+            changed = copy.deepcopy(ledger)
+            if defect == 'coverage':
+                changed['items'].pop()
+            else:
+                changed['items'][0]['alignments'][0]['fresh_refs'] = ['C99'] if defect == 'unknown' else []
+            with self.subTest(defect=defect):
+                self.assertTrue(validate_ledger(changed, responses))

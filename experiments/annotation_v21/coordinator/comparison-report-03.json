@@ -1,0 +1,47 @@
+{
+  "run": "03",
+  "delivery": {
+    "terra": {
+      "version": "2.1",
+      "response_sha256": "753b5d4c5e9a1daefc4c5adc90e02041923571894b50dcaa8bba9dcb233dc328",
+      "packet_sha256": "ee3fcf8392131c48cbeaa0d43ead8507bc5ae3f25c3f791852cd330083d685ff",
+      "items": 10,
+      "commitments": 26,
+      "source_status_counts": {
+        "explicit": 22,
+        "inferred": 4
+      },
+      "preservation_counts": {
+        "required": 26
+      },
+      "measured_timings": 0,
+      "validation_errors": [],
+      "scope": "Schema, exact evidence and delivery checks only; no semantic score."
+    },
+    "fresh": {
+      "version": "2.1",
+      "response_sha256": "3ee2b2dcd3f5d41efdee8511cfc15e21422ac5be00e31f576ded4e6602e169fc",
+      "packet_sha256": "ee3fcf8392131c48cbeaa0d43ead8507bc5ae3f25c3f791852cd330083d685ff",
+      "items": 10,
+      "commitments": 37,
+      "source_status_counts": {
+        "explicit": 25,
+        "unresolved": 6,
+        "inferred": 4,
+        "backgrounded": 1,
+        "policy": 1
+      },
+      "preservation_counts": {
+        "required": 35,
+        "unresolved": 1,
+        "optional": 1
+      },
+      "measured_timings": 0,
+      "validation_errors": [],
+      "scope": "Schema, exact evidence and delivery checks only; no semantic score."
+    }
+  },
+  "ledger_sha256": "d8755973b57d16d87beefa0a3c4559f868a4f1a6cb806359ccc30f482420d3a2",
+  "ledger_errors": [],
+  "scope": "Same frozen packet; manual object alignment; no agreement score or adjudication."
+}
