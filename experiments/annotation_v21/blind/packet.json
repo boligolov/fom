@@ -1,0 +1,101 @@
+{
+  "version": "2.1",
+  "task": "Independently annotate the semantic commitments of each Russian source for a faithful English translation. No additional scenario facts are supplied. General competent Russian/English language knowledge is allowed; distinguish defeasible inference from assertion.",
+  "translation_policy": "Preserve source content, attribution, uncertainty and information order. Quoted words may be translated idiomatically; preserve explicitly stated word count and quotation status. Original-language graphemes are not required unless explicitly requested. No extra scenario facts are supplied.",
+  "instructions": [
+    "Pass A only: describe commitments before choosing graph representation. Read only this packet and the empty response template, not the project repository, designer annotations, candidate translations, labels, or other annotators.",
+    "Record unresolved references, alternative readings, and disagreements. Do not infer that every example has a special phenomenon. Do not resolve missing facts using plausibility.",
+    "Use free text; do not force meanings into a fixed ontology. If you cannot decide, explain why. Do not generate a graph in this pass.",
+    "Record actual elapsed annotation time and your declared annotator identity/model version and prior exposure; leave unknown measurements null. Do not estimate another annotator’s time or results.",
+    "Judge source status and preservation obligation separately. A content claim may be explicit, backgrounded, inferred, or unresolved; a task policy is not a source assertion.",
+    "Preservation concerns the realization: identify precisely what must survive. Preserving an inference as available does not assert that its conclusion is true. Conversely, a plausible inference is not automatically required to remain recoverable.",
+    "For each commitment report source_status, scope, and preservation with decision (required, optional, or unresolved), object (what would be preserved), and rationale (why that obligation follows from the source or shared task policy). Neither source_status nor decision determines the other.",
+    "Use unresolved when the source or task does not settle the preservation obligation. Do not force a binary decision or assume the intended answer from an apparent example type.",
+    "Do not strengthen unspecified referents, categories, causes, or institutional facts through ordinary plausibility. Retain the coarsest supported description.",
+    "No example-specific answers are provided. These instructions do not require you to find a special phenomenon in each text."
+  ],
+  "items": [
+    {
+      "id": "P01",
+      "source_language": "ru",
+      "target_language": "en",
+      "source": "По словам Марины, мост закрыли ночью. Других подтверждений у нас нет."
+    },
+    {
+      "id": "P02",
+      "source_language": "ru",
+      "target_language": "en",
+      "source": "На столе стояли две чашки. Кресло напротив было ещё тёплым. Сергей ничего не сказал."
+    },
+    {
+      "id": "P03",
+      "source_language": "ru",
+      "target_language": "en",
+      "source": "На остановке лежал мокрый зонт. Никто так и не выяснил, кто его оставил."
+    },
+    {
+      "id": "P04",
+      "source_language": "ru",
+      "target_language": "en",
+      "source": "На записке было ровно одно слово: «нет»."
+    },
+    {
+      "id": "P05",
+      "source_language": "ru",
+      "target_language": "en",
+      "source": "«Я объявляю заседание закрытым», — сказал случайный прохожий из коридора. Председатель продолжил обсуждение."
+    },
+    {
+      "id": "P06",
+      "source_language": "ru",
+      "target_language": "en",
+      "source": "«Ну вот, наконец-то мы нашли общий язык», — сказал переводчик, вытаскивая из коробки протез языка."
+    },
+    {
+      "id": "P07",
+      "source_language": "ru",
+      "target_language": "en",
+      "source": "Именно Пётр отказался подписывать договор; остальные согласились."
+    },
+    {
+      "id": "P08",
+      "source_language": "ru",
+      "target_language": "en",
+      "source": "Алиса говорит, что ключ у Бориса; Борис уверяет, что ключ у Алисы. Мы не знаем, кто прав."
+    },
+    {
+      "id": "P09",
+      "source_language": "ru",
+      "target_language": "en",
+      "source": "Кажется, поезд уже ушёл."
+    },
+    {
+      "id": "P10",
+      "source_language": "ru",
+      "target_language": "en",
+      "source": "В конверте ничего не было. Лена уже решила, что её разыграли. Только вечером она заметила письмо, приклеенное к внутренней стороне крышки коробки."
+    }
+  ],
+  "commitment_fields": {
+    "id": "Stable local ID, e.g. C01.",
+    "claim": "Free-text semantic commitment.",
+    "evidence": "Nonempty array of exact source substrings.",
+    "scope": "Whose assertion, report, perspective or task obligation this is.",
+    "source_status": [
+      "explicit",
+      "backgrounded",
+      "inferred",
+      "policy",
+      "unresolved"
+    ],
+    "preservation": {
+      "decision": [
+        "required",
+        "optional",
+        "unresolved"
+      ],
+      "object": "What exactly must/may remain: a fact, attribution, uncertainty, reading availability, form, order, or another justified feature.",
+      "rationale": "Explain from source evidence or shared task policy; do not equate inferred with optional."
+    }
+  }
+}

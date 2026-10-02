@@ -1,0 +1,114 @@
+{
+  "version": "2.1",
+  "annotator": "annotator-terra",
+  "model_or_background": "GPT-5.6-terra (requested dispatch model; identity not independently verified)",
+  "prior_exposure": "No prior exposure to these blinded items, candidate translations, or other annotations in this task.",
+  "items": [
+    {
+      "id": "P01",
+      "summary": "Marina is the source of the report that the bridge was closed at night; the narrator/group has no other confirmations.",
+      "commitments": [
+        {"id":"C01","claim":"Marina says that the bridge was closed at night.","evidence":["По словам Марины","мост закрыли ночью"],"scope":"Reported attribution to Marina, not an unqualified narrator assertion.","source_status":"explicit","preservation":{"decision":"required","object":"Marina's attribution, the closure event, and its nighttime timing.","rationale":"The reporting frame and its complement are overtly stated."}},
+        {"id":"C02","claim":"The speaker's group has no confirmations other than Marina's report.","evidence":["Других подтверждений у нас нет"],"scope":"The epistemic position of ‘us’.","source_status":"explicit","preservation":{"decision":"required","object":"The absence of other confirmation, including the first-person plural perspective.","rationale":"The second sentence explicitly limits the available confirmation."}}
+      ],
+      "unresolved":["Who ‘we’ are, and whether the bridge was in fact closed, are not settled."],
+      "alternatives":[],"policy_assumptions":[],"elapsed_seconds":null,"notes":null
+    },
+    {
+      "id": "P02",
+      "summary": "Two cups stood on a table; an opposite armchair was still warm; Sergey said nothing.",
+      "commitments": [
+        {"id":"C01","claim":"There were two cups on the table.","evidence":["На столе стояли две чашки"],"scope":"Narration.","source_status":"explicit","preservation":{"decision":"required","object":"The number, cups, and their placement on the table.","rationale":"This is directly asserted."}},
+        {"id":"C02","claim":"The armchair opposite was still warm.","evidence":["Кресло напротив было ещё тёплым"],"scope":"Narration; ‘opposite’ is relationally underspecified.","source_status":"explicit","preservation":{"decision":"required","object":"The chair's opposite relation and continued warmth.","rationale":"Both are lexically expressed."}},
+        {"id":"C03","claim":"Its warmth makes recent occupancy a defeasible inference, without identifying an occupant.","evidence":["ещё тёплым"],"scope":"Inference licensed for a reader.","source_status":"inferred","preservation":{"decision":"required","object":"Availability of the ordinary recent-occupancy inference through the ‘still warm’ description.","rationale":"A faithful rendering of continuing warmth should retain this natural inference, while not turning it into an assertion."}},
+        {"id":"C04","claim":"Sergey said nothing.","evidence":["Сергей ничего не сказал"],"scope":"Narration about Sergey.","source_status":"explicit","preservation":{"decision":"required","object":"Sergey's silence/non-speaking in the relevant situation.","rationale":"It is directly stated."}}
+      ],
+      "unresolved":["The reference point for ‘opposite’ and the identity of any recent occupant are unspecified."],
+      "alternatives":[],"policy_assumptions":[],"elapsed_seconds":null,"notes":null
+    },
+    {
+      "id": "P03",
+      "summary": "A wet umbrella lay at a stop, and nobody ever determined who left it.",
+      "commitments": [
+        {"id":"C01","claim":"A wet umbrella was lying at the stop.","evidence":["На остановке лежал мокрый зонт"],"scope":"Narration.","source_status":"explicit","preservation":{"decision":"required","object":"An umbrella, its wetness, and its location at a stop.","rationale":"All three are stated."}},
+        {"id":"C02","claim":"Nobody succeeded in finding out who left the umbrella.","evidence":["Никто так и не выяснил","кто его оставил"],"scope":"Narration about an unresolved investigation/knowledge state.","source_status":"explicit","preservation":{"decision":"required","object":"The failure to establish the person who left it, including the ‘eventually/still not’ aspect of так и.","rationale":"The sentence explicitly reports that no one determined this."}}
+      ],
+      "unresolved":["The owner, the person who left it, and why it is wet are not specified."],
+      "alternatives":[],"policy_assumptions":[],"elapsed_seconds":null,"notes":null
+    },
+    {
+      "id": "P04",
+      "summary": "The note contained exactly one quoted word, ‘no’.",
+      "commitments": [
+        {"id":"C01","claim":"There was exactly one word on the note.","evidence":["ровно одно слово"],"scope":"Narration.","source_status":"explicit","preservation":{"decision":"required","object":"The exact one-word count.","rationale":"Ровно explicitly marks exactness."}},
+        {"id":"C02","claim":"That word was the quoted word ‘нет’.","evidence":["«нет»"],"scope":"Quoted written content.","source_status":"explicit","preservation":{"decision":"required","object":"The negative word's content and its presentation as the note's quoted written word.","rationale":"The quotation and word identity are explicit; an idiomatic English equivalent is permitted by the shared policy."}}
+      ],
+      "unresolved":["What the negative answers or who wrote the note are not given."],
+      "alternatives":[],"policy_assumptions":[],"elapsed_seconds":null,"notes":null
+    },
+    {
+      "id": "P05",
+      "summary": "A random passerby in the corridor uttered a declaration closing the meeting, but the chair continued the discussion.",
+      "commitments": [
+        {"id":"C01","claim":"A random passerby from the corridor said, ‘I declare the meeting closed.’","evidence":["«Я объявляю заседание закрытым»","сказал случайный прохожий из коридора"],"scope":"Narrated speech, attributed to an unidentified passerby.","source_status":"explicit","preservation":{"decision":"required","object":"The quoted declaration, its speaker as a random passerby, and the corridor setting.","rationale":"The utterance and attribution are overt."}},
+        {"id":"C02","claim":"The chair continued the discussion.","evidence":["Председатель продолжил обсуждение"],"scope":"Narration about the chair.","source_status":"explicit","preservation":{"decision":"required","object":"Continuation of the discussion by the chair.","rationale":"This is explicitly asserted."}},
+        {"id":"C03","claim":"The passerby's words are not established by the text as successfully closing the meeting.","evidence":["случайный прохожий","Председатель продолжил обсуждение"],"scope":"Inference from the described mismatch.","source_status":"inferred","preservation":{"decision":"required","object":"The availability of the inference that the declaration lacked operative effect in this episode.","rationale":"The passerby's description and the continued discussion jointly support this inference; it must not become an assertion of a general rule about authority."}}
+      ],
+      "unresolved":["The passerby's authority, if any, and the formal status of the meeting are not independently specified."],
+      "alternatives":[],"policy_assumptions":[],"elapsed_seconds":null,"notes":null
+    },
+    {
+      "id": "P06",
+      "summary": "A translator says they have finally found a common language while taking a tongue prosthesis from a box, creating a deliberate idiomatic/literal juxtaposition.",
+      "commitments": [
+        {"id":"C01","claim":"The translator said, ‘Well, at last we have found a common language.’","evidence":["«Ну вот, наконец-то мы нашли общий язык»","сказал переводчик"],"scope":"Quoted speech attributed to a translator.","source_status":"explicit","preservation":{"decision":"required","object":"The speaker, the finally/at-last aspect, and the quoted claim of achieving mutual linguistic understanding.","rationale":"The quote and attribution are explicit."}},
+        {"id":"C02","claim":"While speaking, the translator was taking a tongue prosthesis out of a box.","evidence":["вытаскивая из коробки протез языка"],"scope":"Narration contemporaneous with the speech.","source_status":"explicit","preservation":{"decision":"required","object":"The action, box, and a prosthesis for a physical tongue.","rationale":"The participial phrase expressly supplies these details."}},
+        {"id":"C03","claim":"The shared Russian word язык links the idiomatic ‘common language’ phrase with the literal tongue prosthesis, producing incongruity/wordplay.","evidence":["общий язык","протез языка"],"scope":"A reading made available by the wording.","source_status":"inferred","preservation":{"decision":"required","object":"The availability of the idiomatic/literal lexical connection or a comparably intelligible wordplay effect.","rationale":"The repeated polysemous word is deliberately foregrounded by the adjacent phrase and action; retaining only either reading loses this source-level relation."}}
+      ],
+      "unresolved":["Whose prosthesis it is and whether it relates causally to the translator's linguistic success are not stated."],
+      "alternatives":["The quotation can be read as the ordinary idiom for reaching mutual understanding, while the physical tongue reference activates a literal reading; both should remain accessible."],"policy_assumptions":[],"elapsed_seconds":null,"notes":null
+    },
+    {
+      "id": "P07",
+      "summary": "Peter, specifically, refused to sign the contract; the others agreed.",
+      "commitments": [
+        {"id":"C01","claim":"It was Peter in particular who refused to sign the contract.","evidence":["Именно Пётр","отказался подписывать договор"],"scope":"Narration with contrastive focus on Peter.","source_status":"explicit","preservation":{"decision":"required","object":"Peter's refusal, the signing of a contract, and the contrastive/exhaustive focus carried by именно.","rationale":"Each is overtly encoded."}},
+        {"id":"C02","claim":"The other relevant people agreed.","evidence":["остальные согласились"],"scope":"Narration about the contextually relevant remainder, excluding Peter.","source_status":"explicit","preservation":{"decision":"required","object":"Agreement by the others relative to the relevant group.","rationale":"The source explicitly contrasts them with Peter."}}
+      ],
+      "unresolved":["The size and membership of the relevant group, and the precise object of the others' agreement, are contextually supplied rather than stated."],
+      "alternatives":[],"policy_assumptions":[],"elapsed_seconds":null,"notes":null
+    },
+    {
+      "id": "P08",
+      "summary": "Alice says the key is with Boris, while Boris says it is with Alice; the speaker/group does not know who is right.",
+      "commitments": [
+        {"id":"C01","claim":"Alice says that the key is with Boris.","evidence":["Алиса говорит","ключ у Бориса"],"scope":"Alice's reported/current assertion.","source_status":"explicit","preservation":{"decision":"required","object":"Alice's attribution and the content locating the key with Boris.","rationale":"The source explicitly attributes this claim to Alice."}},
+        {"id":"C02","claim":"Boris insists that the key is with Alice.","evidence":["Борис уверяет","ключ у Алисы"],"scope":"Boris's assertion, with the force of уверяет.","source_status":"explicit","preservation":{"decision":"required","object":"Boris's attribution, its insistence/assurance force, and the opposing location claim.","rationale":"The source expressly contrasts his statement with Alice's."}},
+        {"id":"C03","claim":"The speaker/group does not know who is right.","evidence":["Мы не знаем, кто прав"],"scope":"First-person plural epistemic state.","source_status":"explicit","preservation":{"decision":"required","object":"The unresolved epistemic stance of ‘we’ toward the competing claims.","rationale":"It is directly stated."}}
+      ],
+      "unresolved":["The actual location of the key, whether either speaker is correct, and the identity of ‘we’ are not established."],
+      "alternatives":[],"policy_assumptions":[],"elapsed_seconds":null,"notes":null
+    },
+    {
+      "id": "P09",
+      "summary": "The speaker presents the train's having already left as an appearance or impression, not as certain fact.",
+      "commitments": [
+        {"id":"C01","claim":"It seems that the train has already left.","evidence":["Кажется","поезд уже ушёл"],"scope":"Speaker/narrator's evidentially qualified assessment.","source_status":"explicit","preservation":{"decision":"required","object":"The uncertainty/evidential qualification, the train's possible departure, and the ‘already’ relation to a reference time.","rationale":"Кажется and уже are explicitly encoded; removing the former strengthens the claim."}}
+      ],
+      "unresolved":["Whether the train actually left, the evidence for the appearance, and the relevant schedule/reference time are unspecified."],
+      "alternatives":[],"policy_assumptions":[],"elapsed_seconds":null,"notes":null
+    },
+    {
+      "id": "P10",
+      "summary": "The envelope contained nothing; Lena had concluded she was being pranked, then only in the evening noticed a letter stuck to the inside of a box lid.",
+      "commitments": [
+        {"id":"C01","claim":"There was nothing in the envelope.","evidence":["В конверте ничего не было"],"scope":"Narration about the envelope's contents at the relevant time.","source_status":"explicit","preservation":{"decision":"required","object":"The envelope's absence of contents.","rationale":"This is directly asserted."}},
+        {"id":"C02","claim":"Lena had already decided that someone was playing a prank on her.","evidence":["Лена уже решила","что её разыграли"],"scope":"Lena's prior conclusion/belief.","source_status":"explicit","preservation":{"decision":"required","object":"Lena's attributed conclusion, its prior/already timing, and its prank content without asserting the prank as fact.","rationale":"The source attributes the conclusion to Lena."}},
+        {"id":"C03","claim":"Only in the evening did Lena notice a letter glued to the inner side of the lid of a box.","evidence":["Только вечером","она заметила письмо","приклеенное к внутренней стороне крышки коробки"],"scope":"Narration about Lena's notice and the letter's physical location.","source_status":"explicit","preservation":{"decision":"required","object":"The late (‘only in the evening’) noticing, the letter, and its attachment to the inner side of a box lid.","rationale":"These details and their order are explicitly stated."}},
+        {"id":"C04","claim":"The ‘only in the evening’ wording supports that Lena had not noticed the letter earlier.","evidence":["Только вечером она заметила"],"scope":"Temporal inference concerning Lena's awareness.","source_status":"inferred","preservation":{"decision":"required","object":"Availability of the delayed-discovery inference through an equivalent restrictive temporal expression.","rationale":"Only restricts the time of her noticing; it does not assert that the letter was absent earlier."}}
+      ],
+      "unresolved":["The relation between the envelope and the box, who attached the letter, and whether Lena really was pranked are not stated."],
+      "alternatives":[],"policy_assumptions":[],"elapsed_seconds":null,"notes":null
+    }
+  ]
+}

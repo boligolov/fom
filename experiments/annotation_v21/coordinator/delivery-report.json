@@ -1,0 +1,17 @@
+{
+  "version": "2.1",
+  "response_sha256": "753b5d4c5e9a1daefc4c5adc90e02041923571894b50dcaa8bba9dcb233dc328",
+  "packet_sha256": "ee3fcf8392131c48cbeaa0d43ead8507bc5ae3f25c3f791852cd330083d685ff",
+  "items": 10,
+  "commitments": 26,
+  "source_status_counts": {
+    "explicit": 22,
+    "inferred": 4
+  },
+  "preservation_counts": {
+    "required": 26
+  },
+  "measured_timings": 0,
+  "validation_errors": [],
+  "scope": "Schema, exact evidence and delivery checks only; no semantic score."
+}
